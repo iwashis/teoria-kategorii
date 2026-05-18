@@ -1,0 +1,133 @@
+\documentclass[9pt]{amsart}
+
+\usepackage{amssymb, latexsym, amscd,stmaryrd}
+\usepackage{amsfonts, polski}
+\usepackage[utf8]{inputenc}
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{proposition}[lemma]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{remark}[lemma]{Remark}
+\numberwithin{equation}{section}
+
+\textwidth\paperwidth \advance\textwidth -60mm \oddsidemargin-1in
+%\advance\oddsidemargin 30mm
+\advance\oddsidemargin 25mm \evensidemargin-1in
+\advance\evensidemargin 25mm \topmargin -1in
+ %\advance\topmargin 1cm
+\advance\topmargin 10mm \textheight = 700pt
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+\title{Teoria kategorii}
+\author{Seria 4: Kategorie kartezjańsko-domknięte}
+\begin{document}
+\maketitle
+
+\blfootnote{\today}
+\begin{problem}
+Niech $\mathbb{C}$ będzie kategorią CCC. Pokazać, że $\tilde{f} = f^A\circ \eta$, gdzie dla $f:Z\times A\to B$ 
+strzałka $\tilde{f}:Z\to B^A$ oznaca transpozycję, $f^A:(Z\times A)^A\to B^A$ oraz $\eta:Z\to (Z\times A)^A$ są zdefiniowane 
+jak na wykładzie.
+\end{problem}
+
+\begin{problem}
+Pokazać, że w dowolnej kategorii, która jest CCC zachodzi:
+\begin{itemize}
+\item $(A\times B)^C \cong A^C\times B^C$,
+\item $(A^B)^C \cong A^{B\times C}$.
+\end{itemize}
+\end{problem}
+
+\begin{problem}
+Czy kategoria $\mathsf{Mon}$ jest CCC?
+\end{problem}
+
+%\begin{problem}
+%Opisać kategorię $Fun(\mathsf{C},\mathsf{D})$, gdy $\mathsf{C}$ i $\mathsf{D}$ są kategoriami zadanymi przez pewne posety.
+%\end{problem}
+
+%
+%\begin{problem}
+%Pokazać, że następujące rodziny są transformacjami naturalnymi między odpowiednimi $\mathsf{Set}$-funktorami:
+%\begin{itemize}
+%\item $\{\eta_X:X\to \mathcal{P}X\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = \{x\}$,
+%\item $\{\mu_X: \mathcal{P}\mathcal{P}X\to \mathcal{P}X\}_{X}, \mu_X(S) =\bigcup S$,
+%\item $\{\mu_{X}:M\times M\times X\to M\times X\}_{X}$, gdzie $M=(M,\cdot,1)$ jest ustalonym z góry monoidem i $\mu_{X}(m,n,x) = (m\cdot n,x)$,
+%\end{itemize}
+%\end{problem}
+
+\begin{problem}
+Pokazać, że kategoria $\omega \mathsf{CPO}$ jest CCC, natomiast kategoria $\omega \mathsf{CPO}_\perp$ nie jest CCC.\footnote{Poset $(P,\leq)$ nazywamy $\omega CPO$ jeśli każdy przeliczalny łańcuch $x_1\leq x_2 \leq \dots$ ma supremum. Przekształcenie $f:P\to Q$, które zachowuje porządek między dwoma posetami $(P,\leq)$ i $(Q,\leq)$, które dodatkowo są $\omega CPO$ nazywamy \emph{ciągłym}, jeśli zachowuje suprema przeliczalnych łańchuchów, tj. $f(\bigvee_{i\in \mathbb{N}} x_i ) = \bigvee_{i} f(x_i)$ dla każdego $x_1\leq x_2\leq \ldots$. Posety, które spełniają własność $\omega CPO$ wraz z ciągłymi przekształceniami jako morfizmami tworzą kategorię oznaczaną przez $\omega\mathsf{CPO}$. 
+
+Poset $(P,\leq)$, który jest $\omega CPO$ nazywamy \emph{punktowym}, jeśli istnieje w nim element najmniejszy $\perp\in P$. Punktowe $\omega CPO$ tworzą kategorię w której strzałkami są wszystkie ciągłe przekształcenia dodatkowo zachowujące element najmniejszy, tj. $h(\perp)= \perp$. Tę kategorię oznaczamy przez $\omega \mathsf{CPO}_\perp$.}  
+\end{problem}
+
+
+\begin{problem}
+Pokazać, że kategoria wszystkich małych kategorii i funktorów $\mathsf{Cat}$ jest CCC, gdzie $\mathsf{C}^\mathsf{D} = Fun(\mathsf{C},\mathsf{D})$. 
+\end{problem}
+
+\begin{problem}
+Udowodnić (dokończając dowód z Wykładu 10), że dla każdego $f:X\times A\to Y\times A$ i $g:Y\times A\to Z\times A$
+zachodzi
+$$
+\widetilde{g\circ f} = (\varepsilon_{Z\times A})^A\circ (\widetilde{g}\times \mathsf{id}_A)^A\circ \widetilde{f}
+$$
+\end{problem}
+
+\begin{problem}
+Niech $\mathsf{State}_A$ będzie złożeniem funktorów 
+$(-)\times A$ i $(-)^A$ (czyli $\mathsf{State}_A(X) = (X\times A)^A$ oraz
+$\mathsf{State}_A(X\stackrel{f}{\to} Y) = \widetilde{ (f\times \mathsf{id}_A) \circ \varepsilon_{X\times A} }$). Dla dwóch strzałek $f:X\to \mathsf{State}_A Y$ i $g:Y\to \mathsf{State}_A Z$ definiujemy:
+\begin{align*}
+  g\cdot f = (\varepsilon_{X\times A})^A \circ \mathsf{State}_A (g) \circ f.
+\end{align*}
+Pokazać, że tak zdefiniowane działanie jest łączne oraz, że 
+$\eta_Y \cdot f = f\cdot \eta_X = f$ dla $\eta_X:X\to \mathsf{State}_A X$ 
+zadanego przez $\eta_X = \widetilde{id_{X\times A}}$ (Podpowiedź: skorzystać z poprzedniego zadania).
+\end{problem}
+\begin{problem}
+Niech $W$ będzie wybranym obiektem kategorii $\mathbb{C}$ i zdefiniujmy $\mathsf{IO} = \mathsf{State}_W$.  Używając operacji składania $\circ$ w kategorii $\mathbb{C}$, operacji $\cdot$ zdefiniowanej (\ref{eq:composition}) i wymienionych poniżej morfizmów:
+\begin{align*}
+& \textbf{show} : Bool \to String, \ \textbf{length} : String \to Integer,\ \textbf{removeCapitals} : String \to String, \\
+& \textbf{reverse} : String \to String, \textbf{equal} : Integer \times Integer \to Bool, \textbf{concat}: String \times String \to String \\
+& \textbf{readString} : () \to IO\  String, \textbf{putString} : String \to \mathsf{IO}\ (), \textbf{readFile} : String \to \mathsf{IO}\ String, \\
+& \textbf{split} : \forall a. a \to a\times a, \textbf{fst}: \forall a. a\times a\to a, \textbf{twist} : \forall ab. a\times b \to b \times a , \\
+& \textbf{strength} : \forall a b. a \times \mathsf{IO} \ b \to \mathsf{IO} (a\times b), \ \textbf{pure}:\forall a. a\to \textsf{IO} \ a.
+\end{align*}
+
+napisać  program $\textbf{main}:()\to \mathsf{IO} ()$, który:
+\begin{enumerate}
+\item wczytuje z klawiatury dwie nazwy plików, wczytuje pliki i sprawdza czy ich zawartość jest tej samej długości, a następnie wyświetla tą informację na standardowym outpucie.
+\item wczytuje z klawiatury nazwę pliku, wczytuje plik i wyświetla jego nazwę zapisaną od tyłu złączoną z jego zawartością (zawartość wyświetlana jest nieodwrócona).
+\end{enumerate}
+\end{problem}
+
+%%
+%\begin{problem}
+%Pokazać, że $Fun(\mathsf{C},\mathsf{D})$ ma binarne produkty jeśli $\mathsf{D}$ ma binarne produkty.
+%\end{problem}
+%
+%\begin{problem}
+%Znaleźć własności, które \emph{nie} są zachowywane przez równoważność kategorii.
+%\end{problem}
+%
+%\begin{problem}
+%Kategorię nazywamy \emph{szkieletową}, jeśli dowolne dwa izomorficzne obiekty są sobie równe. Pokazać, że każda kategoria jest równoważna pewnej kategorii szkieletowej. 
+%\end{problem}
+\end{document}

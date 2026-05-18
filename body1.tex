@@ -1,0 +1,250 @@
+\section{Definicja kategorii}
+
+\begin{definicja}
+\emph{Kategorię} $\Cat$ nazywamy parę $(\Cat_0, \Cat_m)$, gdzie:
+\begin{enumerate}
+\item $\Cat_0$ jest klasą tzw.\ \emph{obiektów}, oznaczanych przez $A, B, C, \ldots$
+\item $\Cat_m$ jest klasą tzw.\ \emph{morfizmów} (strzałek), oznaczanych przez $f, g, h, \ldots$
+\end{enumerate}
+Dla każdej strzałki $f \in \Cat_m$ istnieją $\dom(f) \in \Cat_0$ oraz $\cod(f) \in \Cat_0$, które oznaczamy
+\[
+f \colon A \longrightarrow B, \qquad \dom(f) = A, \quad \cod(f) = B.
+\]
+Dla dwóch strzałek $f \colon A \to B$ i $g \colon B \to C$ zdefiniowane jest \emph{złożenie}
+\[
+g \circ f \colon A \longrightarrow C.
+\]
+Operacja składania jest \emph{łączna}:
+\[
+h \circ (g \circ f) = (h \circ g) \circ f
+\]
+dla $f \colon A \to B$, $g \colon B \to C$, $h \colon C \to D$.
+
+Dla każdego obiektu $A$ istnieje \emph{identyczność} $\id_A \colon A \to A$ taka, że
+\[
+\id_B \circ f \;=\; f \circ \id_A \;=\; f
+\]
+dla każdego $f \colon A \to B$.
+\end{definicja}
+
+\section{Przykłady kategorii}
+
+\begin{przyklad}[$\Set$]
+Kategoria, w której obiektami są wszystkie zbiory, a strzałkami są wszystkie przekształcenia (funkcje), z naturalnym składaniem.
+\end{przyklad}
+
+\begin{przyklad}[$\Setf$]
+Kategoria, w której obiektami są wszystkie skończone zbiory, a strzałkami są przekształcenia na nich zdefiniowane, z naturalną operacją składania.
+\end{przyklad}
+
+\begin{przyklad}[$\Grp$ -- kategoria grup]
+Obiektami są wszystkie grupy, morfizmami są homomorfizmy grup, a składanie jest zwykłym składaniem homomorfizmów.
+\end{przyklad}
+
+\begin{przyklad}[$\Mon$ -- kategoria monoidów]
+Obiektami są wszystkie monoidy, morfizmami są homomorfizmy monoidów, a składanie jest zwykłym składaniem homomorfizmów.
+\end{przyklad}
+
+\begin{przyklad}[$\mathbf{Graphs}$]
+Kategoria grafów (z homomorfizmami grafów jako strzałkami).
+\end{przyklad}
+
+\begin{przyklad}[$\Top$]
+Kategoria przestrzeni topologicznych, w której strzałkami są przekształcenia ciągłe.
+\end{przyklad}
+
+\begin{przyklad}[$\Pos$]
+Obiektami są zbiory częściowo uporządkowane, a strzałkami są przekształcenia zachowujące porządek, z naturalnym składaniem.
+
+Niech $(P, \le)$, $(Q, \le)$ będą obiektami. Strzałka
+\[
+f \colon (P, \le) \longrightarrow (Q, \le)
+\]
+to przekształcenie $f \colon P \to Q$ takie, że jeśli $p_1 \le p_2$ w $(P, \le)$, to $f(p_1) \le f(p_2)$ w $(Q, \le)$.
+
+Zwróćmy uwagę na to, że jeśli
+\[
+f \colon (P, \le) \longrightarrow (Q, \le), \qquad g \colon (Q, \le) \longrightarrow (R, \le)
+\]
+są przekształceniami zachowującymi porządek, to $g \circ f \colon P \to R$ jest przekształceniem zachowującym porządek. Innymi słowy,
+\[
+g \circ f \colon (P, \le) \longrightarrow (R, \le)
+\]
+jest dobrze zdefiniowaną strzałką.
+\end{przyklad}
+
+\begin{przyklad}[$\Rel$]
+Obiektami są wszystkie zbiory. Dla dwóch obiektów (zbiorów) $A, B$ strzałka $f \colon A \to B$ w $\Rel$ jest relacją $f \subseteq A \times B$. Dla każdego obiektu $A$ mamy
+\[
+\id_A = \{(a, a) : a \in A\} \subseteq A \times A.
+\]
+Ponadto, dla strzałek $f \colon A \to B$, $g \colon B \to C$, tzn.\ $f \subseteq A \times B$, $g \subseteq B \times C$, definiujemy złożenie
+\[
+g \circ f = \bigl\{(a, c) \in A \times C : \exists\, b \in B\ \ (a,b) \in f \ \text{i}\ (b,c) \in g \bigr\}.
+\]
+Na przykład dla $A = \{a_1, a_2\}$, $B = \{x, y\}$, $C = \{z, t\}$ oraz
+\[
+f \colon A \to B, \quad f = \{(a_1, y), (a_1, x)\}, \qquad g \colon B \to C, \quad g = \{(x, z), (y, z)\},
+\]
+mamy
+\[
+g \circ f = \{(a_1, z)\}.
+\]
+\end{przyklad}
+
+\begin{przyklad}[Monoid jako kategoria]
+Niech $\mathbf{M} = (M, \cdot, 1)$ będzie monoidem. Definiujemy kategorię $\underline{\mathbf{M}}$, w której klasa obiektów składa się z jednego obiektu $*$:
+\[
+\underline{\mathbf{M}}_0 = \{*\},
+\]
+a morfizmami są elementy $M$, tzn.\ każdy element $m \in M$ utożsamiamy ze strzałką $m \colon * \to *$. Składaniem w kategorii $\underline{\mathbf{M}}$ jest mnożenie w monoidzie $(M, \cdot, 1)$:
+\[
+m \circ n \;\stackrel{df}{=}\; m \cdot n,
+\]
+a identycznością na obiekcie $*$ jest strzałka $1 \colon * \to *$.
+\[
+\begin{tikzcd}
+* \ar[r, "m"] & * \ar[r, "n"] & *
+\end{tikzcd}
+\]
+\end{przyklad}
+
+\begin{przyklad}[Poset jako kategoria]
+Niech $\mathbf{P} = (P, \le)$ będzie posetem. Definiujemy kategorię $\underline{\mathbf{P}}$ w następujący sposób:
+\begin{enumerate}
+\item obiektami $\underline{\mathbf{P}}$ są elementy $P$;
+\item dla dwóch elementów $a, b \in P$ istnieje jedna strzałka $a \to b$ wtedy i tylko wtedy, gdy $a \le b$.
+\end{enumerate}
+Na przykład poset typu ,,diament''
+\[
+\begin{tikzcd}[row sep=small,column sep=small]
+ & 1 \arrow[dl] \arrow[dr] & \\
+a \arrow[dr] & & b \arrow[dl] \\
+ & 0 &
+\end{tikzcd}
+\]
+wyznacza kategorię o tych samych obiektach i strzałkach $0 \to a,\ 0\to b,\ 0\to 1,\ a\to 1,\ b\to 1$, wzbogaconą o pętle identycznościowe na każdym obiekcie.
+\end{przyklad}
+
+\begin{przyklad}[$\Par$ -- przekształcenia częściowe]
+Obiekty to wszystkie zbiory. Dla obiektów $A, B$ strzałka $f \colon A \to B$ w $\Par$ to przekształcenie
+\[
+f \colon A \longrightarrow B + \{\bot\},
+\]
+gdzie $\bot$ jest \emph{wartością nieokreśloną} (różną od wszystkich elementów $B$), a $+$ oznacza rozłączną sumę zbiorów:
+\[
+X + Y \;\stackrel{df}{=}\; \{1\} \times X \;\cup\; \{2\} \times Y.
+\]
+\emph{Interpretacja:} jeśli $f \colon A \to B$ oraz $f(a) = \bot$, to interpretujemy ten wynik jako ,,wartość nieokreśloną''.
+
+Przykładem strzałki w $\Par$ jest dzielenie
+\[
+\mathrm{div} \colon \mathbb{R} \times \mathbb{R} \longrightarrow \mathbb{R}, \qquad
+\bigl(\mathrm{div} \colon \mathbb{R} \times \mathbb{R} \longrightarrow \mathbb{R} + \{\bot\}\bigr),
+\]
+\[
+\mathrm{div}(a, b) = \begin{cases} \dfrac{a}{b}, & b \neq 0, \\ \bot, & \text{w p.p.} \end{cases}
+\]
+
+\emph{Składanie w $\Par$.} Dla $f \colon A \to B$, $g \colon B \to C$ złożenie $g \circ f \colon A \to C$ jest dane wzorem
+\[
+(g \circ f)(a) \;\stackrel{df}{=}\;
+\begin{cases}
+\bot, & f(a) = \bot, \\
+g\bigl(f(a)\bigr), & f(a) \neq \bot.
+\end{cases}
+\]
+\end{przyklad}
+
+\begin{przyklad}[$\Err$ -- kategoria błędów]
+Niech $M$ będzie ustalonym zbiorem wiadomości o błędach. Obiekty $\Err$ to wszystkie zbiory. Strzałka $f \colon A \to B$ to przekształcenie
+\[
+f \colon A \longrightarrow B + M.
+\]
+\end{przyklad}
+
+\begin{przyklad}[Kategoria $\Trace$ nad monoidem]
+Niech $\mathbf{M} = (M, \cdot, 1)$ będzie monoidem. Definiujemy kategorię $\Trace$, w której obiektami są zbiory $A, B, \ldots$, a dla zbiorów $A, B$ strzałka $f \colon A \to B$ jest przekształceniem
+\[
+f \colon A \longrightarrow M \times B.
+\]
+Składanie zdefiniowane jest następująco: dla $f \colon A \to B$ (tzn.\ $f \colon A \to M \times B$) oraz $g \colon B \to C$ (tzn.\ $g \colon B \to M \times C$) złożenie
+\[
+g \circ f \colon A \longrightarrow C \qquad (g \circ f \colon A \to M \times C)
+\]
+dane jest wzorem
+\[
+(g \circ f)(a) \;\stackrel{df}{=}\; (m_f \cdot m_g, \, c), \qquad \text{gdzie } f(a) = (m_f, b), \ g(b) = (m_g, c).
+\]
+Dla każdego zbioru $A$ identyczność
+\[
+\id_A \colon A \longrightarrow A \qquad (\id_A \colon A \to M \times A)
+\]
+zadana jest wzorem
+\[
+\id_A(a) = (1, a).
+\]
+\end{przyklad}
+
+\section{Funktory}
+
+\begin{definicja}
+Niech $\Cat$, $\D$ będą kategoriami. \emph{Funktorem} $F \colon \Cat \to \D$ nazywamy parę przyporządkowań $F = (F_0, F_m)$, tzn.
+\[
+F_0 \colon \Cat_0 \longrightarrow \D_0, \qquad F_m \colon \Cat_m \longrightarrow \D_m
+\]
+spełniającą warunki:
+\begin{enumerate}
+\item dla $f \colon A \to B$ mamy $F_m(f) \colon F_0(A) \to F_0(B)$;
+\item $F_m(g \circ f) = F_m(g) \circ F_m(f)$;
+\item $F_m(\id_A) = \id_{F_0(A)}$.
+\end{enumerate}
+\end{definicja}
+
+\begin{uwaga}[Notacja]
+Często będziemy pomijali indeksy dolne pisząc $F(A)$ zamiast $F_0(A)$ oraz $F(f)$ zamiast $F_m(f)$. Wtedy warunki (1), (2), (3) brzmią:
+\begin{enumerate}
+\item $F(f \colon A \to B) = F(f) \colon F(A) \to F(B)$;
+\item $F(g \circ f) = F(g) \circ F(f)$ \quad (składanie w $\D$);
+\item $F(\id_A) = \id_{F(A)}$ \quad (składanie w $\Cat$).
+\end{enumerate}
+\end{uwaga}
+
+\subsection{Przykłady funktorów}
+
+\begin{przyklad}[Funktor identycznościowy]
+$\Id \colon \Set \to \Set$ lub ogólniej $\Id \colon \Cat \to \Cat$ jest funktorem identycznościowym, tzn.
+\[
+\Id(A) = A, \qquad \Id(f) = f.
+\]
+\end{przyklad}
+
+\begin{przyklad}[Funktor $\mathrm{Maybe}$]
+$\mathrm{Maybe} \colon \Set \to \Set$. Dla zbioru $B$:
+\[
+\mathrm{Maybe}\, B \;\stackrel{df}{=}\; B + \{\bot\}.
+\]
+Dla strzałki $f \colon A \to B$:
+\[
+\mathrm{Maybe}\, f \colon \mathrm{Maybe}\, A \longrightarrow \mathrm{Maybe}\, B, \qquad
+A + \{\bot\} \longrightarrow B + \{\bot\},
+\]
+\[
+(\mathrm{Maybe}\, f)(a) = \begin{cases} f(a), & a \in A, \\ \bot, & a = \bot. \end{cases}
+\]
+\end{przyklad}
+
+\begin{przyklad}[Funktor $(-)^{*}$ -- wolny monoid]
+$(-)^{*} \colon \Set \to \Set$. Dla zbioru $A$ definiujemy
+\[
+A^{*} \;=\; \text{zbiór wszystkich skończonych ciągów (słów) nad zbiorem } A.
+\]
+Dla przekształcenia $f \colon A \to B$ definiujemy
+\[
+f^{*} \colon A^{*} \longrightarrow B^{*}
+\]
+wzorem
+\[
+f^{*}(\varepsilon) = \varepsilon, \qquad f^{*}(a_1 \ldots a_n) = f(a_1) \ldots f(a_n).
+\]
+\end{przyklad}

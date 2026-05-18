@@ -1,0 +1,291 @@
+Poniższe zadania pochodzą z pięciu serii ćwiczeń towarzyszących wykładom z teorii kategorii. Numeracja sekcji odpowiada oryginalnej numeracji serii.
+
+\section{Kategorie i funktory}
+
+\begin{zadanie}
+Niech $A$ będzie zbiorem. Pokazać, że przyporządkowania $\Set\to\Set$ zdefiniowane na obiektach i morfizmach jak poniżej są funktorami:
+\begin{itemize}
+\item $X\mapsto A\times X$ oraz $(f\colon X\to Y)\mapsto \bigl((\id\times f)\colon A\times X\to A\times Y;\, (a,x)\mapsto (a,f(x))\bigr)$,
+\item $X\mapsto A+X$ oraz
+\[
+(f\colon X\to Y)\mapsto (\id+f)\colon A+X\to A+Y;\; x\mapsto
+\begin{cases} f(x) & \text{jeśli } x\in X, \\ x & \text{jeśli } x\in A. \end{cases}
+\]
+\item $X\mapsto X^A$ oraz
+\[
+(f\colon X\to Y)\mapsto f^A\colon X^A\to Y^A;\; \varphi\mapsto f\circ\varphi.
+\]
+\item $X\mapsto \mathcal{P}X \stackrel{df}{=}\{A\subseteq X\}$ oraz
+\[
+(f\colon X\to Y)\mapsto \mathcal{P}(f)\colon \mathcal{P}(X)\to\mathcal{P}(Y);\; A\mapsto f(A).
+\]
+\end{itemize}
+\end{zadanie}
+
+\begin{zadanie}
+Niech $\mathbb{P}$ i $\mathbb{Q}$ będą kategoriami zadanymi przez posety $(P,\leq)$ i $(Q,\leq)$. Podać charakteryzację funktorów $\mathbb{P}\to\mathbb{Q}$ wyrażoną w języku przekształceń $P\to Q$ między tymi posetami.
+\end{zadanie}
+
+\begin{zadanie}
+Podać przykłady funktorów $\Set\to\Par$ i $\Par\to\Set$.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że funktor $(-)^*\colon \Set\to\Set$ spełnia
+\[
+X^* \;\cong\; \{\varepsilon\} + X\times X^*,
+\]
+gdzie $\cong$ oznacza bijekcję między zbiorami. Dodatkowo pokazać, że dla $f\colon X\to Y\in\Set$ przekształcenie $f^*\colon X^*\to Y^*$ spełnia
+\[
+f^*(\varepsilon)=\varepsilon, \qquad f^*(x::xs) = f(x)::f^*(xs),
+\]
+gdzie operacja $({::})\colon X\times X^*\to X^*$ jest dopisaniem elementu na początku ciągu.
+\end{zadanie}
+
+\begin{zadanie}
+Znaleźć przykład funktora $F\colon\Set\to\Set$ spełniającego
+\[
+F X \;\cong\; \{\mathrm{Nil}\} + F X \times X \times F X.
+\]
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że $\Rel$ jest izomorficzna z $\Rel^{\op}$.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że kategoria $\Set$ nie jest izomorficzna z kategorią $\Set^{\op}$.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że w kategorii $\Set$ strzałka $f\colon A\to B$ jest izomorfizmem wtedy i tylko wtedy, gdy jest bijekcją.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że każdy izomorfizm jest mono i epi.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że w $\Set$ przekształcenie $f\colon X\to Y$ jest ,,na'' wtedy i tylko wtedy, gdy jest epimorfizmem.
+\end{zadanie}
+
+\begin{zadanie}
+Niech $f\colon X\to Y$, $g\colon Y\to Z$ oraz $h\colon X\to Z$ spełniają $h=g\circ f$. Pokazać, że:
+\begin{itemize}
+\item jeśli $f,g$ są izo, to $h$ też jest izo;
+\item jeśli $h$ jest mono, to $f$ jest mono;
+\item jeśli $h$ jest mono, to $g$ \emph{nie} musi być mono.
+\end{itemize}
+\end{zadanie}
+
+\section{Podstawowe konstrukcje kategoryjne}
+
+\begin{zadanie}
+Znaleźć obiekt początkowy i końcowy (jeśli istnieją) w kategorii $\Grp$, $\Pos$, $\Par$ oraz w kategorii wszystkich algebr typu $(1,0)$.
+\end{zadanie}
+
+\begin{zadanie}
+Niech $\C$ będzie kategorią oraz niech $A\in\C$ będzie obiektem. Definiujemy przyporządkowanie $\C(A,-)\colon\C\to\Set$ wzorami
+\[
+X\mapsto \C(A,X), \qquad (f\colon X\to Y)\mapsto \bigl(\C(A,f)\colon\C(A,X)\to\C(A,Y);\, g\mapsto f\circ g\bigr).
+\]
+Pokazać, że $\C(A,-)$ jest funktorem. Udowodnić, że zachowuje binarne produkty.\footnote{Mówimy, że funktor $F\colon\C\to\D$ \emph{zachowuje produkty}, jeśli $F(A\times B)\cong F(A)\times F(B)$ dla dowolnych $A,B\in\C$, dla których produkt $A\times B$ istnieje.}
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że w dowolnej kategorii $\C$ z (binarnymi) produktami dla dowolnych trzech obiektów $A,B,C$ zachodzi
+\[
+(A\times B)\times C \;\cong\; A\times(B\times C).
+\]
+\end{zadanie}
+
+\begin{zadanie}
+Dla dowolnej rodziny $(X_i)_{i\in I}$ obiektów w kategorii $\C$ napisać definicję produktu $\prod_{i\in I} X_i$ przez własność uniwersalności, uogólniając przypadek $|I|=2$.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że binarne koprodukty są wyznaczone jednoznacznie z dokładnością do izomorfizmu.
+\end{zadanie}
+
+\begin{zadanie}
+Udowodnić, że w kategorii grup abelowych $\Ab$ koprodukt $A+B$ dwóch grup spełnia $A+B\cong A\times B$.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że dla dwóch zbiorów $A$, $B$ koprodukt monoidów słów $A^*$ oraz $B^*$ w kategorii $\Mon$ istnieje i spełnia
+\[
+A^* + B^* \;\cong\; (A+B)^*.
+\]
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że jeśli $e\colon E\to A$ jest ekwalizatorem pewnej pary strzałek, to $e$ jest mono. Sformułować i udowodnić (bez używania zasady dualności) twierdzenie dualne dla koekwalizatorów.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że kategoria grup abelowych $\Ab$ ma wszystkie ekwalizatory. Opisać je.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że $\Set$ ma wszystkie koekwalizatory. Podać ich konstrukcję.
+\end{zadanie}
+
+\begin{zadanie}
+Niech $f\colon A\to B$ będzie pewnym przekształceniem w $\Set$. Opisać ekwalizator przekształceń $f\circ\pi_1,\, f\circ\pi_2\colon A\times A\to B$ (taki typ ekwalizatora nazywać będziemy \emph{jądrem} $f$). Udowodnić, że dla dowolnej relacji równoważności $R$ na $A$ jądrem przekształcenia ilorazowego $A\to A/R;\, a\mapsto[a]_R$ jest $R$.
+\end{zadanie}
+
+\begin{zadanie}
+Niech $R\subseteq A\times A$ będzie dowolną relacją binarną oraz niech $\langle R\rangle$ będzie najmniejszą relacją równoważności na $A$ zawierającą $R$. Pokazać, że przekształcenie ilorazowe $A\to A/\langle R\rangle$ jest koekwalizatorem dwóch rzutowań $R\rightrightarrows A$.
+\end{zadanie}
+
+\section{(Ko)granice}
+
+\begin{zadanie}
+W kategorii $\Set$ rozważmy dowolne przekształcenie $f\colon A\to B$ oraz zanurzenie $i_U\colon U\hookrightarrow B$. Opisać pullback przekształceń $f$ i $i_U$.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że strzałka $m\colon X\to Y$ jest mono wtedy i tylko wtedy, gdy $X$ wraz z parą $\id\colon X\to X$, $\id\colon X\to X$ jest pullbackiem pary $m\colon X\to Y$, $m\colon X\to Y$. Wywnioskować, że funktor $\C(A,-)$ zachowuje monomorfizmy.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że w dowolnej kategorii dla pullbacku $A'\xleftarrow{m'} M' \to M$ morfizmów $A'\xrightarrow{f} A\xleftarrow{m} M$, jeśli $m$ jest mono, to $m'$ też jest mono.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że jeśli $\C$ jest kategorią z wszystkimi skończonymi granicami oraz $F\colon\C\to\C$ jest funktorem, to kategoria $\mathrm{Alg}(F)$ ma wszystkie skończone granice.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że jeśli kategoria $\C$ ma skończone produkty i pullbacki, to ma ekwalizatory.
+\end{zadanie}
+
+\begin{zadanie}
+Zdualizować definicję pullbacku (nazywając go \emph{pushoutem}). Opisać pushouty w $\Set$. Pokazać konstrukcję pushoutów za pomocą koproduktów i koekwalizatorów.
+\end{zadanie}
+
+\begin{zadanie}
+Podać definicję kostożka i kogranicy nad diagramem $D\colon\Jcat\to\mathcal{K}$. Pokazać, że kategoria $\mathcal{K}$ ma wszystkie skończone kogranice wtedy i tylko wtedy, gdy ma wszystkie skończone koprodukty i koekwalizatory (bez używania zasady dualności).
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że funktor $\C(-,A)\colon\C^{\op}\to\Set$ przekształca koekwalizatory w $\C$ na ekwalizatory, a obiekt początkowy w $\C$ na obiekt końcowy w $\Set$.
+\end{zadanie}
+
+\section{Kategorie kartezjańsko domknięte}
+
+\begin{zadanie}
+Niech $\C$ będzie CCC. Pokazać, że $\tilde{f} = f^A\circ\eta$, gdzie dla $f\colon Z\times A\to B$ strzałka $\tilde{f}\colon Z\to B^A$ oznacza transpozycję, $f^A\colon (Z\times A)^A\to B^A$ oraz $\eta\colon Z\to (Z\times A)^A$ są zdefiniowane jak na wykładzie.
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że w dowolnej kategorii kartezjańsko domkniętej zachodzi:
+\begin{itemize}
+\item $(A\times B)^C \cong A^C\times B^C$,
+\item $(A^B)^C \cong A^{B\times C}$.
+\end{itemize}
+\end{zadanie}
+
+\begin{zadanie}
+Czy kategoria $\Mon$ jest CCC?
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że kategoria $\omega\mathrm{CPO}$ jest CCC, natomiast kategoria $\omega\mathrm{CPO}_\bot$ nie jest CCC.\footnote{Poset $(P,\leq)$ nazywamy $\omega\mathrm{CPO}$, jeśli każdy przeliczalny łańcuch $x_1\leq x_2\leq\dots$ ma supremum. Przekształcenie $f\colon P\to Q$ zachowujące porządek między $\omega\mathrm{CPO}$ nazywamy \emph{ciągłym}, jeśli zachowuje suprema przeliczalnych łańcuchów: $f(\bigvee_i x_i) = \bigvee_i f(x_i)$. $\omega\mathrm{CPO}$ wraz z ciągłymi przekształceniami tworzą kategorię $\omega\mathrm{CPO}$. Punktowe $\omega\mathrm{CPO}$ (z elementem najmniejszym $\bot$) wraz z ciągłymi przekształceniami zachowującymi $\bot$ tworzą kategorię $\omega\mathrm{CPO}_\bot$.}
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że kategoria $\mathbf{Cat}$ wszystkich małych kategorii i funktorów jest CCC, gdzie $\C^\D = \mathrm{Fun}(\D,\C)$.
+\end{zadanie}
+
+\begin{zadanie}
+Udowodnić (dokończając dowód z wykładu), że dla każdego $f\colon X\times A\to Y\times A$ i $g\colon Y\times A\to Z\times A$ zachodzi
+\[
+\widetilde{g\circ f} \;=\; (\varepsilon_{Z\times A})^A \circ (\widetilde{g}\times\id_A)^A \circ \widetilde{f}.
+\]
+\end{zadanie}
+
+\begin{zadanie}
+Niech $\State_A$ będzie złożeniem funktorów $(-)\times A$ i $(-)^A$, tj.
+\[
+\State_A(X) = (X\times A)^A, \qquad \State_A(X\xrightarrow{f} Y) = \widetilde{(f\times\id_A)\circ\varepsilon_{X\times A}}.
+\]
+Dla strzałek $f\colon X\to\State_A Y$, $g\colon Y\to\State_A Z$ definiujemy
+\[
+g\cdot f \;=\; (\varepsilon_{Z\times A})^A \circ \State_A(g) \circ f.
+\]
+Pokazać, że tak zdefiniowane działanie jest łączne oraz $\eta_Y\cdot f = f\cdot \eta_X = f$ dla $\eta_X = \widetilde{\id_{X\times A}}$.
+
+\emph{Wskazówka:} skorzystać z poprzedniego zadania.
+\end{zadanie}
+
+\begin{zadanie}
+Niech $W$ będzie wybranym obiektem kategorii $\C$ i przyjmijmy $\IO = \State_W$. Używając operacji składania $\circ$ w $\C$, operacji $\cdot$ zdefiniowanej powyżej oraz morfizmów
+\begin{align*}
+& \mathbf{show}\colon\mathrm{Bool}\to\mathrm{String},\quad \mathbf{length}\colon\mathrm{String}\to\mathrm{Integer},\\
+& \mathbf{removeCapitals}\colon\mathrm{String}\to\mathrm{String},\quad \mathbf{reverse}\colon\mathrm{String}\to\mathrm{String},\\
+& \mathbf{equal}\colon\mathrm{Integer}\times\mathrm{Integer}\to\mathrm{Bool},\quad \mathbf{concat}\colon\mathrm{String}\times\mathrm{String}\to\mathrm{String},\\
+& \mathbf{readString}\colon()\to\IO\,\mathrm{String},\quad \mathbf{putString}\colon\mathrm{String}\to\IO\,(),\\
+& \mathbf{readFile}\colon\mathrm{String}\to\IO\,\mathrm{String},\quad \mathbf{split}\colon a\to a\times a,\\
+& \mathbf{fst}\colon a\times a\to a,\quad \mathbf{twist}\colon a\times b\to b\times a,\\
+& \mathbf{strength}\colon a\times\IO\,b\to\IO(a\times b),\quad \mathbf{pure}\colon a\to\IO\,a,
+\end{align*}
+napisać program $\mathbf{main}\colon()\to\IO\,()$, który:
+\begin{enumerate}
+\item wczytuje z klawiatury dwie nazwy plików, wczytuje pliki, sprawdza, czy ich zawartość ma tę samą długość, i wyświetla wynik na standardowym wyjściu;
+\item wczytuje z klawiatury nazwę pliku, wczytuje plik i wyświetla jego nazwę zapisaną od tyłu złączoną z jego zawartością (zawartość wyświetlana jest nieodwrócona).
+\end{enumerate}
+\end{zadanie}
+
+\section{Transformacje naturalne i monady}
+
+\begin{zadanie}\label{zad:nat-ccc}
+Niech $\C$ będzie kategorią kartezjańsko domkniętą. Pokazać, że następujące rodziny są transformacjami naturalnymi między odpowiednimi funktorami:
+\begin{itemize}
+\item $\{\eta_X\colon X\to(X\times A)^A\}_X$;
+\item $\{\varepsilon_X\colon X^A\times A\to X\}_X$;
+\item $\{\mu_X\colon ((X\times A)^A\times A)^A \to (X\times A)^A\}_X$, gdzie $\mu_X = (\varepsilon_{X\times A})^A$.
+\end{itemize}
+\end{zadanie}
+
+\begin{zadanie}\label{zad:nat-set}
+Pokazać, że następujące rodziny $\{\eta_X\}_X$ i $\{\mu_X\}_X$ są transformacjami naturalnymi między odpowiednimi $\Set$-funktorami:
+\begin{enumerate}
+\item $\{\eta_X\colon X\to\mathcal{P}X\}$, $\eta_X(x)=\{x\}$, oraz $\{\mu_X\colon\mathcal{P}\mathcal{P}X\to\mathcal{P}X\}$, $\mu_X(\mathcal{S}) = \bigcup\mathcal{S}$;
+\item $\{\eta_X\colon X\to X^*\}$, $\eta_X(x)=x$, oraz $\{\mu_X\colon (X^*)^*\to X^*\}$, $\mu_X(s_1,\dots,s_n) = s_1 s_2 \dots s_n$;
+\item dla ustalonego monoidu $M=(M,\cdot,1)$: $\{\eta_X\colon X\to M\times X\}$, $\eta_X(x)=(1,x)$, oraz $\{\mu_X\colon M\times M\times X\to M\times X\}$, $\mu_X(m,n,x)=(m\cdot n,\, x)$.
+\end{enumerate}
+\end{zadanie}
+
+\begin{zadanie}
+Pokazać, że następujące trójki są monadami:
+\begin{enumerate}
+\item $((\Id\times A)^A\colon\C\to\C,\, \mu,\, \eta)$, gdzie $\C$ jest CCC oraz $\mu,\eta$ są jak w Zadaniu~\ref{zad:nat-ccc};
+\item $(T,\mu,\eta)$ dla $T\in\{\mathcal{P},\,(-)^*,\, M\times\Id\}$, gdzie $\mu,\eta$ są jak w Zadaniu~\ref{zad:nat-set}.
+\end{enumerate}
+\end{zadanie}
+
+\begin{zadanie}
+Niech $(T,\mu,\eta)$ będzie monadą w kategorii $\C$. Dla $f\colon A\to TB$, $g\colon B\to TC$ definiujemy
+\[
+g\cdot f\colon A\to TC, \qquad g\cdot f = \mu_C\circ T(g)\circ f.
+\]
+Pokazać, że dla $f,g$ oraz $h\colon C\to TD$ zachodzi
+\[
+(h\cdot g)\cdot f = h\cdot(g\cdot f), \qquad f\cdot\eta_A = \eta_B\cdot f = f.
+\]
+\end{zadanie}
+
+\begin{zadanie}
+Trójkę $(T,(-)^*,\eta)$ nazywamy \emph{trójką Kleisliego}, jeśli
+\begin{itemize}
+\item $T\colon\C_0\to\C_0$ jest przyporządkowaniem na obiektach;
+\item $\eta = \{\eta_X\colon X\to TX\}_X$ jest rodziną strzałek;
+\item $(-)^*$ przyporządkowuje każdej strzałce $f\colon X\to TY$ strzałkę $f^*\colon TX\to TY$,
+\end{itemize}
+spełniającymi równania
+\[
+\eta_X^* = \id_{TX}, \qquad f^*\circ\eta_X = f, \qquad (g^*\circ f)^* = g^*\circ f^*.
+\]
+Pokazać, że jeśli $(T,(-)^*,\eta)$ jest trójką Kleisliego, to $(T,\mu,\eta)$ jest monadą, gdzie $T(f) = (\eta_Y\circ f)^*$ dla $f\colon X\to Y$ oraz $\mu = \{\mu_X\colon T^2 X\to TX\}$ dla $\mu_X = (\id_{TX})^*$. Ponadto, jeśli $(T,\mu,\eta)$ jest monadą, to $(T,(-)^*,\eta)$ jest trójką Kleisliego, gdzie $f^* = \mu_Y\circ T(f)$ dla $f\colon X\to TY$.
+\end{zadanie}

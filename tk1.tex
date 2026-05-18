@@ -1,0 +1,154 @@
+\documentclass[10pt]{amsart}
+
+\usepackage{amssymb, latexsym, amscd,stmaryrd}
+\usepackage{amsfonts, polski}
+\usepackage[utf8]{inputenc}
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{proposition}[lemma]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{remark}[lemma]{Remark}
+\numberwithin{equation}{section}
+
+\textwidth\paperwidth \advance\textwidth -60mm \oddsidemargin-1in
+%\advance\oddsidemargin 30mm
+\advance\oddsidemargin 25mm \evensidemargin-1in
+\advance\evensidemargin 25mm \topmargin -1in
+ %\advance\topmargin 1cm
+\advance\topmargin 10mm \textheight = 700pt
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\title{Teoria kategorii}
+\author{Seria 1: Kategorie i funktory}
+\begin{document}
+\maketitle
+
+\blfootnote{\today}
+
+
+\begin{problem}
+Niech $A$ będzie zbiorem. Pokazać, że przyporządkowania $\mathsf{Set}\to \mathsf{Set}$ zdefiniowane na obiektach i morfizmach jak poniżej są funktorami:
+\begin{itemize}
+\item $X\mapsto A\times X$ oraz $(f:X\to Y)\mapsto \left ((id \times f):A\times X\to A\times Y; (a,x)\mapsto (a,f(x))\right )$,
+\item $X\mapsto A+ X$ oraz $$(f:X\to Y)\mapsto (id + f):A+ X\to A+ Y; x \mapsto \left \{ \begin{array}{cc}f(x)  &\text{ jeśli }x\in X, \\ x &\text{ jeśli }x\in A \end{array}\right. $$
+\item $X\mapsto X^A$ oraz 
+$$
+f:X\to Y\quad \mapsto \quad f^A:X^A\to Y^A; \phi\mapsto f\circ \phi. 
+$$
+\item $X\mapsto \mathcal{P}X\stackrel{def}{=} \{ A\subseteq X \}$ oraz 
+$$
+(f:X\to Y)\quad \mapsto \quad \mathcal{P}(f):\mathcal{P}(X)\to \mathcal{P}(Y); A\mapsto f(A). 
+$$
+\end{itemize}
+\end{problem}
+%
+\begin{problem}
+Niech $\mathbb{P}$ i $\mathbb{Q}$ będą kategoriami zadanymi przez posety $(P,\leq)$ i $(Q,\leq)$. Podać charakteryzację fuktorów $\mathbb{P}\to \mathbb{Q}$ wyrażoną w języku przekształceń $P\to Q$ między wyżej wymienonymi posetami.
+\end{problem}
+
+\begin{problem}
+Podać przykłady funktorów $\mathsf{Set}\to \mathsf{Par}$ i $\mathsf{Par}\to \mathsf{Set}$. 
+\end{problem}
+
+\begin{problem}
+Pokazać, że funktor $(-)^\ast: \mathsf{Set}\to \mathsf{Set}$ spełnia:
+$$
+X^\ast \cong \{ \varepsilon \} + X\times X^\ast,
+$$
+gdzie $\cong$ oznacza relację bijekcji między zbiorami. Dodatkowo pokazać, że dla $f:X\to Y\in \mathsf{Set}$
+przekształcenie $f^\ast: X^\ast \to Y^\ast$ spełnia:
+$$
+f^\ast (\varepsilon) = \varepsilon \text{ \& } f^\ast (x :: xs) = f(x) :: f^\ast (xs).
+$$
+W powyższej definicji, operacja $ (::) : X\times X^\ast \to X^\ast$ zdefiniowana
+jest dla $x :: xs$ przez dopisanie elementu $x$ do ciągu $xs$ na pierwszej
+pozycji.
+%Udowodnić, że funktor $(-)^\infty : \mathsf{Set}\to \mathsf{Set}$ spełnia podobne zależności.
+\end{problem}
+
+
+\begin{problem}
+Znaleźć przykład funktora $F:\mathsf{Set}\to\mathsf{Set}$, który spełnia:
+$$
+FX \cong \{Nil\} + FX \times X \times FX.
+$$
+\end{problem}
+
+\begin{problem}
+Pokazać, że $\mathsf{Rel}$ jest izomorficzna z $\mathsf{Rel}^{op}$. 
+\end{problem}
+
+
+\begin{problem}
+Pokazać, że kategoria $\mathsf{Set}$ nie jest izomorficzna z kategorią $\mathsf{Set}^{op}$. 
+\end{problem}
+
+\begin{problem}
+Pokazać, że w kategorii $\mathsf{Set}$ strzałka $f:A\to B$ jest izomorfizmem wtedy i tylko wtedy, gdy jest bijekcją. 
+\end{problem}
+
+\begin{problem}
+Pokazać, że każdy izomorfizm jest mono i epi.
+\end{problem}
+
+\begin{problem}
+Pokazać, że w $\mathsf{Set}$ przekształcenie $f:X\to Y$ jest "na" wtedy i tylko wtedy, gdy jest epimorfizmem.
+\end{problem}
+
+
+\begin{problem}
+Niech $f:X\to Y$, $g:Y\to Z$ oraz $h:X\to Z$ spełniają $h= g\circ f$. Pokazać, że 
+\begin{itemize}
+\item jeśli $f,g$ są izo to $h$ też jest izo,
+\item jeśli $h$ jest mono, to $f$ jest mono,
+\item jeśli $h$ jest mono to $g$ \emph{nie} musi być mono.
+\end{itemize}
+\end{problem}
+
+
+%\begin{problem}
+%Pokazać, że każde dwa obiekty początkowe w danej kategorii są izomorficzne. 
+%\end{problem}
+%
+%\begin{problem}x
+%Znaleźć obiekty początkowe i końcowe (jeśli istnieją) w następujących kategoriach:
+%$
+%\mathsf{Rel},  \mathsf{Mon},\mathsf{CoAlg}(\Sigma\times \mathcal{I}d), \mathsf{Alg}(\Sigma\times \mathcal{I}d+1).
+%$\footnote{Niech $F:\mathsf{C}\to \mathsf{C}$ będzie funktorem. $F$-algebrą nazywamy parę $(A,a:FA\to A)$ dla obiektu $A\in \mathsf{C}$. Dla dwóch $F$-algebr $(A,a:FA\to A)$, $(B,b:FB\to B)$ morfizm $h:A\to B$ nazywamy \emph{homomorfizmem} o dziedzinie $(A,a:FA\to A)$ i przeciwdziedzinie $(B,b:FB\to B)$ jeśli $h\circ a = b\circ F(h)$.  Kategorię wszystkich $F$-algebr i homomorfizmów miedzy nimi oznaczamy przez $\mathsf{Alg}(F)$. Kategorię $F$-\emph{koalgebr} $\mathsf{CoAlg}(F)$ definiujemy dualnie.}
+%\end{problem}
+%
+%\begin{problem}
+%Zdefiniować korekurencyjnie funkcję $\mathsf{merge}:\Sigma^\omega \times \Sigma^\omega \to \Sigma^\omega$, która każdej parze $(\sigma,\tau)=(\sigma_0\sigma_1\ldots,\tau_0\tau_1\ldots)$ nieskończonych ciągów nad alfabetem $\Sigma$ przyporządkowuje ciąg $$\mathsf{merge}(\sigma,\tau) = \sigma_0\tau_0\sigma_1\tau_1\ldots.$$
+%\noindent \emph{Podpowiedź:} Jaki jest obiekt końcowy w $\mathsf{CoAlg}(\Sigma\times \mathcal{I}d)$?    
+%\end{problem}
+%
+%\begin{problem}
+%Niech $F:\mathsf{C}\to \mathsf{C}$ będzie funktorem. Udowodnić, że jeśli $(A,a:FA\to A)$ jest obiektem początkowym w $\mathsf{Alg}(F)$ to morfizm $a:FA\to A$ jest izomorfizmem w $\mathsf{C}$. Czy istnieje obiekt początkowy w $\mathsf{Alg}(\mathcal{P})$?
+%\end{problem}
+%
+%
+%\begin{problem}
+%Pokazać, że w każdej kategorii w której mamy skończone produkty zachodzi:
+%$$
+%A\times (B\times C) \cong (A\times B)\times C
+%$$
+%\end{problem}
+%
+%
+%\begin{problem}
+%Podać definicję uogólnionego produktu dla dowolnej rodziny $\{X_i\}_{i\in I}$ obiektów z kategorii $\mathsf{C}$. 
+%\end{problem}
+\end{document}

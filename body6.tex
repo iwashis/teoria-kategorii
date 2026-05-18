@@ -1,0 +1,174 @@
+\subsection*{Kategorie z produktami binarnymi i ekwalizatorami a pullbacki}
+
+\begin{stwierdzenie}
+W kategorii z produktami binarnymi i ekwalizatorami dla dowolnej pary strzałek
+\[
+\begin{tikzcd}
+A \arrow[r,"f"] & C & B \arrow[l,"g"']
+\end{tikzcd}
+\]
+istnieje pullback. Dokładniej, biorąc:
+\begin{enumerate}
+  \item[(a)] $A\times B$ wraz z $\pi_1\colon A\times B \to A$, $\pi_2\colon A\times B \to B$ jako produkt,
+  \item[(b)] obiekt $E$ oraz $e\colon E \to A\times B$, gdzie $E$ jest ekwalizatorem
+  \[
+  \begin{tikzcd}
+  E \arrow[r,"e"] & A\times B \arrow[r, shift left,"f\circ\pi_1"] \arrow[r, shift right,"g\circ\pi_2"'] & C,
+  \end{tikzcd}
+  \]
+  \item[(c)] $p_1 \stackrel{\mathrm{df}}{=} \pi_1\circ e$, $p_2 \stackrel{\mathrm{df}}{=} \pi_2\circ e$,
+\end{enumerate}
+otrzymujemy, że $E$ wraz ze strzałkami $p_1,p_2$ jest pullbackiem strzałek $A \xrightarrow{f} C \xleftarrow{g} B$:
+\[
+\begin{tikzcd}
+E \arrow[r,"p_2"] \arrow[d,"p_1"'] \arrow[dr, phantom, "\lrcorner", very near start] & B \arrow[d,"g"] \\
+A \arrow[r,"f"'] & C
+\end{tikzcd}
+\]
+\end{stwierdzenie}
+
+\paragraph{Krok 1.} Jeśli $E$ wraz z $p_1\colon E\to A$, $p_2\colon E\to B$ jest pullbackiem strzałek $A \xrightarrow{f} C \xleftarrow{g} B$, to strzałka
+\[
+E \xrightarrow{\langle p_1,p_2\rangle} A\times B
+\]
+jest ekwalizatorem $f\circ \pi_1$ i $g\circ \pi_2$:
+\[
+\begin{tikzcd}
+E \arrow[r,"{\langle p_1,p_2\rangle}"] & A\times B \arrow[r, shift left,"f\circ\pi_1"] \arrow[r, shift right,"g\circ\pi_2"'] & C.
+\end{tikzcd}
+\]
+
+\emph{Dowód.} Z założenia diagram
+\[
+\begin{tikzcd}
+E \arrow[r,"p_2"] \arrow[d,"p_1"'] & B \arrow[d,"g"] \\
+A \arrow[r,"f"'] & C
+\end{tikzcd}
+\]
+jest przemienny. Sprawdzimy, że
+\begin{enumerate}
+  \item strzałka $\langle p_1,p_2\rangle$ ekwalizuje $f\circ \pi_1$ i $g\circ \pi_2$,
+  \item spełnia własność uniwersalną ekwalizatora.
+\end{enumerate}
+
+\textbf{Ad 1.} Mamy $\pi_1\circ \langle p_1,p_2\rangle = p_1$ oraz $\pi_2\circ \langle p_1,p_2\rangle = p_2$, więc
+\[
+(f\circ\pi_1)\circ\langle p_1,p_2\rangle = f\circ p_1 = g\circ p_2 = (g\circ\pi_2)\circ\langle p_1,p_2\rangle.
+\]
+
+\textbf{Ad 2.} Weźmy $z\colon Z\to A\times B$ taki, że
+\[
+(f\circ\pi_1)\circ z = (g\circ\pi_2)\circ z.
+\]
+Oznacza to, że $f\circ(\pi_1\circ z) = g\circ(\pi_2\circ z)$, więc z własności pullbacka istnieje dokładnie jedna $u\colon Z\to E$ z
+\[
+p_1\circ u = \pi_1\circ z, \qquad p_2\circ u = \pi_2\circ z.
+\]
+Wtedy
+\[
+\pi_1\circ\langle p_1,p_2\rangle\circ u = p_1\circ u = \pi_1\circ z, \qquad \pi_2\circ\langle p_1,p_2\rangle\circ u = p_2\circ u = \pi_2\circ z,
+\]
+a stąd z jednoznaczności pary do produktu $\langle p_1,p_2\rangle\circ u = z$.
+
+Jednoznaczność $u$ wynika z jednoznaczności w pullbacku. \qed
+
+\bigskip
+
+\paragraph{Krok 2.} Pokazujemy, że jeśli kategoria ma pullbacki i obiekt końcowy, to ma binarne produkty oraz ekwalizatory.
+
+\emph{(a) Binarne produkty.} Weźmy dwa obiekty $A,B$ oraz pullback strzałek $A\xrightarrow{!_A} 1 \xleftarrow{!_B} B$:
+\[
+\begin{tikzcd}
+P \arrow[r,"p_2"] \arrow[d,"p_1"'] \arrow[dr, phantom, "\lrcorner", very near start] & B \arrow[d,"!_B"] \\
+A \arrow[r,"!_A"'] & 1
+\end{tikzcd}
+\]
+Wtedy $P$ wraz z $p_1, p_2$ jest produktem $A\times B$.
+
+\emph{(b) Ekwalizatory.} Weźmy parę $f, g \colon A \to B$ i rozważmy strzałki $\langle f,g\rangle\colon A\to B\times B$ oraz $\langle \id_B, \id_B\rangle\colon B\to B\times B$. Pullback
+\[
+\begin{tikzcd}
+E \arrow[r,"u"] \arrow[d,"e"'] \arrow[dr, phantom, "\lrcorner", very near start] & B \arrow[d,"{\langle \id_B,\id_B\rangle}"] \\
+A \arrow[r,"{\langle f,g\rangle}"'] & B\times B
+\end{tikzcd}
+\]
+daje obiekt $e\colon E\to A$ będący ekwalizatorem $f$ i $g$. \qed
+
+\begin{wniosek}
+Jeśli $\C$ jest kategorią z produktami binarnymi i ekwalizatorami, to ma pullbacki.
+\end{wniosek}
+
+\begin{twierdzenie}
+Kategoria ma skończone produkty i ekwalizatory wtedy i tylko wtedy, gdy ma pullbacki i obiekt końcowy.
+\end{twierdzenie}
+
+\subsection*{Diagramy i stożki}
+
+\begin{definicja}
+Niech $\Jcat$ oraz $\C$ będą kategoriami. \emph{Diagramem typu $\Jcat$ w $\C$} nazywamy dowolny funktor
+\[
+D\colon \Jcat\to \C.
+\]
+\end{definicja}
+
+\textbf{Notacja.} W tym przypadku $\Jcat$ nazywamy kategorią indeksów. Jej obiekty oznaczamy $i,j,t,\ldots$, a jej morfizmy $\alpha,\beta,\ldots$. Zamiast $D(i)$, $D(\alpha)$ pisać będziemy $D_i$, $D_\alpha$.
+
+\begin{definicja}
+\emph{Stożkiem nad diagramem $D\colon \Jcat\to \C$} nazywamy obiekt $C\in \C$ wraz z rodziną strzałek
+\[
+\{c_j\colon C\to D_j\}_{j\in \Ob\Jcat}
+\]
+taką, że dla każdego $\alpha\colon i\to j$ w $\Jcat$ następujący diagram jest przemienny w $\C$:
+\[
+\begin{tikzcd}
+& C \arrow[dl,"c_i"'] \arrow[dr,"c_j"] & \\
+D_i \arrow[rr,"D_\alpha"'] & & D_j
+\end{tikzcd}
+\]
+\end{definicja}
+
+\begin{przyklad}
+Weźmy kategorię $\Jcat$ generowaną przez
+\[
+\begin{tikzcd}
+& 2 \arrow[d,"\beta"] \\
+1 \arrow[r,"\alpha"'] & 3
+\end{tikzcd}
+\]
+Jeśli rozważymy diagram $D\colon \Jcat\to \Set$, to jest on zadany przez trzy zbiory $A,B,C$ oraz 2 przekształcenia
+\[
+\begin{tikzcd}
+& B \arrow[d,"g"] \\
+A \arrow[r,"f"'] & C
+\end{tikzcd}
+\qquad
+\text{gdzie } D_1=A,\ D_2=B,\ D_3=C,\ D_\alpha = f,\ D_\beta = g.
+\]
+Stożek nad tym diagramem to $S$ wraz z $s_1, s_2, s_3$ takimi, że
+\[
+\begin{tikzcd}
+S \arrow[r,"s_2"] \arrow[d,"s_1"'] \arrow[dr,"s_3"] & B \arrow[d,"g"] \\
+A \arrow[r,"f"'] & C
+\end{tikzcd}
+\]
+jest przemienny, co jest równoważne $s_3 = f\circ s_1 = g\circ s_2$.
+\end{przyklad}
+
+\begin{przyklad}
+Niech $\Jcat$ będzie kategorią dyskretną o dwóch obiektach. Diagram $D\colon \Jcat\to \C$ to po prostu para obiektów $A,B$, gdzie $D_1=A$, $D_2=B$. Stożek nad $D$ to trójka $S, s_1, s_2$:
+\[
+\begin{tikzcd}
+& S \arrow[dl,"s_1"'] \arrow[dr,"s_2"] & \\
+A & & B
+\end{tikzcd}
+\]
+gdzie $s_1\colon S\to A$, $s_2\colon S\to B$.
+\end{przyklad}
+
+\begin{przyklad}
+Niech $\Jcat$ będzie kategorią generowaną przez $1 \xrightarrow{\alpha} 2$. Diagram $D\colon \Jcat\to \C$ jest zadany przez
+\[
+A \xrightarrow{f} B,
+\]
+gdzie $D_1=A$, $D_2=B$, $D_\alpha = f$. Stożek nad $D$ to $S$ z $s_1\colon S\to A$, $s_2\colon S\to B$ takimi, że $f\circ s_1 = s_2$.
+\end{przyklad}

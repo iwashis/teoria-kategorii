@@ -1,0 +1,195 @@
+\begin{definicja}
+Niech $\Jcat$ i $\C$ będą kategoriami. \emph{Diagramem typu $\Jcat$ w $\C$} nazywamy funktor
+\[
+D \colon \Jcat \longrightarrow \C.
+\]
+\end{definicja}
+
+\begin{uwaga}
+Kategorię $\Jcat$ nazywamy \emph{kategorią indeksów}; jej obiekty oznaczamy zwykle przez $i, j, k, \dots$, a morfizmy przez $\alpha, \beta, \gamma, \dots$. Wartości funktora $D$ oznaczamy odpowiednio przez $D_i, D_j, \dots$ oraz $D_\alpha, D_\beta, \dots$
+\end{uwaga}
+
+\begin{definicja}
+\emph{Stożkiem nad diagramem $D \colon \Jcat \to \C$} nazywamy obiekt $C \in \C$ wraz z rodziną morfizmów
+\[
+\bigl\{\, c_i \colon C \longrightarrow D_i \,\bigr\}_{i \in \Ob \Jcat},
+\]
+takich, że dla każdego $\alpha \colon i \to j$ w $\Jcat$ diagram
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+ & C \arrow[dl, "c_i"'] \arrow[dr, "c_j"] & \\
+ D_i \arrow[rr, "D_\alpha"'] & & D_j
+\end{tikzcd}
+\]
+jest przemienny.
+\end{definicja}
+
+\begin{definicja}
+Niech $(C, \{c_i\})$ oraz $(C', \{c'_i\})$ będą stożkami nad diagramem $D \colon \Jcat \to \C$. \emph{Morfizmem stożków} $(C, \{c_i\}) \to (C', \{c'_i\})$ nazywamy strzałkę
+\[
+\vartheta \colon C \longrightarrow C' \quad \text{w } \C,
+\]
+taką, że diagram
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+C \arrow[rr, "\vartheta"] \arrow[dr, "c_i"'] & & C' \arrow[dl, "c'_i"] \\
+ & D_i &
+\end{tikzcd}
+\]
+jest przemienny dla każdego $i \in \Ob \Jcat$.
+\end{definicja}
+
+\begin{definicja}
+Przez $\mathrm{Cone}(D)$ oznaczamy kategorię, w której obiektami są stożki nad diagramem $D \colon \Jcat \to \C$, a morfizmami --- morfizmy stożków.
+\end{definicja}
+
+\begin{definicja}
+\emph{Granicą diagramu $D \colon \Jcat \to \C$} nazywamy obiekt końcowy w kategorii $\mathrm{Cone}(D)$ i oznaczamy go przez
+\[
+\Bigl( \varprojlim_{j} D_j,\ \bigl\{ p_i \colon \varprojlim_{j} D_j \to D_i \bigr\} \Bigr).
+\]
+\end{definicja}
+
+\subsection*{Przykłady}
+
+\begin{przyklad}
+Jeśli $\Jcat = \emptyset$, to $\mathrm{Cone}(D) = \C$, więc
+\[
+\varprojlim D \;=\; \text{obiekt końcowy w } \C.
+\]
+\end{przyklad}
+
+\begin{przyklad}
+Jeśli $\Jcat$ jest kategorią dyskretną o dwóch obiektach $\bullet_1, \bullet_2$, a $D(\bullet_i) = D_i$, to
+\[
+\varprojlim D \;=\; D_1 \times D_2.
+\]
+\end{przyklad}
+
+\begin{przyklad}
+Jeśli $\Jcat$ jest kategorią z dwoma obiektami i dwiema równoległymi strzałkami między nimi:
+\[
+\Jcat \;=\; \begin{tikzcd} \bullet_1 \arrow[r, shift left, "\alpha"] \arrow[r, shift right, "\beta"'] & \bullet_2 \end{tikzcd},
+\qquad
+D \;=\; \begin{tikzcd} D_1 \arrow[r, shift left, "D_\alpha"] \arrow[r, shift right, "D_\beta"'] & D_2 \end{tikzcd},
+\]
+to
+\[
+\varprojlim D \;=\; \text{ekwalizator } D_\alpha,\, D_\beta.
+\]
+\end{przyklad}
+
+\begin{przyklad}
+Jeśli $\Jcat$ jest kategorią postaci
+\[
+\Jcat \;=\; \begin{tikzcd} & \bullet_3 \arrow[d, "\beta"] \\ \bullet_1 \arrow[r, "\alpha"'] & \bullet_2 \end{tikzcd},
+\qquad
+D \;=\; \begin{tikzcd} & D_3 \arrow[d, "D_\beta"] \\ D_1 \arrow[r, "D_\alpha"'] & D_2 \end{tikzcd},
+\]
+to
+\[
+\varprojlim D \;=\; \text{pullback } D_\alpha, D_\beta \text{ w } \C.
+\]
+\end{przyklad}
+
+\begin{definicja}
+\emph{Skończoną granicą} nazywamy granicę nad diagramem $D \colon \Jcat \to \C$, w którym kategoria $\Jcat$ jest skończona.
+\end{definicja}
+
+\begin{twierdzenie}
+Kategoria $\C$ ma wszystkie skończone granice wtedy i tylko wtedy, gdy ma skończone produkty i ekwalizatory (lub równoważnie: gdy ma pullbacki i obiekt końcowy).
+\end{twierdzenie}
+
+\begin{proof}[Dowód (szkic)]
+Pokażemy, że z faktu istnienia skończonych produktów i ekwalizatorów wynika istnienie wszystkich skończonych granic.
+
+Weźmy diagram $D \colon \Jcat \to \C$, gdzie $\Jcat$ jest skończoną kategorią indeksów. Podamy konstrukcję obiektu $E$ wraz ze strzałkami $e_i \colon E \to D_i$, dla którego $(E, \{e_i\})$ będzie obiektem końcowym w $\mathrm{Cone}(D)$.
+
+\textbf{(1)} Rozważmy następujące obiekty w $\C$:
+\[
+\prod_{i \in \Ob \Jcat} D_i \qquad \text{oraz} \qquad \prod_{\alpha \colon i \to j \in \Mor \Jcat} D_j.
+\]
+
+\textbf{(2)} Zdefiniujmy dwie strzałki
+\[
+\begin{tikzcd}[column sep=large]
+\displaystyle\prod_{i \in \Ob \Jcat} D_i \arrow[r, shift left, "\varphi"] \arrow[r, shift right, "\psi"'] & \displaystyle\prod_{\alpha \colon i \to j} D_j,
+\end{tikzcd}
+\]
+zadane następująco: rzutowanie $\pi_\alpha$ z produktu po prawej stronie spełnia
+\[
+\pi_\alpha \circ \varphi = \pi_j, \qquad \pi_\alpha \circ \psi = D_\alpha \circ \pi_i.
+\]
+
+\textbf{(3)} Weźmy ekwalizator $E$ wraz ze strzałką $e \colon E \to \prod_{i \in \Ob \Jcat} D_i$ pary $\varphi, \psi$:
+\[
+\begin{tikzcd}[column sep=large]
+E \arrow[r, "e"] & \displaystyle\prod_{i \in \Ob \Jcat} D_i \arrow[r, shift left, "\varphi"] \arrow[r, shift right, "\psi"'] & \displaystyle\prod_{\alpha \colon i \to j} D_j.
+\end{tikzcd}
+\]
+Definiujemy $e_i := \pi_i \circ e$. Można pokazać, że $E$ wraz z $\{e_i\}_{i \in \Ob \Jcat}$ spełnia żądane własności.
+\end{proof}
+
+\subsection*{Zachowywanie granic}
+
+\begin{definicja}
+Mówimy, że funktor $F \colon \C \to \D$ \emph{zachowuje granice} nad diagramem typu $\Jcat$, jeśli dla każdego diagramu $D \colon \Jcat \to \C$ zachodzi
+\[
+F\Bigl(\varprojlim_i D_i\Bigr) \;\cong\; \varprojlim_i F(D_i)
+\]
+(izomorfizm kanoniczny).
+
+Mówimy, że funktor $F \colon \C \to \D$ \emph{zachowuje wszystkie granice}, jeśli zachowuje granice nad diagramami każdego typu.
+\end{definicja}
+
+\begin{przyklad}
+Niech $\C$ będzie kategorią. Rozważmy funktor
+\[
+\C(X, -) \colon \C \longrightarrow \Set
+\]
+dla ustalonego obiektu $X \in \C$:
+\[
+A \longmapsto \C(X, A) = \text{zbiór strzałek } X \to A \text{ w } \C,
+\]
+oraz dla $f \colon A \to B$:
+\[
+\C(X, A) \xrightarrow{\;\C(X, f)\;} \C(X, B), \qquad \C(X, f)(g \colon X \to A) \;=\; f \circ g.
+\]
+(Często $\C(X, f) =: f_*$, czyli $f_*(g) = f \circ g$.)
+
+Pokażemy, że funktor $\C(X, -)$ zachowuje wszystkie skończone granice.
+
+\textbf{(1) Obiekt końcowy.} Jeśli $\mathbf{1}$ jest obiektem końcowym w $\C$, to
+\[
+\C(X, \mathbf{1}) \;=\; \{!_X\} \quad \text{--- jednoelementowy zbiór,}
+\]
+czyli obiekt końcowy w $\Set$.
+
+\textbf{(2) Produkty.} Z ćwiczeń wiemy, że $\C(X, -)$ zachowuje produkty.
+
+\textbf{(3) Ekwalizatory.} Weźmy parę $f, g \colon A \rightrightarrows B$, ich ekwalizator
+\[
+\begin{tikzcd}
+E \arrow[r, "e"] & A \arrow[r, shift left, "f"] \arrow[r, shift right, "g"'] & B.
+\end{tikzcd}
+\]
+Czy diagram
+\[
+\begin{tikzcd}
+\C(X, E) \arrow[r, "e_*"] & \C(X, A) \arrow[r, shift left, "f_*"] \arrow[r, shift right, "g_*"'] & \C(X, B)
+\end{tikzcd}
+\]
+jest diagramem ekwalizatora w $\Set$? Weźmy $x \in \C(X, A)$, czyli $x \colon X \to A$. Warunek $f_*(x) = g_*(x)$ jest równoważny $f \circ x = g \circ x$. Z własności ekwalizatora istnieje dokładnie jedna strzałka $u_x \colon X \to E$ taka, że $e \circ u_x = x$. Czyli
+\[
+e_* \colon \C(X, E) \longrightarrow \{\, x \in \C(X, A) \colon f_*(x) = g_*(x) \,\}
+\]
+jest bijekcją, a więc $\C(X, E)$ jest ekwalizatorem $f_*, g_*$.
+\end{przyklad}
+
+\begin{wniosek}
+Funktor $\C(X, -)$ zachowuje wszystkie skończone granice.
+\end{wniosek}
+
+\begin{uwaga}
+Można pokazać, że $\C(X, -)$ zachowuje wszystkie granice (nie tylko skończone).
+\end{uwaga}

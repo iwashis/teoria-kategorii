@@ -1,0 +1,127 @@
+\subsection*{Wykładniki}
+
+\begin{przyklad}
+W kategorii $\Set$ mamy: dla wybranych zbiorów $B, C$ istnieje zbiór
+\[
+C^B \stackrel{df}{=} \{f : B \to C\}.
+\]
+\end{przyklad}
+
+\begin{uwaga}
+Weźmy funkcję $f : A \times B \to C$. Wybierzmy $a \in A$ i zauważmy, że
+\[
+f_a \stackrel{df}{=} f(a, -) : B \to C
+\]
+jest elementem zbioru $C^B$. Dla funkcji $f : A \times B \to C$ zdefiniowaliśmy więc funkcję
+\[
+\hat{f} : A \to C^B, \qquad a \mapsto f_a.
+\]
+Co więcej, dla każdej funkcji $g : A \to C^B$ istnieje funkcja $f : A \times B \to C$ taka, że $\hat{f} = g$ -- mianowicie $f(x, y) = g(x)(y)$.
+
+Podsumowując, istnieje bijekcja
+\[
+\Set(A \times B, C) \;\cong\; \Set(A, C^B).
+\]
+\end{uwaga}
+
+\begin{uwaga}
+Bijekcja daje nam przekształcenie
+\[
+\mathrm{eval} : C^B \times B \to C, \qquad \mathrm{eval}(g, b) = g(b).
+\]
+Ponadto dla dowolnego $A$ i $f : A \times B \to C$ istnieje jednoznaczne $\tilde{f} : A \to C^B$ takie, że diagram
+\[
+\begin{tikzcd}
+C^B \times B \arrow[r, "\mathrm{eval}"] & C \\
+A \times B \arrow[u, "\tilde{f} \times \id_B"] \arrow[ur, "f"'] &
+\end{tikzcd}
+\]
+jest przemienny, tj.\ $\mathrm{eval}\circ(\tilde f\times\id_B) = f$.
+\end{uwaga}
+
+\begin{definicja}
+Załóżmy, że $\C$ ma binarne produkty. Obiektem potęgowym (\emph{wykładnikiem}) obiektów $B, C \in \C$ nazywamy obiekt $C^B$ wraz ze strzałką
+\[
+\varepsilon : C^B \times B \to C
+\]
+taką, że dla każdego obiektu $Z \in \C$ i strzałki $f : Z \times B \to C$ istnieje dokładnie jedna strzałka
+\[
+\tilde{f} : Z \to C^B
+\]
+taka, że diagram
+\[
+\begin{tikzcd}
+C^B \times B \arrow[r, "\varepsilon"] & C \\
+Z \times B \arrow[u, "\tilde{f} \times \id_B"] \arrow[ur, "f"'] &
+\end{tikzcd}
+\]
+jest przemienny.
+\end{definicja}
+
+\begin{uwaga}[Notacja]
+\begin{enumerate}
+\item $\varepsilon : C^B \times B \to C$ nazywamy \emph{ewaluacją}.
+\item $\tilde{f} : Z \to C^B$ nazywamy \emph{transpozycją} (\emph{wykładnikiem}) strzałki $f : Z \times B \to C$.
+\end{enumerate}
+\end{uwaga}
+
+\begin{uwaga}
+Mając daną strzałkę $g : Z \to C^B$, definiujemy
+\[
+\overline{g} \stackrel{df}{=} \varepsilon \circ (g \times \id_B) : Z \times B \to C,
+\]
+tj.
+\[
+\begin{tikzcd}
+Z \times B \arrow[r, "g \times \id_B"] & C^B \times B \arrow[r, "\varepsilon"] & C
+\end{tikzcd}
+\]
+Wtedy $\overline{\tilde{f}} = f$ oraz $\widetilde{\overline{g}}=g$. Innymi słowy, jeśli kategoria $\C$ ma obiekty potęgowe, to mamy bijekcję
+\[
+\C(Z \times B, C) \;\cong\; \C(Z, C^B), \qquad f \mapsto \tilde{f}, \quad g \mapsto \overline{g}.
+\]
+\end{uwaga}
+
+\subsection*{Kategorie kartezjańsko domknięte}
+
+\begin{definicja}
+Kategorię $\C$ nazywamy \emph{kartezjańsko domkniętą}, jeśli ma:
+\begin{enumerate}
+\item wszystkie skończone produkty,
+\item wszystkie obiekty potęgowe (dla dowolnej pary $B, C$).
+\end{enumerate}
+\end{definicja}
+
+\begin{przyklad}
+$\Set$ oraz $\Pos$ są kategoriami kartezjańsko domkniętymi.
+\end{przyklad}
+
+\begin{stwierdzenie}
+$\Pos$ jest kartezjańsko domknięta.
+\end{stwierdzenie}
+
+\begin{proof}[Szkic]
+\textbf{(1)} $\Pos$ ma wszystkie skończone produkty: jednoelementowy poset jest terminalny w $\Pos$, a dla posetów $P = (P, \leq_P)$, $Q = (Q, \leq_Q)$ definiujemy
+\[
+P \times Q = (P \times Q, \leq),
+\]
+gdzie
+\[
+(p_1, q_1) \leq (p_2, q_2) \;\stackrel{df}{\iff}\; p_1 \leq_P p_2 \;\wedge\; q_1 \leq_Q q_2.
+\]
+Razem z rzutowaniami $\pi_1, \pi_2$ daje to produkt.
+
+\textbf{(2)} Dla posetów $P$ i $Q$ definiujemy
+\[
+Q^P \stackrel{df}{=} \big(\{f : P \to Q \mid f \text{ monotoniczna}\},\ \leq\big),
+\]
+gdzie
+\[
+f_1 \leq f_2 \;\stackrel{df}{\iff}\; f_1(p) \leq_Q f_2(p) \quad \text{dla każdego } p \in P,
+\]
+oraz ewaluację
+\[
+\varepsilon : Q^P \times P \to Q, \qquad \varepsilon(f, p) \stackrel{df}{=} f(p),
+\]
+która jest dobrze zdefiniowaną strzałką w $\Pos$. Transpozycja $\tilde{f}\colon X\to Q^P$ jest zdefiniowana analogicznie jak w $\Set$.
+\end{proof}

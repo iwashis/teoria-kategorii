@@ -1,0 +1,76 @@
+\documentclass[10pt]{amsart}
+
+\usepackage{amssymb, latexsym, amscd,stmaryrd}
+\usepackage{amsfonts, polski}
+\usepackage[utf8]{inputenc}
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{proposition}[lemma]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{remark}[lemma]{Remark}
+\numberwithin{equation}{section}
+
+\textwidth\paperwidth \advance\textwidth -60mm \oddsidemargin-1in
+%\advance\oddsidemargin 30mm
+\advance\oddsidemargin 25mm \evensidemargin-1in
+\advance\evensidemargin 25mm \topmargin -1in
+ %\advance\topmargin 1cm
+\advance\topmargin 10mm \textheight = 700pt
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+\title{Teoria kategorii}
+\author{Seria 3: (Ko)granice}
+\begin{document}
+\maketitle
+
+\blfootnote{\today}
+
+\begin{problem}
+W kategorii $\mathsf{Set}$ rozważmy dowolne przekształcenie $f:A\to B$ oraz zanurzenie $i_U:w:U\subseteq B$. Opisać pullback przekształceń $f$ i $i$.
+\end{problem}
+
+\begin{problem}
+Pokazać, że strzałka $m:X\to Y$ jest mono wtedy i tylko wtedy, gdy $X$ wraz z parą $id:X\to X$, $id:X\to X$ jest pullbackiem pary $m:X\to Y$, $m:X\to Y$. Wywnioskować, że funktor $\mathsf{C}(A,-)$ zachowuje monomorfizmy.
+\end{problem}
+
+\begin{problem}
+Pokazać, że w dowolnej kategorii dla pullbacku  $A'\stackrel{m'}{\leftarrow} M'\rightarrow M$ morfizmów $A'\stackrel{f}{\rightarrow } A\stackrel{m}{\leftarrow }M$, jeśli $m$ jest mono, to $m'$ też jest mono. 
+\end{problem}
+
+\begin{problem}
+Pokazać, że jeśli $\mathsf{C}$ jest kategorią w której istnieją skończone granice oraz $F:\mathsf{C}\to \mathsf{C}$ jest funktorem to kategoria $\mathsf{Alg}(F)$ ma wszystkie skończone granice. 
+\end{problem}
+
+\begin{problem}
+Pokazać, że jeśli kategoria $\mathbb{C}$ ma skończone produkty i pullbacki, to ma ekwalizatory.
+\end{problem}
+
+\begin{problem}
+Zdualizować definicję pullbacku (nazywając go pushoutem). Opisać pushouty w $\mathsf{Set}$. Pokazać konstrukcję pushoutów za pomocą koproduktów i koekwalizatorów. 
+\end{problem}
+
+\begin{problem}
+Podać definicję kostożka i kogranicy nad diagramem $D:J\to \mathsf{K}$. Pokazać, że kategoria $K$ ma wszystkie skończone kogranice wtedy i tylko, gdy ma wszystkie skończone koprodukty i koekwalizatory (bez używania zasady dualności). 
+\end{problem}
+
+\begin{problem}
+Pokazać, że $\mathsf{C}(-,A):\mathsf{C}^{op}\to \mathsf{Set}$ przekształca koekwalizatory w $\mathsf{C}$ na ekwalizatory i obiekt początkowy na obiekt końcowy.
+\end{problem}
+
+
+\end{document}

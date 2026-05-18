@@ -1,0 +1,154 @@
+\subsection*{Ekwalizatory}
+
+Niech $\C$ będzie kategorią.
+
+\begin{definicja}
+Dla pary strzałek $f, g \colon A \to B \in \C$ mówimy, że $e\colon E\to A$ jest \emph{ekwalizatorem} $f$ i $g$, jeśli:
+\begin{enumerate}
+\item diagram
+\[\begin{tikzcd}
+E \arrow[r,"e"] & A \arrow[r,shift left,"f"] \arrow[r,shift right,swap,"g"] & B
+\end{tikzcd}\]
+jest przemienny, tj.\ $f\circ e = g\circ e$,
+\item dla dowolnego $z\colon Z\to A$ takiego, że $f\circ z = g\circ z$, istnieje dokładnie jedna strzałka $u\colon Z\to E$ czyniąca następujący diagram przemiennym:
+\[\begin{tikzcd}
+E \arrow[r,"e"] & A \arrow[r,shift left,"f"] \arrow[r,shift right,swap,"g"] & B \\
+Z \arrow[ur,swap,"z"] \arrow[u,dashed,"\exists !\, u"] & &
+\end{tikzcd}\]
+\end{enumerate}
+\end{definicja}
+
+\begin{przyklad}
+W kategorii $\Set$, mając dane dwa przekształcenia $f,g\colon A\to B$, ich ekwalizatorem będzie
+\[
+\{x\in A \mid f(x)=g(x)\} \hookrightarrow A,
+\]
+gdzie strzałka jest zanurzeniem (inkluzją).
+\end{przyklad}
+
+\paragraph{Dowód.}
+Dla każdego $z\colon Z\to A$ takiego, że $f\circ z = g\circ z$, mamy: dla $y\in Z$ zachodzi $f(z(y)) = g(z(y))$, czyli element $x:=z(y)\in A$ spełnia $f(x)=g(x)$. Definiujemy
+\[
+u\colon Z \to \{x\in A\mid f(x)=g(x)\}, \qquad u(y) := z(y).
+\]
+Wtedy diagram
+\[\begin{tikzcd}
+\{x\in A \mid f(x)=g(x)\} \arrow[r,hook] & A \arrow[r,shift left,"f"] \arrow[r,shift right,swap,"g"] & B \\
+Z \arrow[ur,swap,"z"] \arrow[u,"u"] & &
+\end{tikzcd}\]
+jest przemienny. Przekształcenie $u$ jest jednoznaczne. \qed
+
+\begin{stwierdzenie}
+Jeśli $e\colon E\to A$ jest ekwalizatorem pary $A\rightrightarrows B$, to $e$ jest mono.
+\end{stwierdzenie}
+
+\begin{przyklad}
+Rozważmy w $\Set$ podzbiór $U\subseteq A$ oraz diagram
+\[\begin{tikzcd}
+? \arrow[r,"?"] & A \arrow[r,shift left,"\mathrm{const}_1"] \arrow[r,shift right,swap,"\chi_U"] & 2=\{0,1\}
+\end{tikzcd}\]
+gdzie
+\[
+\chi_U(a)=\begin{cases} 1 & a\in U,\\ 0 & \text{w p.p.},\end{cases} \qquad \mathrm{const}_1(a)=1.
+\]
+Czym jest ekwalizator $\mathrm{const}_1$ i $\chi_U$?
+\end{przyklad}
+
+\subsection*{Koekwalizatory}
+
+\begin{definicja}
+Dla pary strzałek $f, g \colon A\to B \in \C$ \emph{koekwalizatorem} $f$ i $g$ nazywamy strzałkę $q\colon B\to Q$ taką, że:
+\begin{enumerate}
+\item $q\circ f = q\circ g$, tj.\ diagram
+\[\begin{tikzcd}
+A \arrow[r,shift left,"f"] \arrow[r,shift right,swap,"g"] & B \arrow[r,"q"] & Q
+\end{tikzcd}\]
+jest przemienny,
+\item dla każdego $z\colon B\to Z$ takiego, że $z\circ f = z\circ g$, istnieje dokładnie jedna strzałka $u\colon Q\to Z$ taka, że poniższy diagram jest przemienny:
+\[\begin{tikzcd}
+A \arrow[r,shift left,"f"] \arrow[r,shift right,swap,"g"] & B \arrow[r,"q"] \arrow[dr,swap,"z"] & Q \arrow[d,dashed,"\exists !\, u"] \\
+& & Z
+\end{tikzcd}\]
+\end{enumerate}
+\end{definicja}
+
+\begin{stwierdzenie}
+Jeśli $q\colon B\to Q$ jest koekwalizatorem pewnej pary strzałek, to $q$ jest epi.
+\end{stwierdzenie}
+
+\begin{przyklad}
+Niech $R\subseteq X\times X$ będzie relacją binarną na $X$. Rozważmy diagram
+\[\begin{tikzcd}
+R \arrow[r,shift left,"\pi_1"] \arrow[r,shift right,swap,"\pi_2"] & X
+\end{tikzcd}\]
+Jeśli $R$ jest relacją równoważności, to koekwalizatorem tej pary rzutowań jest
+\[\begin{tikzcd}
+R \arrow[r,shift left,"\pi_1"] \arrow[r,shift right,swap,"\pi_2"] & X \arrow[r,"\mathrm{nat}\,R"] & X/R,
+\end{tikzcd}\]
+gdzie
+\[
+X/R = \{\,[x]_R \mid x\in X\,\}
+\]
+(klasy abstrakcji relacji $R$),
+\[
+\mathrm{nat}\,R\colon X \twoheadrightarrow X/R, \qquad \mathrm{nat}\,R(x) \stackrel{\mathrm{df}}{=} [x]_R.
+\]
+\end{przyklad}
+
+\subsection*{Pullback}
+
+\begin{definicja}
+\emph{Pullbackiem} (cofnięciem) pary strzałek
+\[\begin{tikzcd}
+& B \arrow[d,"g"] \\
+A \arrow[r,"f"] & C
+\end{tikzcd}\]
+nazywamy obiekt $P$ wraz ze strzałkami $p_1\colon P\to A$, $p_2\colon P\to B$ takimi, że
+\begin{enumerate}
+\item diagram
+\[\begin{tikzcd}
+P \arrow[r,"p_2"] \arrow[d,swap,"p_1"] & B \arrow[d,"g"] \\
+A \arrow[r,"f"] & C
+\end{tikzcd}\]
+jest przemienny,
+\item dla każdego obiektu $Z$ wraz ze strzałkami $z_1\colon Z\to A$ oraz $z_2\colon Z\to B$ takimi, że $f\circ z_1 = g\circ z_2$, istnieje dokładnie jedna strzałka $u\colon Z\to P$ czyniąca następujący diagram przemiennym:
+\[\begin{tikzcd}
+Z \arrow[drr,bend left,"z_2"] \arrow[ddr,bend right,swap,"z_1"] \arrow[dr,dashed,"\exists !\, u"] & & \\
+& P \arrow[r,"p_2"] \arrow[d,swap,"p_1"] & B \arrow[d,"g"] \\
+& A \arrow[r,swap,"f"] & C
+\end{tikzcd}\]
+\end{enumerate}
+\end{definicja}
+
+\begin{uwaga}
+Często używać będziemy notacji ,,produktowej'' w kontekście pullbacków. Dokładniej, obiekt pullback strzałek $A\xrightarrow{f} C \xleftarrow{g} B$ oznaczać będziemy przez $A\times_C B$. Morfizmy pullbacka często będziemy też oznaczać przez $\pi_1,\pi_2$:
+\[\begin{tikzcd}
+A\times_C B \arrow[r,"\pi_2"] \arrow[d,swap,"\pi_1"] & B \arrow[d,"g"] \\
+A \arrow[r,swap,"f"] & C
+\end{tikzcd}\]
+\end{uwaga}
+
+\begin{stwierdzenie}
+Niech $\C$ będzie kategorią z binarnymi produktami i ekwalizatorami. Dla danej pary $A\xrightarrow{f} C \xleftarrow{g} B$:
+\begin{enumerate}
+\item weźmy produkt binarny $A\times B$ wraz z $\pi_1\colon A\times B\to A$, $\pi_2\colon A\times B\to B$,
+\item rozważmy ekwalizator $E \xhookrightarrow{e} A\times B$ pary
+\[\begin{tikzcd}
+A\times B \arrow[r,shift left,"f\circ \pi_1"] \arrow[r,shift right,swap,"g\circ \pi_2"] & C.
+\end{tikzcd}\]
+\end{enumerate}
+Wtedy obiekt $E$ wraz z $\pi_1\circ e\colon E\to A$ oraz $\pi_2\circ e\colon E\to B$ jest pullbackiem $A\xrightarrow{f} C \xleftarrow{g} B$.
+\end{stwierdzenie}
+
+\paragraph{Dowód.}
+Widzimy, że $E$ wraz z $\pi_1\circ e$ oraz $\pi_2\circ e$ czyni kwadrat $f\circ(\pi_1\circ e) = g\circ(\pi_2\circ e)$ przemiennym -- wynika to z faktu, że $e$ jest ekwalizatorem $f\circ\pi_1$ oraz $g\circ\pi_2$.
+
+Weźmy obiekt $Z$ wraz z $z_1\colon Z\to A$, $z_2\colon Z\to B$ takie, że $f\circ z_1 = g\circ z_2$. Z własności produktu istnieje jednoznaczna strzałka $\langle z_1,z_2\rangle\colon Z\to A\times B$ z $\pi_1\circ\langle z_1,z_2\rangle = z_1$, $\pi_2\circ\langle z_1,z_2\rangle = z_2$. Widzimy, że
+\[
+f\circ \pi_1 \circ \langle z_1,z_2\rangle = f\circ z_1 = g\circ z_2 = g\circ \pi_2\circ\langle z_1,z_2\rangle,
+\]
+więc istnieje dokładnie jedna strzałka $u\colon Z\to E$ taka, że $e\circ u = \langle z_1,z_2\rangle$. Wówczas
+\[
+(\pi_1\circ e)\circ u = z_1, \qquad (\pi_2\circ e)\circ u = z_2,
+\]
+co dowodzi własności uniwersalnej. \qed

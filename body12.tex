@@ -1,0 +1,137 @@
+Niech $\C$ będzie kategorią kartezjańsko zamkniętą (CCC). Przypomnijmy zwykłe składanie morfizmów:
+\[
+\frac{X \xrightarrow{f} Y \qquad Y \xrightarrow{g} Z}{X \xrightarrow{g \circ f} Z}
+\]
+
+\begin{uwaga}[Motywacja --- ,,obliczenia z efektem'']
+Ustalmy obiekt $A \in \Ob(\C)$ i oznaczmy
+\[
+\IO X \;\stackrel{df}{=}\; (X \times A)^A.
+\]
+Chcielibyśmy mieć regułę składania morfizmów ,,z efektem'' postaci
+\[
+\frac{X \xrightarrow{f} \IO Y \qquad Y \xrightarrow{g} \IO Z}{X \xrightarrow{g \,\square\, f} \IO Z}
+\]
+oraz wyróżnioną rodzinę morfizmów
+\[
+\eta = \{\eta_X : X \to \IO X\}_{X \in \C}.
+\]
+\end{uwaga}
+
+\begin{przyklad}[Motywacja --- Haskell]
+Napisać program, który:
+\begin{enumerate}
+\item wczytuje z klawiatury nazwę pliku,
+\item usuwa z zawartości wielkie litery,
+\item wyświetla zawartość wypisaną od tyłu.
+\end{enumerate}
+
+Dane są funkcje
+\begin{align*}
+\mathrm{readString} &: () \to \IO\,\mathrm{String}, \\
+\mathrm{putString} &: \mathrm{String} \to \IO\,(), \\
+\mathrm{readFile} &: \mathrm{String} \to \IO\,\mathrm{String}, \\
+\mathrm{reverse} &: \mathrm{String} \to \mathrm{String}, \\
+\mathrm{removeCaps} &: \mathrm{String} \to \mathrm{String},
+\end{align*}
+oraz operacje $\eta$ (czyli \texttt{pure} $:\ a \to \IO a$) i $\square$. Wówczas
+\[
+\mathrm{main} \;=\; \mathrm{putString} \;\square\; (\mathrm{pure} \circ \mathrm{reverse}) \;\square\; (\mathrm{pure} \circ \mathrm{removeCaps}) \;\square\; \mathrm{readFile} \;\square\; \mathrm{readString}.
+\]
+\end{przyklad}
+
+\begin{uwaga}[Pytanie]
+Jakie własności abstrakcyjne pozwalają na zdefiniowanie ,,składania''
+\[
+\frac{X \xrightarrow{f} \IO Y \qquad Y \xrightarrow{g} \IO Z}{X \xrightarrow{g \,\square\, f} \IO Z} \;?
+\]
+
+\textbf{Odpowiedź} (por.\ zad.\ 4.7): dane są
+\[
+\eta = \{\eta_X : X \to \IO X\}_{X},
+\qquad
+\mu = \bigl\{(\varepsilon_{X \times A})^A : \IO^2 X \to \IO X\bigr\}_{X},
+\]
+gdzie $\varepsilon$ jest kojednością sprzężenia $(-)\times A \dashv (-)^A$.
+\end{uwaga}
+
+\begin{uwaga}[Własności rodzin $\eta$ i $\mu$]
+\begin{enumerate}
+\item $\eta$ jest naturalną transformacją $\Id \Rightarrow \IO$ -- dla każdego $f : X \to Y$:
+\[
+\begin{tikzcd}
+X \arrow[r, "\eta_X"] \arrow[d, "f"'] & \IO X \arrow[d, "\IO f"] \\
+Y \arrow[r, "\eta_Y"'] & \IO Y
+\end{tikzcd}
+\]
+komutuje.
+\item Analogicznie $\mu$ jest naturalną transformacją $\IO^2 \Rightarrow \IO$.
+\item Mamy
+\[
+\eta_X \;=\; \widetilde{\id_{X \times A}} \;:\; X \to (X \times A)^A \;=\; \IO X.
+\]
+\end{enumerate}
+\end{uwaga}
+
+\begin{uwaga}[Aksjomaty jedności i łączności]
+Rodziny $\eta$ i $\mu$ spełniają dodatkowo:
+\[
+\begin{tikzcd}[column sep=large]
+\IO X \arrow[r, "\eta_{\IO X}"] \arrow[dr, "\id_{\IO X}"'] & \IO^2 X \arrow[d, "\mu_X"] & \IO X \arrow[l, "\IO(\eta_X)"'] \arrow[dl, "\id_{\IO X}"] \\
+& \IO X &
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+\IO^3 X \arrow[r, "\mu_{\IO X}"] \arrow[d, "\IO(\mu_X)"'] & \IO^2 X \arrow[d, "\mu_X"] \\
+\IO^2 X \arrow[r, "\mu_X"'] & \IO X
+\end{tikzcd}
+\]
+gdzie operacja $\square$ jest zdefiniowana wzorem
+\[
+g \,\square\, f \;=\; \mu_Z \circ \IO(g) \circ f, \qquad f : X \to \IO Y,\ g : Y \to \IO Z.
+\]
+\end{uwaga}
+
+\section{Definicja monady}
+
+\begin{definicja}
+\textbf{Monadą} w kategorii $\C$ nazywamy trójkę $(T, \mu, \eta)$, gdzie
+\begin{enumerate}
+\item $T : \C \to \C$ jest funktorem,
+\item $\mu = \{\mu_X : T^2 X \to T X\}_X$ jest naturalną transformacją $\mu : T^2 \Rightarrow T$,
+\item $\eta = \{\eta_X : X \to T X\}_X$ jest naturalną transformacją $\eta : \Id_{\C} \Rightarrow T$,
+\end{enumerate}
+oraz następujące diagramy komutują:
+\[
+\begin{tikzcd}[column sep=large]
+T X \arrow[r, "\eta_{T X}"] \arrow[dr, "\id_{T X}"'] & T^2 X \arrow[d, "\mu_X"] & T X \arrow[l, "T(\eta_X)"'] \arrow[dl, "\id_{T X}"] \\
+& T X &
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+T^3 X \arrow[r, "\mu_{T X}"] \arrow[d, "T(\mu_X)"'] & T^2 X \arrow[d, "\mu_X"] \\
+T^2 X \arrow[r, "\mu_X"'] & T X
+\end{tikzcd}
+\]
+(odpowiednio: \emph{aksjomat jedności} oraz \emph{aksjomat łączności}).
+\end{definicja}
+
+\begin{uwaga}
+Nieformalnie: jeśli wyobrazimy sobie $A$ jako punkt, $TA$ jako ,,$A$ owinięte pojedynczą warstwą'', a $T^2 A$ jako ,,$A$ owinięte podwójną warstwą'', to $\eta_A : A \to TA$ pakuje punkt w warstwę, a $\mu_A : T^2 A \to TA$ scala dwie warstwy w jedną. Aksjomat jedności mówi, że doklejenie warstwy a następnie scalanie nic nie zmienia; aksjomat łączności mówi, że scalanie trzech warstw nie zależy od kolejności.
+\end{uwaga}
+
+\begin{stwierdzenie}
+Niech $(T, \mu, \eta)$ będzie monadą w $\C$. Wówczas operacja
+\[
+g \,\square\, f \;=\; \mu_Z \circ T(g) \circ f \qquad \text{dla } f : X \to T Y,\ g : Y \to T Z
+\]
+jest
+\begin{enumerate}
+\item łączna: $h \,\square\, (g \,\square\, f) = (h \,\square\, g) \,\square\, f$,
+\item ze stronami neutralnymi: $\eta_Y \,\square\, f = f = f \,\square\, \eta_X$.
+\end{enumerate}
+\end{stwierdzenie}
+
+\begin{uwaga}
+Dowód na ćwiczeniach.
+\end{uwaga}

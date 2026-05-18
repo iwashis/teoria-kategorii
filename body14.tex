@@ -1,0 +1,169 @@
+W poprzednim rozdziale poznaliśmy pojęcie monady $(T,\mu,\eta)$ oraz pomocniczą operację składania
+\[
+g\,\square\,f \;=\; \mu_Z\circ T(g)\circ f, \qquad f\colon X\to TY,\ g\colon Y\to TZ.
+\]
+Tę operację można teraz wprost przekuć na strukturę nowej kategorii.
+
+\section{Definicja kategorii Kleisliego}
+
+\begin{definicja}
+Niech $(T,\mu,\eta)$ będzie monadą w kategorii $\C$. \emph{Kategorią Kleisliego} $\Kl(T)$ nazywamy kategorię, w której:
+\begin{enumerate}
+\item obiektami $\Kl(T)$ są obiekty $\C$;
+\item dla obiektów $X,Y\in\C$ zbiór strzałek $X\to Y$ w $\Kl(T)$ definiujemy jako
+\[
+\Kl(T)(X,Y) \;\stackrel{df}{=}\; \C(X,\,T Y);
+\]
+\item identycznością na obiekcie $X$ jest jedność monady $\eta_X\colon X\to TX$;
+\item dla strzałek $f\colon X\to Y$ i $g\colon Y\to Z$ w $\Kl(T)$ (tzn.\ $f\colon X\to TY$, $g\colon Y\to TZ$ w $\C$) złożenie $g\circ_{\Kl} f\colon X\to Z$ w $\Kl(T)$ dane jest wzorem
+\[
+g\circ_{\Kl} f \;\stackrel{df}{=}\; \mu_Z \circ T(g) \circ f \;=\; g\,\square\,f.
+\]
+\end{enumerate}
+\end{definicja}
+
+Schemat składania:
+\[
+\begin{tikzcd}[column sep=large]
+X \arrow[r,"f"] & TY \arrow[r,"T(g)"] & T^2 Z \arrow[r,"\mu_Z"] & TZ.
+\end{tikzcd}
+\]
+
+\begin{stwierdzenie}
+$\Kl(T)$ jest kategorią.
+\end{stwierdzenie}
+
+\begin{proof}[Szkic]
+Sprawdzamy aksjomaty kategorii. Niech $f\colon X\to TY$, $g\colon Y\to TZ$, $h\colon Z\to TW$ w $\C$.
+
+\emph{Łączność.} Korzystając z naturalności $\mu$ oraz z aksjomatu łączności $\mu_W\circ\mu_{TW} = \mu_W\circ T(\mu_W)$ liczymy
+\begin{align*}
+h\circ_{\Kl}(g\circ_{\Kl} f) &= \mu_W \circ T(h) \circ \bigl(\mu_Z\circ T(g)\circ f\bigr) \\
+ &= \mu_W \circ T(h)\circ \mu_Z \circ T(g)\circ f \\
+ &\stackrel{\mathrm{nat.}\,\mu}{=} \mu_W \circ \mu_{TW} \circ T^2(h) \circ T(g)\circ f \\
+ &\stackrel{\mathrm{ass.}\,\mu}{=} \mu_W \circ T(\mu_W) \circ T^2(h) \circ T(g)\circ f \\
+ &= \mu_W \circ T\bigl(\mu_W \circ T(h)\circ g\bigr) \circ f \\
+ &= (h\circ_{\Kl} g)\circ_{\Kl} f.
+\end{align*}
+
+\emph{Prawa jedynka.} Niech $f\colon X\to Y$ w $\Kl(T)$, tzn.\ $f\colon X\to TY$ w $\C$. Z aksjomatu jedności monady $\mu_Y \circ T(\eta_Y) = \id_{TY}$ otrzymujemy
+\[
+\eta_Y \circ_{\Kl} f \;=\; \mu_Y \circ T(\eta_Y) \circ f \;=\; \id_{TY}\circ f \;=\; f.
+\]
+
+\emph{Lewa jedynka.} Z naturalności $\eta\colon \Id\Rightarrow T$ mamy $T(f)\circ \eta_X = \eta_{TY}\circ f$. Stąd
+\[
+f \circ_{\Kl} \eta_X \;=\; \mu_Y \circ T(f) \circ \eta_X \;=\; \mu_Y \circ \eta_{TY}\circ f \;\stackrel{\eta\text{-lewa}}{=}\; \id_{TY}\circ f \;=\; f. \qedhere
+\]
+\end{proof}
+
+\section{Przykłady}
+
+\begin{przyklad}[Funkcje częściowe]
+Niech $T = \mathrm{Maybe}\colon \Set\to\Set$, $TX = X+\{\bot\}$, $\eta_X(x)=x$, $\mu_X\colon (X+\{\bot\})+\{\bot\}\to X+\{\bot\}$ zadane przez sklejenie obu kopii $\bot$ w jeden. Wówczas
+\[
+\Kl(\mathrm{Maybe})(X,Y) = \Set(X, Y+\{\bot\}),
+\]
+czyli strzałki $X\to Y$ w $\Kl(\mathrm{Maybe})$ to dokładnie funkcje częściowe z $X$ do $Y$ (z $\bot$ jako wartością nieokreśloną). Składanie wyznaczone przez Kleisliego pokrywa się ze składaniem funkcji częściowych z rozdziału~1. Otrzymujemy
+\[
+\Kl(\mathrm{Maybe}) \;\cong\; \Par.
+\]
+\end{przyklad}
+
+\begin{przyklad}[Trace nad monoidem]
+Niech $(M,\cdot,1)$ będzie monoidem i niech $T = M\times(-)\colon \Set\to\Set$. Definiujemy
+\[
+\eta_X\colon X\to M\times X, \qquad \eta_X(x) = (1,x),
+\]
+\[
+\mu_X\colon M\times(M\times X)\to M\times X, \qquad \mu_X(m_1,(m_2,x)) = (m_1\cdot m_2,\, x).
+\]
+\begin{uwaga}
+Aksjomaty jedności i łączności wynikają wprost z aksjomatów monoidu (jedność jedyny po obu stronach, łączność mnożenia).
+\end{uwaga}
+Wówczas
+\[
+\Kl(M\times{-})(X,Y) \;=\; \Set\bigl(X,\, M\times Y\bigr),
+\]
+a złożenie strzałek $f\colon X\to M\times Y$, $g\colon Y\to M\times Z$ dane jest przez
+\[
+(g\,\square\, f)(x) = (m_f\cdot m_g,\, z), \qquad \text{gdzie } f(x)=(m_f,y),\ g(y)=(m_g,z).
+\]
+Jest to dokładnie kategoria $\Trace$ wprowadzona w rozdziale~1.
+\end{przyklad}
+
+\begin{przyklad}[Niedeterminizm i relacje]
+Niech $T = \mathcal{P}\colon \Set\to\Set$ -- funktor potęgowy. Z jednościami $\eta_X(x)=\{x\}$ oraz mnożeniem $\mu_X(\mathcal{A}) = \bigcup\mathcal{A}$ funktor $\mathcal{P}$ tworzy monadę. Strzałka $X\to Y$ w $\Kl(\mathcal{P})$ to funkcja $X\to \mathcal{P}Y$, czyli równoważnie relacja $X\to Y$. Składanie Kleisliego pokrywa się ze składaniem relacji:
+\[
+(g\,\square\, f)(x) \;=\; \bigcup_{y\in f(x)} g(y).
+\]
+Otrzymujemy więc izomorfizm kategorii
+\[
+\Kl(\mathcal{P}) \;\cong\; \Rel.
+\]
+\end{przyklad}
+
+\begin{przyklad}[Monada stanu]
+Niech $A\in\Ob(\C)$ i niech $\C$ będzie kategorią kartezjańsko domkniętą. Z rozdziału~12 wiemy, że
+\[
+\State_A \;=\; (-\times A)^A\colon \C\to\C
+\]
+wraz z $\eta_X = \widetilde{\id_{X\times A}}$ oraz $\mu_X = (\varepsilon_{X\times A})^A$ jest monadą. Wówczas
+\[
+\Kl(\State_A)(X,Y) \;=\; \C\bigl(X,\, (Y\times A)^A\bigr) \;\cong\; \C\bigl(X\times A,\, Y\times A\bigr).
+\]
+Stąd intuicja: strzałka w $\Kl(\State_A)$ to ,,obliczenie z efektem ubocznym na stanie typu $A$'', tj.\ procedura, która biorąc wejście typu $X$ i obecny stan, produkuje wynik typu $Y$ i nowy stan.
+
+Operacja $\square$ z rozdziału~11 jest dokładnie składaniem w $\Kl(\State_A)$.
+\end{przyklad}
+
+\section{Sprzężenie $F\dashv G$}
+
+Kategoria Kleisliego jest powiązana z $\C$ przez parę naturalnych funktorów.
+
+\begin{definicja}
+Definiujemy funktor
+\[
+F\colon \C\longrightarrow \Kl(T)
+\]
+wzorami
+\[
+F(X) = X, \qquad F(f\colon X\to Y) = \eta_Y\circ f\colon X\to TY,
+\]
+oraz funktor
+\[
+G\colon \Kl(T)\longrightarrow \C
+\]
+wzorami
+\[
+G(X) = TX, \qquad G(f\colon X\to Y \in \Kl(T)) = \mu_Y\circ T(f)\colon TX\to TY,
+\]
+gdzie $f\colon X\to TY$ traktujemy jako strzałkę w $\C$.
+\end{definicja}
+
+\begin{uwaga}
+Można sprawdzić bezpośrednio, że $F$ i $G$ są funktorami oraz że
+\[
+G\circ F \;=\; T.
+\]
+Co więcej, dla dowolnych $X\in\C$ oraz $Y\in\Kl(T)$ zachodzi bijekcja
+\[
+\Kl(T)\bigl(F(X),\, Y\bigr) \;=\; \Kl(T)(X,Y) \;=\; \C(X,TY) \;=\; \C\bigl(X,\, G(Y)\bigr),
+\]
+naturalna względem $X$ i $Y$. Oznacza to, że $F$ jest \emph{lewym sprzężonym} do $G$, w notacji $F\dashv G$, a wyjściowa monada $(T,\mu,\eta)$ jest dokładnie monadą indukowaną przez to sprzężenie ($T = G\circ F$, $\eta$ -- jedność, $\mu = G\varepsilon F$, gdzie $\varepsilon$ jest kojednością).
+\end{uwaga}
+
+\begin{uwaga}
+Konstrukcja Kleisliego ma własność uniwersalną: spośród wszystkich par funktorów $\C\xrightarrow{F'} \Dcat \xrightarrow{G'} \C$ generujących daną monadę $T$, $\Kl(T)$ jest \emph{początkowa} (równoważnie: każdą taką parę $(F',G')$ da się jednoznacznie rozłożyć przez $\Kl(T)$). Rolą dualną pełni kategoria algebr Eilenberga--Moore'a $T\text{-}\catname{Alg}$, terminalna wśród rozkładów monady.
+\end{uwaga}
+
+\section{Podsumowanie}
+
+Powtórzmy najważniejsze fakty:
+
+\begin{itemize}[leftmargin=*]
+\item Każda monada $(T,\mu,\eta)$ w kategorii $\C$ wyznacza kategorię $\Kl(T)$, której strzałkami są \emph{obliczenia z efektem opisywanym przez $T$}.
+\item Identyczność w $\Kl(T)$ to jedność monady $\eta$; składanie -- operacja $\square$ wprowadzona w rozdziale~11.
+\item Konkretne przykłady ilustrują, że pojęcie monady jednolicie obejmuje funkcje częściowe ($\mathrm{Maybe}$), efekty ,,trace'' ($M\times{-}$), niedeterminizm ($\mathcal{P}$) oraz stan ($\State_A$).
+\item Konstrukcja $\Kl(T)$ wpisuje monadę $T$ w naturalne sprzężenie $F\dashv G$ między $\C$ a $\Kl(T)$.
+\end{itemize}

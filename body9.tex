@@ -1,0 +1,127 @@
+\begin{definicja}
+Niech $\C$ będzie kategorią oraz $B, C \in \C$ obiektami. \emph{Obiektem potęgowym} (wykładniczym) nazywamy obiekt $C^B$ wraz ze strzałką
+\[
+\varepsilon : C^B \times B \longrightarrow C
+\]
+taką, że dla każdego obiektu $Z \in \C$ i każdej strzałki $f : Z \times B \to C$ istnieje dokładnie jedna strzałka $\tilde{f} : Z \to C^B$ taka, że poniższy diagram jest przemienny:
+\[
+\begin{tikzcd}
+C^B \times B \arrow[r, "\varepsilon"] & C \\
+Z \times B \arrow[u, "\tilde{f} \times \id_B"] \arrow[ur, "f"'] &
+\end{tikzcd}
+\]
+tzn.\ $\varepsilon \circ (\tilde{f} \times \id_B) = f$.
+\end{definicja}
+
+\begin{definicja}
+Kategoria $\C$ nazywana jest \emph{kartezjańsko-domkniętą} (CCC -- \emph{cartesian closed category}), gdy:
+\begin{enumerate}
+\item ma wszystkie skończone produkty (w szczególności obiekt końcowy $\mathbf{1}$),
+\item dla każdej pary obiektów $B, C \in \C$ istnieje obiekt potęgowy $C^B$.
+\end{enumerate}
+\end{definicja}
+
+\begin{stwierdzenie}
+Niech $\C$ będzie CCC. Wtedy przyporządkowanie na obiektach
+\[
+X \longmapsto X^A
+\]
+rozszerza się do funktora $(-)^A : \C \to \C$.
+\end{stwierdzenie}
+
+\begin{proof}
+\textbf{(1) Sytuacja w $\Set$.} Załóżmy, że mamy funkcję $\beta : B \to C$ w $\Set$. Definiujemy
+\[
+\beta^A : B^A \longrightarrow C^A, \qquad \beta^A(f : A \to B) \stackrel{df}{=} \beta \circ f.
+\]
+Mamy więc przyporządkowanie
+\[
+X \longmapsto X^A, \qquad (\beta : B \to C) \longmapsto (\beta^A : B^A \to C^A).
+\]
+Sprawdźmy aksjomaty funktorowe. Dla $\alpha : C \to D$ i $\beta : B \to C$:
+\[
+(\alpha \circ \beta)^A(f) = \alpha \circ \beta \circ f = (\alpha^A \circ \beta^A)(f),
+\]
+czyli $(\alpha \circ \beta)^A = \alpha^A \circ \beta^A$. Ponadto $(\id_B)^A(f) = \id_B \circ f = f = \id_{B^A}(f)$, więc $(\id_B)^A = \id_{B^A}$.
+
+\textbf{(2) Ogólnie, dla CCC $\C$.} Dla strzałki $\beta : B \to C$ definiujemy $\beta^A : B^A \to C^A$ jako
+\[
+\beta^A \stackrel{df}{=} \widetilde{\beta \circ \varepsilon},
+\]
+tj.\ transpozycję strzałki $B^A \times A \xrightarrow{\varepsilon} B \xrightarrow{\beta} C$. Innymi słowy, $\beta^A$ jest jedynym rozwiązaniem równania (przemienność diagramu):
+\[
+\begin{tikzcd}
+C^A \times A \arrow[r, "\varepsilon"] & C \\
+B^A \times A \arrow[u, "\beta^A \times \id_A"] \arrow[r, "\varepsilon"'] & B \arrow[u, "\beta"']
+\end{tikzcd}
+\]
+
+$(\id_B)^A$ jest jedynym rozwiązaniem
+\[
+\begin{tikzcd}
+B^A \times A \arrow[r, "\varepsilon"] & B \\
+B^A \times A \arrow[u, "(\id_B)^A \times \id_A"] \arrow[r, "\varepsilon"'] & B \arrow[u, "\id_B"']
+\end{tikzcd}
+\]
+Ale my znamy rozwiązanie -- jest nim $\id_{B^A}$. Z jednoznaczności $(\id_B)^A = \id_{B^A}$.
+
+Pokażemy, że $\sigma^A \circ \beta^A = (\sigma \circ \beta)^A$ dla $B \xrightarrow{\beta} C \xrightarrow{\sigma} D$. Poniższy złożony diagram jest przemienny:
+\[
+\begin{tikzcd}
+D^A \times A \arrow[r, "\varepsilon"] & D \\
+C^A \times A \arrow[u, "\sigma^A \times \id_A"] \arrow[r, "\varepsilon"] & C \arrow[u, "\sigma"'] \\
+B^A \times A \arrow[u, "\beta^A \times \id_A"] \arrow[r, "\varepsilon"'] & B \arrow[u, "\beta"']
+\end{tikzcd}
+\]
+Widzimy, że $\sigma^A \circ \beta^A$ jest rozwiązaniem równania definiującego $(\sigma \circ \beta)^A$. Z jednoznaczności:
+\[
+(\sigma \circ \beta)^A = \sigma^A \circ \beta^A. \qedhere
+\]
+\end{proof}
+
+\begin{uwaga}
+Oprócz $\varepsilon : C^B \times B \to C$ istnieje też strzałka $\eta$:
+\[
+\eta : C \longrightarrow (C \times B)^B
+\]
+zdefiniowana jako transpozycja $\id_{C \times B} : C \times B \to C \times B$. W $\Set$:
+\[
+\eta(c) \stackrel{df}{=} \bigl(\, b \longmapsto (c, b) \,\bigr).
+\]
+Jeśli przyjmiemy $F = (-)^B$ oraz $G = (-) \times B$, to mamy strzałki
+\[
+\eta : C \longrightarrow F G C, \qquad \varepsilon : G F C \longrightarrow C.
+\]
+\end{uwaga}
+
+\begin{uwaga}
+W dowolnej kategorii CCC strzałka $\eta$ pozwala znaleźć $\tilde{f}$: dla $f : Z \times A \to B$ mamy
+\[
+f^A : (Z \times A)^A \longrightarrow B^A,
+\]
+oraz
+\[
+\begin{tikzcd}
+(Z \times A)^A \arrow[r, "f^A"] & B^A \\
+Z \arrow[u, "\eta"] \arrow[ur, "\tilde{f}"'] &
+\end{tikzcd}
+\]
+Innymi słowy $\tilde{f} = f^A \circ \eta$.
+\end{uwaga}
+
+\subsection*{Równościowa aksjomatyzacja CCC}
+
+\begin{stwierdzenie}
+Kategoria $\C$ jest CCC wtedy i tylko wtedy, gdy ma następującą strukturę:
+\begin{itemize}
+\item Wybrany obiekt $\mathbf{1}$ taki, że dla każdego $C \in \C$ istnieje strzałka $!_C : C \to \mathbf{1}$ oraz dla każdej $f : C \to \mathbf{1}$ zachodzi $f = \,!_C$.
+
+\item Dla każdej pary $A, B$ obiekt $A \times B$ wraz ze strzałkami $p_1 : A \times B \to A$, $p_2 : A \times B \to B$ takimi, że dla każdej pary $f : Z \to A$, $g : Z \to B$ istnieje strzałka $\langle f, g \rangle : Z \to A \times B$ spełniająca
+\[
+p_1 \circ \langle f, g \rangle = f, \qquad p_2 \circ \langle f, g \rangle = g,
+\]
+oraz $\langle p_1 \circ h, p_2 \circ h \rangle = h$ dla każdego $h : Z \to A \times B$.
+
+\item Dla każdej pary $A, B$ obiekt $B^A$ wraz ze strzałką $\varepsilon : B^A \times A \to B$ taką, że dla każdej $f : Z \times A \to B$ istnieje $\tilde{f} : Z \to B^A$ z $\varepsilon \circ (\tilde{f} \times \id_A) = f$ oraz dla każdego $g : Z \to B^A$ mamy $\widetilde{\varepsilon \circ (g \times \id_A)} = g$.
+\end{itemize}
+\end{stwierdzenie}

@@ -1,0 +1,196 @@
+\section{Podstawowe konstrukcje kategoryjne}
+
+\subsection{Kategoria produktowa}
+
+\begin{definicja}
+Niech $\Cat$ i $\D$ będą dwiema kategoriami. \emph{Kategorią produktową} (produktem) $\Cat \times \D$ nazywamy kategorię, w której:
+\begin{enumerate}
+    \item[(a)] obiektami są pary $(C, D)$, gdzie $C$ jest obiektem $\Cat$ oraz $D$ jest obiektem $\D$;
+    \item[(b)] strzałkami z $(C, D)$ do $(C', D')$ w $\Cat \times \D$ są pary
+    \[
+        (f, g) \colon (C, D) \longrightarrow (C', D'),
+    \]
+    gdzie $f \colon C \to C'$ w $\Cat$ oraz $g \colon D \to D'$ w $\D$;
+    \item[(c)] dla strzałek
+    \[
+        (f, g) \colon (C, D) \to (C', D'), \qquad (f', g') \colon (C', D') \to (C'', D'')
+    \]
+    definiujemy złożenie wzorem
+    \[
+        (f', g') \circ (f, g) \;\stackrel{\mathrm{df}}{=}\; (f' \circ f,\; g' \circ g),
+    \]
+    gdzie pierwsza składowa to złożenie w $\Cat$, a druga w $\D$. Dodatkowo
+    \[
+        \id_{(C, D)} \;\stackrel{\mathrm{df}}{=}\; (\id_C, \id_D).
+    \]
+\end{enumerate}
+\end{definicja}
+
+\begin{uwaga}
+Należy sprawdzić, że $\Cat \times \D$ jest poprawnie zdefiniowaną kategorią (spełnia aksjomaty łączności i jedynek).
+\end{uwaga}
+
+\begin{uwaga}
+Dla $\Cat \times \D$ mamy dwa naturalne zadane funktory --- \emph{projekcje}:
+\[
+\begin{tikzcd}
+& \Cat \times \D \arrow[dl, "\pi_1"'] \arrow[dr, "\pi_2"] & \\
+\Cat & & \D
+\end{tikzcd}
+\]
+zadane wzorami
+\[
+    \pi_1(C, D) \stackrel{\mathrm{df}}{=} C, \qquad \pi_1(f, g) \stackrel{\mathrm{df}}{=} f,
+\]
+oraz analogicznie $\pi_2(C, D) = D$, $\pi_2(f, g) = g$. Należy sprawdzić, że $\pi_1, \pi_2$ są funktorami.
+\end{uwaga}
+
+\subsection{Kategoria przeciwna (opposite)}
+
+\begin{definicja}
+Niech $\Cat$ będzie kategorią. Definiujemy $\Cat^{\op}$ w następujący sposób:
+\begin{enumerate}
+    \item[(a)] obiektami $\Cat^{\op}$ są dokładnie obiekty $\Cat$;
+    \item[(b)] strzałka $f \colon C \to D$ w $\Cat^{\op}$ jest dokładnie strzałką $f \colon D \to C$ w $\Cat$. Inaczej:
+    \[
+        \Cat^{\op}(C, D) \stackrel{\mathrm{df}}{=} \Cat(D, C);
+    \]
+    \item[(c)] dla dwóch strzałek $f \colon C \to D$ i $g \colon D \to E$ w $\Cat^{\op}$ (czyli $f \colon D \to C$ i $g \colon E \to D$ w $\Cat$) definiujemy
+    \[
+        g \circ_{\Cat^{\op}} f \;\stackrel{\mathrm{df}}{=}\; f \circ_{\Cat} g,
+    \]
+    czyli złożenie w $\Cat^{\op}$ to złożenie w odwrotnej kolejności w $\Cat$;
+    \item[] $\id_A$ w $\Cat^{\op}$ jest $\id_A$ w $\Cat$.
+\end{enumerate}
+\end{definicja}
+
+\begin{uwaga}
+Mówimy, że $\Cat^{\op}$ jest \emph{kategorią strzałek o dziedzinie $C$ i przeciwdziedzinie $D$} w $\Cat$ (po odwróceniu strzałek).
+\end{uwaga}
+
+\begin{uwaga}
+Dla dowolnej kategorii $\Cat$ mamy zadane przyporządkowanie
+\[
+    \overline{(-)} \colon \Cat \longrightarrow \Cat^{\op},
+\]
+takie że
+\begin{enumerate}
+    \item[(a)] $\overline{(A)} \stackrel{\mathrm{df}}{=} A$;
+    \item[(b)] $\overline{(f \colon C \to D)} \stackrel{\mathrm{df}}{=} f \colon D \to C$.
+\end{enumerate}
+To przyporządkowanie nie jest funktorem (zmienia kierunek strzałek).
+\end{uwaga}
+
+\subsection{Kategoria slice}
+
+\begin{definicja}
+Niech $\Cat$ będzie kategorią i niech $C$ będzie obiektem $\Cat$. \emph{Kategorią slice} (kategorią ilorazową) $\Cat / C$ nazywamy kategorię, w której:
+\begin{enumerate}
+    \item[(a)] obiektami są strzałki $f \in \Cat$ takie, że $\cod(f) = C$;
+    \item[(b)] strzałką z obiektu $f \colon X \to C$ do obiektu $f' \colon X' \to C$ jest morfizm $g \colon X \to X'$ w $\Cat$ taki, że poniższy diagram jest przemienny:
+    \[
+    \begin{tikzcd}
+        X \arrow[rr, "g"] \arrow[dr, "f"'] & & X' \arrow[dl, "f'"] \\
+        & C &
+    \end{tikzcd}
+    \]
+    \item[(c)] mając dane dwie strzałki w $\Cat / C$:
+    \[
+    \begin{tikzcd}
+        X \arrow[rr, "g"] \arrow[ddrr, "f"'] & & X' \arrow[rr, "g'"] \arrow[dd, "f'" near start] & & X'' \arrow[ddll, "f''"] \\
+        & & & & \\
+        & & C & &
+    \end{tikzcd}
+    \]
+    ich złożenie definiujemy wzorem $g' \circ g$. Wówczas
+    \[
+        f'' \circ g' \circ g = f' \circ g = f,
+    \]
+    co oznacza, że $g' \circ g$ jest istotnie morfizmem w $\Cat / C$. Identycznością na $f \colon X \to C$ jest $\id_X$.
+\end{enumerate}
+\end{definicja}
+
+\begin{przyklad}
+Niech $\Cat$ będzie kategorią otrzymaną z poseta $(P, \leq)$ oraz niech $p \in P$. Czym jest $P/p$?
+\begin{itemize}
+    \item Obiektami są strzałki $(x, p)$, gdzie $x \leq p$. Takie obiekty możemy utożsamić z elementami $x$, mianowicie stowarzyszonymi z elementem
+    \[
+        \{x \colon x \leq p\}.
+    \]
+    \item Strzałkami w tej kategorii są po prostu nierówności $x \leq x'$ (dla elementów spełniających $x, x' \leq p$).
+\end{itemize}
+Podsumowując,
+\[
+    P/p \;=\; \bigl( \mathord{\downarrow}(p),\, \leq \bigr),
+\]
+gdzie $\mathord{\downarrow}(p) \stackrel{\mathrm{df}}{=} \{x \colon x \leq p\}$ jest \emph{downsetem} elementu $p$.
+\end{przyklad}
+
+\begin{uwaga}
+Zamieniając w definicji kategorii slice dziedzinę z przeciwdziedziną otrzymujemy definicję \emph{kategorii coslice}, oznaczanej $C / \Cat$. Należy spisać formalną definicję kategorii coslice.
+\end{uwaga}
+
+\subsection{Kategorie duże, małe i lokalnie małe}
+
+\begin{uwaga}
+Podsumowanie: kategorie duże, małe i lokalnie małe.
+\begin{itemize}
+    \item Dla ustalonych obiektów $C, D \in \Cat$ kolekcja
+    \[
+        \{f \colon C \to D \in \Cat\}
+    \]
+    jest zbiorem $\Longrightarrow$ kategoria jest \emph{lokalnie mała}.
+    \item Jeżeli kolekcja obiektów i kolekcja strzałek są zbiorami, kategoria jest \emph{mała}; w przeciwnym razie jest \emph{duża} (nie jest lokalnie mała).
+\end{itemize}
+\end{uwaga}
+
+\section{Struktury abstrakcyjne: izo, mono, epi}
+
+\begin{definicja}
+Strzałkę $f \colon A \to B$ w $\Cat$ nazywamy \emph{izomorfizmem} (izo), jeśli istnieje strzałka $g \colon B \to A$ w $\Cat$ taka, że
+\[
+    g \circ f = \id_A \quad \text{oraz} \quad f \circ g = \id_B.
+\]
+\end{definicja}
+
+\begin{przyklad}
+Izomorfizmami w $\Set$ są dokładnie bijekcje. W $\Grp$ izomorfizmy są standardowymi izomorfizmami grup; analogicznie w innych kategoriach struktur algebraicznych.
+\end{przyklad}
+
+\begin{twierdzenie}
+Jeżeli $f \colon A \to B$ i $f' \colon B \to C$ są izomorfizmami w $\Cat$, to $f' \circ f$ jest izomorfizmem.
+\end{twierdzenie}
+
+\begin{definicja}
+W kategorii $\Cat$ strzałka $f \colon A \to B$ nazywana jest
+\begin{enumerate}
+    \item[(a)] \emph{monomorfizmem} (mono), jeśli dla każdej pary $g, h \colon C \to A$ mamy
+    \[
+        f \circ g = f \circ h \;\Longrightarrow\; g = h;
+    \]
+    \item[(b)] \emph{epimorfizmem} (epi), jeśli dla każdej pary $i, j \colon B \to D$ mamy
+    \[
+        i \circ f = j \circ f \;\Longrightarrow\; i = j.
+    \]
+\end{enumerate}
+\end{definicja}
+
+\begin{uwaga}
+Oznaczenia:
+\[
+    A \hookrightarrow B \;\text{---}\; \text{monomorfizm}, \qquad A \twoheadrightarrow B \;\text{---}\; \text{epimorfizm}.
+\]
+\end{uwaga}
+
+\begin{stwierdzenie}
+Funkcja $f \colon A \to B$ w $\Set$ jest mono wtedy i tylko wtedy, gdy jest różnowartościowa.
+\end{stwierdzenie}
+
+\begin{uwaga}
+Zwróćmy uwagę na to, że
+\[
+    \text{strzałka } f \colon A \to B \text{ jest epi w } \Cat
+    \;\Longleftrightarrow\;
+    \text{strzałka } f \colon B \to A \text{ jest mono w } \Cat^{\op}.
+\]
+\end{uwaga}

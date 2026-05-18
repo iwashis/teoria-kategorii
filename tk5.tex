@@ -1,0 +1,106 @@
+\documentclass[10pt]{amsart}
+
+\usepackage{amssymb, latexsym, amscd,stmaryrd}
+\usepackage{amsfonts, polski}
+\usepackage[utf8]{inputenc}
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{proposition}[lemma]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{remark}[lemma]{Remark}
+\numberwithin{equation}{section}
+
+\textwidth\paperwidth \advance\textwidth -60mm \oddsidemargin-1in
+%\advance\oddsidemargin 30mm
+\advance\oddsidemargin 25mm \evensidemargin-1in
+\advance\evensidemargin 25mm \topmargin -1in
+ %\advance\topmargin 1cm
+\advance\topmargin 10mm \textheight = 700pt
+
+
+\title{Teoria kategorii}
+\author{Seria 5: Transformacje naturalne i monady}
+\begin{document}
+\maketitle
+
+\begin{problem} \label{problem:1}
+  Niech $\mathbb{C}$ będzie kategorią kartezjańsko-domkniętą. Pokazać, że następujące rodziny:
+  \begin{itemize}
+    \item $\{\eta_X: X\to (X\times A)^A\}_X$, 
+    \item $\{\varepsilon_X: X^A\times A\to X\}_X$,
+    \item $\{\mu_X: \left ( (X\times A)^A \times A\right )^A \to (X\times A)^A \}$, gdzie 
+        $\mu_X =  (\varepsilon_{X\times A})^A$. 
+  \end{itemize}
+  są transformacjami naturalnymi między odpowiednimi funktorami. 
+\end{problem} 
+
+\begin{problem} \label{problem:2}
+  Pokazać, że następujące rodziny $\{\eta_X\}_X$ i $\{\mu_X\}_X$ są 
+transformacjami naturalnymi między odpowiednimi $\mathsf{Set}$-funktorami:
+\begin{enumerate}
+\item $\{\eta_X:X\to \mathcal{P}X\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = \{x\}$ oraz 
+  $\{\mu_X: \mathcal{P}\mathcal{P}X\to \mathcal{P}X\}_{X\in \mathsf{Set}}, \mu_X(S) =\bigcup S$,
+\item $\{\eta_X:X\to X^\ast\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = x$ 
+  oraz $\{\mu_X: (X^\ast)^\ast \to X^\ast\}_{X\in \mathsf{Set}}$, 
+  gdzie $\mu_X( s_1,s_2,\ldots, s_n ) = s_1s_2\ldots s_n$.
+\item Niech  $M=(M,\cdot,1)$ będzie ustalonym z góry monoidem, a ponadto
+  $\{\eta_X: X\to M\times X\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = (1,x)$ oraz  
+  $\{\mu_{X}:M\times M\times X\to M\times X\}_{X\in \mathsf{Set}}$, 
+  gdzie $\mu_{X}(m,n,x) = (m\cdot n,x)$.
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem} 
+Pokazać, że następujące trójki są monadami:
+\begin{enumerate}
+  \item 
+    $((\mathcal{I}d\times A)^A:\mathbb{C}\to \mathbb{C}, 
+    \mu: \left ((\mathcal{I}d\times A)^A \times A\right)^A\implies (\mathcal{I}d\times A)^A, 
+    \eta: \mathcal{I}d\implies (\mathcal{I}d\times A)^A)
+    $, 
+    gdzie $\mathbb{C}$ jest kategorią kartezjańsko domkniętą oraz $\mu$ i $\eta$ są jak w Zadaniu \ref{problem:1}.  
+  \item $(T, \mu, \eta)$, gdzie $T\in \{\mathcal{P}, (-)^\ast, M\times \mathcal{I}d\}$, oraz 
+      $\mu$ i $\eta$ są jak w Zadaniu \ref{problem:2} dla odpowiednich funktorów. 
+   
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+  Niech $(T,\mu,\eta)$ będzie monadą na kategorii $\mathbb{C}$. Dla $f:A\to TB, g:B\to TC$ zdefiniujmy:
+  $$ g \cdot f :A\to TC; g\cdot f = \mu_C \circ Tg \circ f .$$ 
+  Pokazać, że dla $f,g$ oraz $h:C\to TD$ zachodzi:
+  \begin{align*}
+    & (h\cdot g)\cdot f = h\cdot (g\cdot f) \text{ oraz } f\cdot \eta_A = \eta_B\cdot f = f.  
+  \end{align*}
+\end{problem}
+
+\begin{problem}
+ Trójkę $(T,(-)^\ast, \eta)$ nazywamy \emph{trójką Kleisliego}, jeśli
+ \begin{itemize}
+   \item $T:\mathbb{C}_o\to \mathbb{C}_o$ jest przyporządkowaniem,
+   \item $\eta= \{\eta_X:X\to TX\}_{X\in \mathbb{C}}$ jest rodziną strzałek,
+   \item $(-)^\ast$ przyporządkowuje dowolnej strzałce $f:X\to TY$ strzałkę $f^\ast :TX\to TY$, 
+  \end{itemize}
+ dodatkowo spełniającymi następujące równania:
+ \[ 
+   \eta_X^\ast = id_{TX}, \text{ oraz } f^\ast \circ \eta_X = f \text{ oraz } 
+    (g^\ast \circ f)^\ast = g^\ast \circ f^\ast.
+ \]
+ Pokazać, że jeśli $(T, (-)^\ast, \eta)$ jest trójką Kleisliego, to $(T,\mu,\eta)$ jest monadą, gdzie $Tf = (\eta_Y\circ f)^\ast$ 
+ dla każdej strzałki $f:X\to Y$ oraz
+ $\mu = \{\mu_X:T^2X\to TX\}$ dla $\mu_X = (id_{TX})^\ast$. 
+ Ponadto, jeśli $(T,(-)^\ast, \eta)$ jest monadą, 
+ to $(T,(-)^\ast, \eta)$ jest trójką Kleisliego, gdzie $f^\ast = \mu_Y \circ Tf$ dla $f:X\to TY$. 
+\end{problem} 
+
+\end{document}

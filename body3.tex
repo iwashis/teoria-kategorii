@@ -1,0 +1,257 @@
+\section{Monomorfizmy, epimorfizmy, izomorfizmy}
+
+\begin{definicja}
+Niech $f\colon A\to B$ będzie strzałką w kategorii $\C$. Strzałkę $f$ nazywamy \emph{izomorfizmem}, jeśli istnieje $g\colon B\to A$ w $\C$ taka, że
+\[
+g\circ f = \id_A \quad\text{oraz}\quad f\circ g = \id_B.
+\]
+\end{definicja}
+
+\begin{definicja}
+Strzałkę $f\colon A\to B$ nazywamy \emph{monomorfizmem} (\emph{mono}), jeśli dla każdych $g,h\colon C\to A$ w $\C$
+\[
+f\circ g = f\circ h \;\Longrightarrow\; g=h,
+\]
+tzn.\ diagram
+\[
+\begin{tikzcd}
+C \arrow[r, shift left, "g"] \arrow[r, shift right, "h"'] & A \arrow[r, "f"] & B
+\end{tikzcd}
+\]
+daje implikację $f\circ g = f\circ h \Rightarrow g=h$.
+\end{definicja}
+
+\begin{definicja}
+Strzałkę $f\colon A\to B$ nazywamy \emph{epimorfizmem} (\emph{epi}), jeśli dla każdych $i,j\colon B\to C$ w $\C$
+\[
+i\circ f = j\circ f \;\Longrightarrow\; i=j.
+\]
+\end{definicja}
+
+\begin{stwierdzenie}
+Funkcja $f\colon A\to B$ jest mono w $\Set$ wtedy i tylko wtedy, gdy jest różnowartościowa.
+\end{stwierdzenie}
+
+\begin{stwierdzenie}
+$f\colon A\to B$ jest mono w $\C$ wtedy i tylko wtedy, gdy $f\colon B\to A$ jest epi w $\C^{\op}$.
+\end{stwierdzenie}
+
+\begin{proof}
+Niech $f\colon A\to B$ będzie mono w $\C$. W szczególności oznacza to, że $f\colon B\to A$ jest strzałką w $\C^{\op}$. Weźmy $i,j\colon A\to C$ w $\C^{\op}$ i załóżmy, że w $\C^{\op}$ zachodzi
+\[
+i\circ_{\C^{\op}} f = j\circ_{\C^{\op}} f,
+\]
+gdzie $f\colon A\to B$, $i,j\colon C\to A$ w $\C$. Z definicji składania w $\C^{\op}$ wynika, że w $\C$ zachodzi
+\[
+f\circ i = f\circ j,
+\]
+gdzie $f\colon A\to B$ oraz $i,j\colon C\to A$ w $\C$. Ponieważ $f$ jest mono w $\C$, dostajemy $i=j$ w $\C$. Ale to znaczy, że $i=j$ w $\C^{\op}$. Stąd $f$ jest epi w $\C^{\op}$. Implikacja w przeciwną stronę jest analogiczna.
+\end{proof}
+
+\subsection{Przykłady}
+
+\begin{przyklad}
+W kategorii $\Set$ mono $=$ ,,różnowartościowe'', a epi $=$ ,,na''.
+\end{przyklad}
+
+\begin{przyklad}
+Niech $\C$ będzie kategorią indukowaną przez poset $(P,\leq)$. Weźmy $p,q\in P$. Wtedy dla strzałek
+\[
+\begin{tikzcd}
+g,h\colon r \arrow[r] & p \arrow[r, "f"] & q
+\end{tikzcd}
+\]
+warunek $f\circ g = f\circ h$ daje $g=h$ (gdyż wszystkie strzałki między tą samą parą obiektów są równe).
+\end{przyklad}
+
+\begin{wniosek}
+Każda strzałka $f\colon p\leq q$ jest mono (i epi) w kategorii indukowanej przez poset $(P,\leq)$.
+\end{wniosek}
+
+\begin{przyklad}
+Rozważmy kategorię $\Mon$ -- kategorię monoidów z homomorfizmami monoidów jako strzałkami. W tej kategorii rozważmy strzałkę
+\[
+f\colon (\mathbb{N},+,0) \longrightarrow (\mathbb{Z},+,0), \qquad f(i) = i.
+\]
+Ta strzałka jest:
+\begin{enumerate}
+\item mono,
+\item epimorfizmem.
+\end{enumerate}
+
+\emph{Dowód (1).} Strzałka $f$ jest różnowartościowa, więc jest mono w $\Set$ -- a zatem także w $\Mon$.
+
+\emph{Dowód (2).} Musimy pokazać, że dla każdej pary
+\[
+i,j\colon (\mathbb{Z},+,0) \longrightarrow M
+\]
+(gdzie $M=(M,\cdot,1)$ jest monoidem) zachodzi
+\[
+i\circ f = j\circ f \;\Longrightarrow\; i=j.
+\]
+Załóżmy, że $i\circ f = j\circ f$. Z tej równości wynika w szczególności, że
+\[
+i|_{\mathbb{N}} = j|_{\mathbb{N}}.
+\]
+Wystarczy więc pokazać, że $i(-n) = j(-n)$ dla każdego $n\in\mathbb{N}$. Z faktu, że $i$ jest homomorfizmem mamy
+\[
+1 = i(0) = i(n + (-n)) = i(n)\cdot i(-n),
+\]
+czyli $i(-n) = i(n)^{-1}$. Analogicznie $j(-n) = j(n)^{-1}$. Z $i|_{\mathbb{N}}=j|_{\mathbb{N}}$ wynika $i(n)=j(n)$, więc $i(-n) = j(-n)$, a zatem $i=j$. \qed
+\end{przyklad}
+
+\section{Obiekty początkowe i końcowe}
+
+W $\Set$:
+\[
+\begin{tikzcd}
+\emptyset \arrow[r, "i"] & A \arrow[r] & \mathbf{1}
+\end{tikzcd}
+\]
+$\emptyset$ jest obiektem początkowym, $\mathbf{1}$ (zbiór jednoelementowy) jest obiektem końcowym.
+
+\begin{definicja}
+Niech $\C$ będzie kategorią. Obiekt $0\in\C$ nazywamy \emph{początkowym}, jeśli dla każdego obiektu $A\in\C$ istnieje dokładnie jedna strzałka
+\[
+i_A\colon 0 \longrightarrow A.
+\]
+\end{definicja}
+
+\begin{definicja}
+Obiekt $\mathbf{1}\in\C$ nazywamy \emph{końcowym}, jeśli dla każdego $A\in\C$ istnieje dokładnie jedna strzałka
+\[
+!_A\colon A \longrightarrow \mathbf{1}.
+\]
+\end{definicja}
+
+\begin{uwaga}
+$0\in\C$ jest obiektem początkowym w $\C$ wtedy i tylko wtedy, gdy $0$ jest końcowym w $\C^{\op}$.
+\end{uwaga}
+
+\begin{stwierdzenie}
+Obiekt początkowy (końcowy) jest wyznaczony jednoznacznie z dokładnością do izomorfizmu.
+\end{stwierdzenie}
+
+\begin{proof}
+Załóżmy, że $0$, $0'$ są początkowe w kategorii $\C$. Wtedy istnieją jednoznacznie wyznaczone strzałki
+\[
+\begin{tikzcd}
+0 \arrow[r, shift left, "u"] & 0' \arrow[l, shift left, "v"]
+\end{tikzcd}
+\]
+spełniające:
+\begin{enumerate}
+\item $v\circ u = \id_0$ (gdyż obie strzałki $0\to 0$ muszą być równe, a $\id_0$ jest jedyną),
+\item $u\circ v = \id_{0'}$ (analogicznie).
+\end{enumerate}
+Stąd $0\cong 0'$. Dowód dla obiektu końcowego jest analogiczny.
+\end{proof}
+
+\subsection{Przykłady}
+
+\begin{przyklad}
+W $\Set$: obiekt początkowy $=\emptyset$, obiekt końcowy $=$ dowolny zbiór jednoelementowy.
+\end{przyklad}
+
+\begin{przyklad}
+Niech $\C$ będzie kategorią indukowaną przez poset $(P,\leq)$. Czym (jeśli istnieją) są obiekty początkowe i końcowe w $\C$?
+
+\emph{Obiekt początkowy:} $0\leq p$ dla każdego $p\in P$. Widzimy, że $0$ jest elementem najmniejszym w $(P,\leq)$. Np.\ w
+\[
+\begin{tikzcd}
+\bullet & & \bullet
+\end{tikzcd}
+\]
+nie ma obiektu początkowego.
+
+\emph{Obiekt końcowy w $P$} spełnia $\forall p\leq \mathbf{1}$. Czyli jest to element największy w $(P,\leq)$.
+\end{przyklad}
+
+\begin{przyklad}
+Rozważmy kategorię algebr typu $(1,0)$. Obiektami w tej kategorii są
+\[
+(A,s,a), \qquad \text{gdzie } s\colon A\to A,\; a\in A.
+\]
+Strzałkami w tej kategorii są
+\[
+f\colon (A,s,a) \longrightarrow (B,s',b),
+\]
+gdzie $f\colon A\to B$ jest funkcją spełniającą:
+\begin{enumerate}
+\item dla każdego $x\in A$: $s'(f(x)) = f(s(x))$,
+\item $f(a)=b$.
+\end{enumerate}
+\end{przyklad}
+
+\begin{stwierdzenie}
+W tej kategorii obiektem początkowym jest algebra
+\[
+(\mathbb{N},\mathrm{succ},0), \qquad \mathrm{succ}(n)\stackrel{\mathrm{df}}{=} n+1.
+\]
+\end{stwierdzenie}
+
+\section{Produkty}
+
+W $\Set$:
+\[
+A\times B = \{(a,b) : a\in A,\; b\in B\}.
+\]
+Zauważmy, że każdy produkt kartezjański $A\times B$ jest w parze z dwoma rzutowaniami
+\[
+\begin{tikzcd}
+A & A\times B \arrow[l, "\pi_1"'] \arrow[r, "\pi_2"] & B
+\end{tikzcd}
+\]
+gdzie $\pi_1(a,b) = a$, $\pi_2(a,b)=b$. Ponadto dla dowolnego zbioru $X$ wraz ze strzałkami $c_1\colon X\to A$, $c_2\colon X\to B$ istnieje jednoznacznie wyznaczona strzałka $X\to A\times B$ dana wzorem $x\mapsto (c_1(x),c_2(x))$.
+
+\begin{definicja}
+Niech $\C$ będzie kategorią. \emph{Diagramem produktu} dla obiektów $A,B\in\C$ nazywamy obiekt $P$ wraz ze strzałkami
+\[
+\begin{tikzcd}
+A & P \arrow[l, "p_1"'] \arrow[r, "p_2"] & B
+\end{tikzcd}
+\]
+takimi, że dla każdego obiektu $X\in\C$ wraz ze strzałkami
+\[
+\begin{tikzcd}
+A & X \arrow[l, "x_1"'] \arrow[r, "x_2"] & B
+\end{tikzcd}
+\]
+istnieje jednoznaczna strzałka $u\colon X\to P$ czyniąca następujący diagram przemiennym:
+\[
+\begin{tikzcd}
+& X \arrow[ld, "x_1"'] \arrow[rd, "x_2"] \arrow[d, dashed, "\exists! u"] & \\
+A & P \arrow[l, "p_1"] \arrow[r, "p_2"'] & B
+\end{tikzcd}
+\]
+\end{definicja}
+
+\begin{definicja}
+Jeśli $P$ wraz z $A\xleftarrow{p_1} P\xrightarrow{p_2} B$ jest diagramem produktowym dla obiektów $A,B$, to $P$ nazywamy \emph{produktem} $A$ oraz $B$.
+\end{definicja}
+
+\begin{stwierdzenie}
+Produkty są określone jednoznacznie z dokładnością do izomorfizmu.
+\end{stwierdzenie}
+
+\begin{proof}
+Załóżmy, że
+\[
+\begin{tikzcd}
+A & P \arrow[l, "p_1"'] \arrow[r, "p_2"] & B
+\end{tikzcd}
+\qquad\text{oraz}\qquad
+\begin{tikzcd}
+A & Q \arrow[l, "q_1"'] \arrow[r, "q_2"] & B
+\end{tikzcd}
+\]
+są diagramami produktowymi dla $A,B$. $Q$ jest produktem, więc istnieje jednoznacznie określona strzałka $i\colon P\to Q$ taka, że
+\[
+q_1\circ i = p_1 \quad\text{oraz}\quad q_2\circ i = p_2.
+\]
+Analogicznie, ponieważ $P$ jest produktem, istnieje jednoznacznie określona strzałka $j\colon Q\to P$ taka, że
+\[
+q_1 = p_1\circ j, \qquad q_2 = p_2\circ j.
+\]
+Stąd $p_1\circ j\circ i = p_1$ oraz $p_2\circ j\circ i = p_2$. Z jednoznaczności strzałki czyniącej diagram produktowy przemiennym (a $\id_P$ także go uzupełnia) mamy $j\circ i = \id_P$. Analogicznie $i\circ j = \id_Q$.
+\end{proof}

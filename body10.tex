@@ -1,0 +1,102 @@
+\section*{Podsumowanie najważniejszych własności CCC}
+
+Jeśli $\C$ jest CCC, to:
+
+\begin{enumerate}
+\item Dla każdego obiektu $A$ mamy funktor
+\[
+(-)\times A \colon \C \longrightarrow \C, \qquad X \longmapsto X\times A, \qquad \bigl(X \xrightarrow{f} Y\bigr) \longmapsto \bigl(X\times A \xrightarrow{f\times \id_A} Y\times A\bigr).
+\]
+
+\item Dla każdego $A$ mamy funktor
+\[
+(-)^{A} \colon \C \longrightarrow \C, \qquad X \longmapsto X^{A},
+\]
+\[
+\bigl(X \xrightarrow{f} Y\bigr) \longmapsto \bigl(X^{A} \xrightarrow{f^{A}} Y^{A}\bigr), \qquad f^{A} \stackrel{df}{=} \widetilde{f\circ \varepsilon}.
+\]
+
+\item Dla każdego $A,X,Y$ mamy bijekcję
+\[
+\C\bigl(X\times A,\; Y\bigr) \;\cong\; \C\bigl(X,\; Y^{A}\bigr),
+\]
+zadaną przez transpozycję $f \mapsto \tilde{f}$.
+
+\item Dla każdego obiektu $X,A$ mamy ewaluację
+\[
+\varepsilon \colon X^{A}\times A \longrightarrow X.
+\]
+\end{enumerate}
+
+\begin{stwierdzenie}
+Dla każdego $f\colon X\to Y$ następujący diagram jest przemienny (naturalność $\varepsilon$):
+\[
+\begin{tikzcd}[column sep=large, row sep=large]
+X^{A}\times A \arrow[r, "\varepsilon_{X}"] \arrow[d, "f^{A}\times \id_{A}"'] & X \arrow[d, "f"] \\
+Y^{A}\times A \arrow[r, "\varepsilon_{Y}"'] & Y
+\end{tikzcd}
+\]
+\end{stwierdzenie}
+
+\begin{proof}
+Weźmy
+\[
+g \colon X^{A}\times A \xrightarrow{\varepsilon} X \xrightarrow{f} Y.
+\]
+Z definicji $f^A = \widetilde{f\circ\varepsilon}$ wynika, że $\varepsilon\circ(f^A\times\id_A) = f\circ\varepsilon$, co jest dokładnie przemiennością kwadratu powyżej.
+\end{proof}
+
+\begin{enumerate}
+\setcounter{enumi}{4}
+\item Mamy strzałkę $\eta\colon X \to (X\times A)^{A}$ zdefiniowaną jako
+\[
+\eta \stackrel{df}{=} \widetilde{\id_{X\times A}}.
+\]
+
+\item Następujący wzór jest pomocny przy składaniu strzałek wykładnikowych: dla $f\colon X\times A\to Y\times A$, $g\colon Y\times A\to Z\times A$
+\[
+\widetilde{g\circ f} \;=\; (\varepsilon_{Z\times A})^{A}\circ \bigl(\widetilde{g}\times\id_{A}\bigr)^{A}\circ \widetilde{f}.
+\]
+\end{enumerate}
+
+\begin{uwaga}
+Ćwiczenie: uzasadnić powyższą równość.
+\end{uwaga}
+
+\section*{Wykorzystanie CCC w modelowaniu obliczeń z efektami ubocznymi}
+
+Niech w naszej kategorii istnieje specjalny obiekt $W$ odpowiadający za stan ,,świata zewnętrznego''. Funkcja, która przyjmuje argument typu $X$ i zwraca wartość typu $Y$, jednocześnie ingerując w $W$, jest typu
+\[
+f \colon X\times W \longrightarrow Y\times W.
+\]
+
+Z bijekcji wynika
+\[
+\frac{f\colon X\times W \longrightarrow Y\times W}{\widetilde{f}\colon X \longrightarrow (Y\times W)^{W}}.
+\]
+
+Jeśli zdefiniujemy
+\[
+\IO(Y) \;=\; (Y\times W)^{W},
+\]
+to nasza funkcja jest typu $\widetilde{f}\colon X \to \IO(Y)$.
+
+Tu $\IO = (-)^W \circ ((-)\times W)$ jest funktorem na $\C$.
+
+\subsection*{Przykłady typów funkcji w Haskellu}
+
+\[
+\texttt{putChar} \;::\; \texttt{Char} \longrightarrow \IO\,()
+\]
+(wyświetlenie znaku na monitorze)
+
+\[
+\texttt{getChar} \;::\; \IO\,\texttt{Char}
+\]
+
+\[
+\texttt{readFile} \;::\; \texttt{FilePath} \longrightarrow \IO\,\texttt{String}
+\]
+\[
+\texttt{writeFile} \;::\; (\texttt{FilePath},\, \texttt{String}) \longrightarrow \IO\,()
+\]

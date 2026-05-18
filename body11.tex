@@ -1,0 +1,134 @@
+\subsection*{Przypomnienie własności CCC}
+
+W CCC dla dowolnych obiektów $A, B$ istnieje obiekt wykładniczy $B^A$ oraz morfizm \emph{ewaluacji}
+\[
+\varepsilon_{A,B} \colon B^A \times A \to B
+\]
+o następujących własnościach:
+
+\textbf{(A)} Dla każdego morfizmu $f \colon X \times A \to B$ istnieje dokładnie jeden morfizm $\widetilde{f} \colon X \to B^A$ taki, że
+\[
+\begin{tikzcd}[column sep=large]
+X \times A \arrow[r, "f"] \arrow[d, "\widetilde{f}\times \id_A"'] & B \\
+B^A \times A \arrow[ur, "\varepsilon"'] &
+\end{tikzcd}
+\]
+komutuje.
+
+\textbf{(B)} Dla każdego $g \colon X \to B^A$ definiujemy
+\[
+\overline{g} \;\stackrel{df}{=}\; \varepsilon \circ (g \times \id_A) \colon X \times A \to B.
+\]
+Wtedy $\widetilde{\overline{g}} = g$ oraz dla każdego $f \colon X \times A \to B$ zachodzi $\overline{\widetilde{f}} = f$.
+
+\textbf{(C)} Dla każdego $f \colon X \to Y$:
+\[
+\begin{tikzcd}[column sep=large]
+X^A \times A \arrow[r, "\varepsilon_X"] \arrow[d, "f^A\times \id_A"'] & X \arrow[d, "f"] \\
+Y^A \times A \arrow[r, "\varepsilon_Y"'] & Y
+\end{tikzcd}
+\]
+oraz $f^A = \widetilde{f \circ \varepsilon}$.
+
+\subsection*{Zadanie 4.6 -- transpozycja złożenia}
+
+\begin{stwierdzenie}
+Dla każdych
+\[
+f \colon X \times A \to Y \times A, \qquad g \colon Y \times A \to Z \times A
+\]
+zachodzi
+\[
+\widetilde{g \circ f} \;=\; (\varepsilon_{Z\times A})^A \circ (\widetilde{g} \times \id_A)^A \circ \widetilde{f}. \tag{$*$}
+\]
+\end{stwierdzenie}
+
+\begin{proof}
+Wystarczy pokazać, że wyrażenie po prawej stronie spełnia równanie definiujące $\widetilde{g \circ f}$, tzn.\ czyni diagram
+\[
+\begin{tikzcd}[column sep=huge, row sep=large]
+X \times A \arrow[rr, "g\circ f"] \arrow[d, "(?)\times \id_A"'] & & Z \times A \\
+(Z \times A)^A \times A \arrow[urr, "\varepsilon_{Z\times A}"'] & &
+\end{tikzcd}
+\]
+przemiennym dla $(?) = (\varepsilon_{Z\times A})^A \circ (\widetilde{g} \times \id_A)^A \circ \widetilde{f}$.
+
+Korzystając z (A) i naturalności ewaluacji (C) otrzymujemy
+\[
+g \circ f \;=\; \varepsilon_{Z\times A} \circ \bigl((\varepsilon_{Z\times A})^A \circ (\widetilde{g}\times\id_A)^A \circ \widetilde{f}\bigr)\times \id_A.
+\]
+Z jednoznaczności w (A) wynika $(*)$.
+\end{proof}
+
+\subsection*{Zadanie 4.7 -- funktor stanu}
+
+\begin{definicja}
+W kategorii CCC, mając funktory $(-)\times A$ oraz $(-)^A$, definiujemy funktor
+\[
+\State_A \;=\; (-)^A \circ \bigl((-)\times A\bigr),
+\]
+czyli
+\[
+\State_A X = (X\times A)^A.
+\]
+Działanie na strzałkach: dla $f\colon X\to Y$
+\[
+\State_A(f) = ((f\times \id_A)\circ \varepsilon)^A.
+\]
+\end{definicja}
+
+\begin{definicja}[Kompozycja Kleisliego]
+Dla dwóch strzałek
+\[
+f \colon X \to \State_A Y, \qquad g \colon Y \to \State_A Z
+\]
+definiujemy
+\[
+g \,\square\, f \;\stackrel{df}{=}\; (\varepsilon_{Z\times A})^A \circ \State_A(g) \circ f.
+\]
+\end{definicja}
+
+\begin{uwaga}
+Operacja $\square$ jest ,,kleislowskim'' odpowiednikiem zwykłego składania. Mamy korespondencję
+\[
+\begin{tikzcd}[column sep=large]
+f\colon X\times A \to Y\times A \arrow[r, leftrightarrow] & \widetilde{f}\colon X \to \State_A Y
+\end{tikzcd}
+\]
+i analogicznie dla $g$. Wówczas
+\[
+\frac{f\colon X\times A\to Y\times A,\quad g\colon Y\times A \to Z\times A}{g\circ f\colon X\times A \to Z\times A}
+\quad\longleftrightarrow\quad
+\frac{\widetilde{f},\; \widetilde{g}}{\widetilde{g}\,\square\,\widetilde{f}\colon X\to \State_A Z.}
+\]
+\end{uwaga}
+
+\begin{stwierdzenie}
+Operacja $\square$ jest łączna oraz spełnia
+\[
+\eta_Y \,\square\, f = f, \qquad f \,\square\, \eta_X = f,
+\]
+gdzie $\eta_X \colon X \to \State_A X$ dane jest przez $\eta_X = \widetilde{\id_{X\times A}}$.
+\end{stwierdzenie}
+
+\begin{proof}
+\textbf{Łączność.} Weźmy $f \colon X \to \State_A Y$, $g \colon Y \to \State_A Z$, $h \colon Z \to \State_A T$. Z (B) mamy $f = \widetilde{\,\overline{f}\,}$, $g = \widetilde{\,\overline{g}\,}$. Wówczas
+\[
+g \,\square\, f \;=\; (\varepsilon_{Z\times A})^A \circ \bigl(\widetilde{\,\overline{g}\,} \times \id_A\bigr)^A \circ \widetilde{\,\overline{f}\,}.
+\]
+Z zadania 4.6 prawa strona równa się $\widetilde{\,\overline{g}\circ \overline{f}\,}$, czyli
+\[
+g \,\square\, f \;=\; \widetilde{\,\overline{g}\circ \overline{f}\,}. \tag{$\triangle$}
+\]
+Dalej
+\begin{align*}
+h \,\square\, (g \,\square\, f) &= h \,\square\, \widetilde{\,\overline{g}\circ \overline{f}\,} \stackrel{(\triangle)}{=} \widetilde{\,\overline{h}\circ (\overline{g}\circ \overline{f})\,} \\
+ &= \widetilde{\,(\overline{h}\circ \overline{g})\circ \overline{f}\,} \stackrel{(\triangle)}{=} (h \,\square\, g) \,\square\, f.
+\end{align*}
+
+\textbf{Elementy neutralne.} Mamy $\overline{\eta_Y} = \id_{Y\times A}$ (z (B)). Z $(\triangle)$:
+\[
+\eta_Y \,\square\, f \;=\; \widetilde{\,\overline{\eta_Y}\circ \overline{f}\,} \;=\; \widetilde{\,\overline{f}\,} \;=\; f.
+\]
+Analogicznie $f \,\square\, \eta_X = f$. \qedhere
+\end{proof}
