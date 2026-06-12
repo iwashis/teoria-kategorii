@@ -1,5 +1,7 @@
 \section{Monomorfizmy, epimorfizmy, izomorfizmy}
 
+Przypomnijmy najpierw pojęcia izomorfizmu, mono- i epimorfizmu wprowadzone pod koniec poprzedniego rozdziału; zobaczymy je teraz w działaniu na przykładach.
+
 \begin{definicja}
 Niech $f\colon A\to B$ będzie strzałką w kategorii $\C$. Strzałkę $f$ nazywamy \emph{izomorfizmem}, jeśli istnieje $g\colon B\to A$ w $\C$ taka, że
 \[
@@ -95,10 +97,16 @@ i|_{\mathbb{N}} = j|_{\mathbb{N}}.
 \]
 Wystarczy więc pokazać, że $i(-n) = j(-n)$ dla każdego $n\in\mathbb{N}$. Z faktu, że $i$ jest homomorfizmem mamy
 \[
-1 = i(0) = i(n + (-n)) = i(n)\cdot i(-n),
+1 = i(0) = i(n + (-n)) = i(n)\cdot i(-n)
+\qquad\text{oraz}\qquad
+1 = i(0) = i((-n) + n) = i(-n)\cdot i(n),
 \]
-czyli $i(-n) = i(n)^{-1}$. Analogicznie $j(-n) = j(n)^{-1}$. Z $i|_{\mathbb{N}}=j|_{\mathbb{N}}$ wynika $i(n)=j(n)$, więc $i(-n) = j(-n)$, a zatem $i=j$. \qed
+czyli $i(-n)$ jest obustronną odwrotnością elementu $i(n)$. W monoidzie element ma co najwyżej jedną obustronną odwrotność: jeśli $x\cdot m = 1 = m\cdot y$, to $x = x\cdot(m\cdot y) = (x\cdot m)\cdot y = y$. Analogicznie $j(-n)$ jest obustronną odwrotnością $j(n)$. Z $i|_{\mathbb{N}}=j|_{\mathbb{N}}$ wynika $i(n)=j(n)$, więc z jednoznaczności odwrotności $i(-n) = j(-n)$, a zatem $i=j$. \qed
 \end{przyklad}
+
+\begin{uwaga}
+Powyższy przykład pokazuje, że strzałka będąca jednocześnie mono i epi nie musi być izomorfizmem ($f$ nie jest ,,na'', więc nie ma odwrotności). W $\Set$ tak być nie może: mono $+$ epi $=$ różnowartościowa i ,,na'' $=$ bijekcja $=$ izo. Inny przykład: w $\Top$ włożenie $\mathbb{Q} \hookrightarrow \mathbb{R}$ jest mono (jest różnowartościowe) i epi (dwa przekształcenia ciągłe o wartościach w przestrzeni Hausdorffa, zgodne na gęstym podzbiorze, są równe), ale nie jest homeomorfizmem.
+\end{uwaga}
 
 \section{Obiekty początkowe i końcowe}
 
@@ -154,6 +162,10 @@ W $\Set$: obiekt początkowy $=\emptyset$, obiekt końcowy $=$ dowolny zbiór je
 \end{przyklad}
 
 \begin{przyklad}
+W $\Grp$ grupa trywialna $\{e\}$ jest jednocześnie obiektem początkowym (jedyny homomorfizm $\{e\} \to G$ posyła $e$ na element neutralny) i końcowym (jedyny homomorfizm $G \to \{e\}$ jest stały). Obiekt o obu tych własnościach nazywamy \emph{obiektem zerowym}. W $\Set$ obiekty początkowy i końcowy są natomiast różne: $\emptyset \neq \{*\}$.
+\end{przyklad}
+
+\begin{przyklad}
 Niech $\C$ będzie kategorią indukowaną przez poset $(P,\leq)$. Czym (jeśli istnieją) są obiekty początkowe i końcowe w $\C$?
 
 \emph{Obiekt początkowy:} $0\leq p$ dla każdego $p\in P$. Widzimy, że $0$ jest elementem najmniejszym w $(P,\leq)$. Np.\ w
@@ -164,7 +176,7 @@ Niech $\C$ będzie kategorią indukowaną przez poset $(P,\leq)$. Czym (jeśli i
 \]
 nie ma obiektu początkowego.
 
-\emph{Obiekt końcowy w $P$} spełnia $\forall p\leq \mathbf{1}$. Czyli jest to element największy w $(P,\leq)$.
+\emph{Obiekt końcowy:} $p \leq \mathbf{1}$ dla każdego $p\in P$, czyli $\mathbf{1}$ jest elementem największym w $(P,\leq)$.
 \end{przyklad}
 
 \begin{przyklad}
@@ -189,6 +201,14 @@ W tej kategorii obiektem początkowym jest algebra
 (\mathbb{N},\mathrm{succ},0), \qquad \mathrm{succ}(n)\stackrel{\mathrm{df}}{=} n+1.
 \]
 \end{stwierdzenie}
+
+\begin{proof}[Szkic dowodu]
+Niech $(B, s', b)$ będzie dowolną algebrą typu $(1,0)$. Strzałka $f\colon (\mathbb{N},\mathrm{succ},0)\to (B,s',b)$ musi spełniać
+\[
+f(0) = b, \qquad f(n+1) = f(\mathrm{succ}(n)) = s'(f(n)),
+\]
+a te dwa warunki \emph{definiują} $f$ rekurencyjnie -- strzałka więc istnieje, a jej jednoznaczność pokazujemy przez indukcję po $n$. Inicjalność $(\mathbb{N},\mathrm{succ},0)$ to zatem dokładnie zasada definiowania przez rekursję.
+\end{proof}
 
 \section{Produkty}
 

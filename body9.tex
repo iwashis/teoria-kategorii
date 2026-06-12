@@ -1,25 +1,4 @@
-\begin{definicja}
-Niech $\C$ będzie kategorią oraz $B, C \in \C$ obiektami. \emph{Obiektem potęgowym} (wykładniczym) nazywamy obiekt $C^B$ wraz ze strzałką
-\[
-\varepsilon : C^B \times B \longrightarrow C
-\]
-taką, że dla każdego obiektu $Z \in \C$ i każdej strzałki $f : Z \times B \to C$ istnieje dokładnie jedna strzałka $\tilde{f} : Z \to C^B$ taka, że poniższy diagram jest przemienny:
-\[
-\begin{tikzcd}
-C^B \times B \arrow[r, "\varepsilon"] & C \\
-Z \times B \arrow[u, "\tilde{f} \times \id_B"] \arrow[ur, "f"'] &
-\end{tikzcd}
-\]
-tzn.\ $\varepsilon \circ (\tilde{f} \times \id_B) = f$.
-\end{definicja}
-
-\begin{definicja}
-Kategoria $\C$ nazywana jest \emph{kartezjańsko-domkniętą} (CCC -- \emph{cartesian closed category}), gdy:
-\begin{enumerate}
-\item ma wszystkie skończone produkty (w szczególności obiekt końcowy $\mathbf{1}$),
-\item dla każdej pary obiektów $B, C \in \C$ istnieje obiekt potęgowy $C^B$.
-\end{enumerate}
-\end{definicja}
+Przypomnijmy z poprzedniej sekcji: w kategorii kartezjańsko domkniętej (CCC) dla każdej pary obiektów $B, C$ istnieje obiekt potęgowy $C^B$ wraz z ewaluacją $\varepsilon \colon C^B \times B \to C$, a każda strzałka $f \colon Z \times B \to C$ ma dokładnie jedną transpozycję $\tilde{f} \colon Z \to C^B$ spełniającą $\varepsilon \circ (\tilde{f} \times \id_B) = f$.
 
 \begin{stwierdzenie}
 Niech $\C$ będzie CCC. Wtedy przyporządkowanie na obiektach

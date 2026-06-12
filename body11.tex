@@ -30,9 +30,9 @@ Y^A \times A \arrow[r, "\varepsilon_Y"'] & Y
 \]
 oraz $f^A = \widetilde{f \circ \varepsilon}$.
 
-\subsection*{Zadanie 4.6 -- transpozycja złożenia}
+\subsection*{Transpozycja złożenia (zadanie~\ref{zad:transpozycja})}
 
-\begin{stwierdzenie}
+\begin{stwierdzenie}\label{stw:transpozycja-zlozenia}
 Dla każdych
 \[
 f \colon X \times A \to Y \times A, \qquad g \colon Y \times A \to Z \times A
@@ -60,7 +60,7 @@ g \circ f \;=\; \varepsilon_{Z\times A} \circ \bigl((\varepsilon_{Z\times A})^A 
 Z jednoznaczności w (A) wynika $(*)$.
 \end{proof}
 
-\subsection*{Zadanie 4.7 -- funktor stanu}
+\subsection*{Funktor stanu (zadanie~\ref{zad:state})}
 
 \begin{definicja}
 W kategorii CCC, mając funktory $(-)\times A$ oraz $(-)^A$, definiujemy funktor
@@ -73,7 +73,7 @@ czyli
 \]
 Działanie na strzałkach: dla $f\colon X\to Y$
 \[
-\State_A(f) = ((f\times \id_A)\circ \varepsilon)^A.
+\State_A(f) = (f\times \id_A)^A = \widetilde{(f\times \id_A)\circ \varepsilon_{X\times A}}.
 \]
 \end{definicja}
 
@@ -116,7 +116,7 @@ gdzie $\eta_X \colon X \to \State_A X$ dane jest przez $\eta_X = \widetilde{\id_
 \[
 g \,\square\, f \;=\; (\varepsilon_{Z\times A})^A \circ \bigl(\widetilde{\,\overline{g}\,} \times \id_A\bigr)^A \circ \widetilde{\,\overline{f}\,}.
 \]
-Z zadania 4.6 prawa strona równa się $\widetilde{\,\overline{g}\circ \overline{f}\,}$, czyli
+Ze Stwierdzenia~\ref{stw:transpozycja-zlozenia} prawa strona równa się $\widetilde{\,\overline{g}\circ \overline{f}\,}$, czyli
 \[
 g \,\square\, f \;=\; \widetilde{\,\overline{g}\circ \overline{f}\,}. \tag{$\triangle$}
 \]

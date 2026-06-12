@@ -51,7 +51,7 @@ gdzie
 \[
 \chi_U(a)=\begin{cases} 1 & a\in U,\\ 0 & \text{w p.p.},\end{cases} \qquad \mathrm{const}_1(a)=1.
 \]
-Czym jest ekwalizator $\mathrm{const}_1$ i $\chi_U$?
+Czym jest ekwalizator $\mathrm{const}_1$ i $\chi_U$? Warunek $\chi_U(a) = \mathrm{const}_1(a) = 1$ oznacza dokładnie $a\in U$, więc ekwalizatorem jest inkluzja $U \hookrightarrow A$. W szczególności \emph{każdy} podzbiór $U\subseteq A$ jest ekwalizatorem pewnej pary strzałek o wartościach w $2=\{0,1\}$.
 \end{przyklad}
 
 \subsection*{Koekwalizatory}
@@ -128,6 +128,22 @@ A \arrow[r,swap,"f"] & C
 \end{tikzcd}\]
 \end{uwaga}
 
+\begin{przyklad}
+W $\Set$ pullbackiem pary $A\xrightarrow{f} C \xleftarrow{g} B$ jest
+\[
+A\times_C B \;=\; \{(a,b)\in A\times B \;:\; f(a) = g(b)\}
+\]
+wraz z obcięciami rzutowań. Dwa ważne przypadki szczególne:
+\begin{enumerate}
+\item \emph{Przeciwobraz.} Dla inkluzji $i_U \colon U \hookrightarrow C$ podzbioru $U\subseteq C$ mamy
+\[
+A \times_C U \;=\; \{(a,u) : f(a) = u\} \;\cong\; f^{-1}(U),
+\]
+czyli pullback wzdłuż $f$ ,,cofa'' podzbiór $U$ do jego przeciwobrazu (por.\ zadanie~\ref{zad:pullback-przeciwobraz}). Stąd właśnie nazwa \emph{cofnięcie}.
+\item \emph{Przecięcie.} Dla inkluzji $U \hookrightarrow X \hookleftarrow V$ dwóch podzbiorów $U, V \subseteq X$ pullbackiem jest $U \cap V$ wraz z inkluzjami.
+\end{enumerate}
+\end{przyklad}
+
 \begin{stwierdzenie}
 Niech $\C$ będzie kategorią z binarnymi produktami i ekwalizatorami. Dla danej pary $A\xrightarrow{f} C \xleftarrow{g} B$:
 \begin{enumerate}
@@ -149,6 +165,6 @@ f\circ \pi_1 \circ \langle z_1,z_2\rangle = f\circ z_1 = g\circ z_2 = g\circ \pi
 \]
 więc istnieje dokładnie jedna strzałka $u\colon Z\to E$ taka, że $e\circ u = \langle z_1,z_2\rangle$. Wówczas
 \[
-(\pi_1\circ e)\circ u = z_1, \qquad (\pi_2\circ e)\circ u = z_2,
+(\pi_1\circ e)\circ u = z_1, \qquad (\pi_2\circ e)\circ u = z_2.
 \]
-co dowodzi własności uniwersalnej. \qed
+Pozostaje jednoznaczność: jeśli $u'\colon Z\to E$ również spełnia $(\pi_1\circ e)\circ u' = z_1$ oraz $(\pi_2\circ e)\circ u' = z_2$, to z jednoznaczności strzałki do produktu $e\circ u' = \langle z_1,z_2\rangle$, a stąd, z jednoznaczności w definicji ekwalizatora, $u' = u$. \qed

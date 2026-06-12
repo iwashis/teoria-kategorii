@@ -1,5 +1,6 @@
 Poniższe zadania pochodzą z pięciu serii ćwiczeń towarzyszących wykładom z teorii kategorii. Numeracja sekcji odpowiada oryginalnej numeracji serii.
 
+\clearpage
 \section{Kategorie i funktory}
 
 \begin{zadanie}
@@ -15,14 +16,14 @@ Niech $A$ będzie zbiorem. Pokazać, że przyporządkowania $\Set\to\Set$ zdefin
 \[
 (f\colon X\to Y)\mapsto f^A\colon X^A\to Y^A;\; \varphi\mapsto f\circ\varphi.
 \]
-\item $X\mapsto \mathcal{P}X \stackrel{df}{=}\{A\subseteq X\}$ oraz
+\item $X\mapsto \mathcal{P}X \stackrel{df}{=}\{U : U\subseteq X\}$ oraz
 \[
-(f\colon X\to Y)\mapsto \mathcal{P}(f)\colon \mathcal{P}(X)\to\mathcal{P}(Y);\; A\mapsto f(A).
+(f\colon X\to Y)\mapsto \mathcal{P}(f)\colon \mathcal{P}(X)\to\mathcal{P}(Y);\; U\mapsto f(U).
 \]
 \end{itemize}
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:funktory-posety}
 Niech $\mathbb{P}$ i $\mathbb{Q}$ będą kategoriami zadanymi przez posety $(P,\leq)$ i $(Q,\leq)$. Podać charakteryzację funktorów $\mathbb{P}\to\mathbb{Q}$ wyrażoną w języku przekształceń $P\to Q$ między tymi posetami.
 \end{zadanie}
 
@@ -78,13 +79,14 @@ Niech $f\colon X\to Y$, $g\colon Y\to Z$ oraz $h\colon X\to Z$ spełniają $h=g\
 \end{itemize}
 \end{zadanie}
 
+\clearpage
 \section{Podstawowe konstrukcje kategoryjne}
 
 \begin{zadanie}
 Znaleźć obiekt początkowy i końcowy (jeśli istnieją) w kategorii $\Grp$, $\Pos$, $\Par$ oraz w kategorii wszystkich algebr typu $(1,0)$.
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:hom-produkty}
 Niech $\C$ będzie kategorią oraz niech $A\in\C$ będzie obiektem. Definiujemy przyporządkowanie $\C(A,-)\colon\C\to\Set$ wzorami
 \[
 X\mapsto \C(A,X), \qquad (f\colon X\to Y)\mapsto \bigl(\C(A,f)\colon\C(A,X)\to\C(A,Y);\, g\mapsto f\circ g\bigr).
@@ -107,11 +109,11 @@ Dla dowolnej rodziny $(X_i)_{i\in I}$ obiektów w kategorii $\C$ napisać defini
 Pokazać, że binarne koprodukty są wyznaczone jednoznacznie z dokładnością do izomorfizmu.
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:ab-koprodukt}
 Udowodnić, że w kategorii grup abelowych $\Ab$ koprodukt $A+B$ dwóch grup spełnia $A+B\cong A\times B$.
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:koprodukt-mon}
 Pokazać, że dla dwóch zbiorów $A$, $B$ koprodukt monoidów słów $A^*$ oraz $B^*$ w kategorii $\Mon$ istnieje i spełnia
 \[
 A^* + B^* \;\cong\; (A+B)^*.
@@ -138,9 +140,10 @@ Niech $f\colon A\to B$ będzie pewnym przekształceniem w $\Set$. Opisać ekwali
 Niech $R\subseteq A\times A$ będzie dowolną relacją binarną oraz niech $\langle R\rangle$ będzie najmniejszą relacją równoważności na $A$ zawierającą $R$. Pokazać, że przekształcenie ilorazowe $A\to A/\langle R\rangle$ jest koekwalizatorem dwóch rzutowań $R\rightrightarrows A$.
 \end{zadanie}
 
+\clearpage
 \section{(Ko)granice}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:pullback-przeciwobraz}
 W kategorii $\Set$ rozważmy dowolne przekształcenie $f\colon A\to B$ oraz zanurzenie $i_U\colon U\hookrightarrow B$. Opisać pullback przekształceń $f$ i $i_U$.
 \end{zadanie}
 
@@ -172,6 +175,7 @@ Podać definicję kostożka i kogranicy nad diagramem $D\colon\Jcat\to\mathcal{K
 Pokazać, że funktor $\C(-,A)\colon\C^{\op}\to\Set$ przekształca koekwalizatory w $\C$ na ekwalizatory, a obiekt początkowy w $\C$ na obiekt końcowy w $\Set$.
 \end{zadanie}
 
+\clearpage
 \section{Kategorie kartezjańsko domknięte}
 
 \begin{zadanie}
@@ -186,7 +190,7 @@ Pokazać, że w dowolnej kategorii kartezjańsko domkniętej zachodzi:
 \end{itemize}
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:mon-ccc}
 Czy kategoria $\Mon$ jest CCC?
 \end{zadanie}
 
@@ -198,14 +202,14 @@ Pokazać, że kategoria $\omega\mathrm{CPO}$ jest CCC, natomiast kategoria $\ome
 Pokazać, że kategoria $\mathbf{Cat}$ wszystkich małych kategorii i funktorów jest CCC, gdzie $\C^\D = \mathrm{Fun}(\D,\C)$.
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:transpozycja}
 Udowodnić (dokończając dowód z wykładu), że dla każdego $f\colon X\times A\to Y\times A$ i $g\colon Y\times A\to Z\times A$ zachodzi
 \[
 \widetilde{g\circ f} \;=\; (\varepsilon_{Z\times A})^A \circ (\widetilde{g}\times\id_A)^A \circ \widetilde{f}.
 \]
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:state}
 Niech $\State_A$ będzie złożeniem funktorów $(-)\times A$ i $(-)^A$, tj.
 \[
 \State_A(X) = (X\times A)^A, \qquad \State_A(X\xrightarrow{f} Y) = \widetilde{(f\times\id_A)\circ\varepsilon_{X\times A}}.
@@ -237,6 +241,7 @@ napisać program $\mathbf{main}\colon()\to\IO\,()$, który:
 \end{enumerate}
 \end{zadanie}
 
+\clearpage
 \section{Transformacje naturalne i monady}
 
 \begin{zadanie}\label{zad:nat-ccc}
@@ -252,12 +257,12 @@ Niech $\C$ będzie kategorią kartezjańsko domkniętą. Pokazać, że następuj
 Pokazać, że następujące rodziny $\{\eta_X\}_X$ i $\{\mu_X\}_X$ są transformacjami naturalnymi między odpowiednimi $\Set$-funktorami:
 \begin{enumerate}
 \item $\{\eta_X\colon X\to\mathcal{P}X\}$, $\eta_X(x)=\{x\}$, oraz $\{\mu_X\colon\mathcal{P}\mathcal{P}X\to\mathcal{P}X\}$, $\mu_X(\mathcal{S}) = \bigcup\mathcal{S}$;
-\item $\{\eta_X\colon X\to X^*\}$, $\eta_X(x)=x$, oraz $\{\mu_X\colon (X^*)^*\to X^*\}$, $\mu_X(s_1,\dots,s_n) = s_1 s_2 \dots s_n$;
+\item $\{\eta_X\colon X\to X^*\}$, $\eta_X(x)=(x)$ (słowo jednoelementowe), oraz $\{\mu_X\colon (X^*)^*\to X^*\}$, $\mu_X(s_1,\dots,s_n) = s_1 s_2 \dots s_n$;
 \item dla ustalonego monoidu $M=(M,\cdot,1)$: $\{\eta_X\colon X\to M\times X\}$, $\eta_X(x)=(1,x)$, oraz $\{\mu_X\colon M\times M\times X\to M\times X\}$, $\mu_X(m,n,x)=(m\cdot n,\, x)$.
 \end{enumerate}
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:monady}
 Pokazać, że następujące trójki są monadami:
 \begin{enumerate}
 \item $((\Id\times A)^A\colon\C\to\C,\, \mu,\, \eta)$, gdzie $\C$ jest CCC oraz $\mu,\eta$ są jak w Zadaniu~\ref{zad:nat-ccc};
@@ -265,7 +270,7 @@ Pokazać, że następujące trójki są monadami:
 \end{enumerate}
 \end{zadanie}
 
-\begin{zadanie}
+\begin{zadanie}\label{zad:kleisli-sklad}
 Niech $(T,\mu,\eta)$ będzie monadą w kategorii $\C$. Dla $f\colon A\to TB$, $g\colon B\to TC$ definiujemy
 \[
 g\cdot f\colon A\to TC, \qquad g\cdot f = \mu_C\circ T(g)\circ f.

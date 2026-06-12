@@ -1,7 +1,7 @@
 \section{Definicja kategorii}
 
 \begin{definicja}
-\emph{Kategorię} $\Cat$ nazywamy parę $(\Cat_0, \Cat_m)$, gdzie:
+\emph{Kategorią} nazywamy parę $\Cat = (\Cat_0, \Cat_m)$, gdzie:
 \begin{enumerate}
 \item $\Cat_0$ jest klasą tzw.\ \emph{obiektów}, oznaczanych przez $A, B, C, \ldots$
 \item $\Cat_m$ jest klasą tzw.\ \emph{morfizmów} (strzałek), oznaczanych przez $f, g, h, \ldots$
@@ -101,10 +101,10 @@ a morfizmami są elementy $M$, tzn.\ każdy element $m \in M$ utożsamiamy ze st
 \[
 m \circ n \;\stackrel{df}{=}\; m \cdot n,
 \]
-a identycznością na obiekcie $*$ jest strzałka $1 \colon * \to *$.
+a identycznością na obiekcie $*$ jest strzałka $1 \colon * \to *$. Na przykład złożenie ścieżki na poniższym diagramie to $m \circ n = m \cdot n$:
 \[
 \begin{tikzcd}
-* \ar[r, "m"] & * \ar[r, "n"] & *
+* \ar[r, "n"] & * \ar[r, "m"] & *
 \end{tikzcd}
 \]
 \end{przyklad}
@@ -118,9 +118,9 @@ Niech $\mathbf{P} = (P, \le)$ będzie posetem. Definiujemy kategorię $\underlin
 Na przykład poset typu ,,diament''
 \[
 \begin{tikzcd}[row sep=small,column sep=small]
- & 1 \arrow[dl] \arrow[dr] & \\
-a \arrow[dr] & & b \arrow[dl] \\
- & 0 &
+ & 1 & \\
+a \arrow[ur] & & b \arrow[ul] \\
+ & 0 \arrow[ul] \arrow[ur] &
 \end{tikzcd}
 \]
 wyznacza kategorię o tych samych obiektach i strzałkach $0 \to a,\ 0\to b,\ 0\to 1,\ a\to 1,\ b\to 1$, wzbogaconą o pętle identycznościowe na każdym obiekcie.
@@ -133,7 +133,7 @@ f \colon A \longrightarrow B + \{\bot\},
 \]
 gdzie $\bot$ jest \emph{wartością nieokreśloną} (różną od wszystkich elementów $B$), a $+$ oznacza rozłączną sumę zbiorów:
 \[
-X + Y \;\stackrel{df}{=}\; \{1\} \times X \;\cup\; \{2\} \times Y.
+X + Y \;\stackrel{df}{=}\; X \times \{1\} \;\cup\; Y \times \{2\}.
 \]
 \emph{Interpretacja:} jeśli $f \colon A \to B$ oraz $f(a) = \bot$, to interpretujemy ten wynik jako ,,wartość nieokreśloną''.
 
@@ -154,6 +154,10 @@ Przykładem strzałki w $\Par$ jest dzielenie
 g\bigl(f(a)\bigr), & f(a) \neq \bot.
 \end{cases}
 \]
+Identycznością na obiekcie $A$ jest przekształcenie
+\[
+\id_A \colon A \longrightarrow A + \{\bot\}, \qquad \id_A(a) = a.
+\]
 \end{przyklad}
 
 \begin{przyklad}[$\Err$ -- kategoria błędów]
@@ -161,6 +165,16 @@ Niech $M$ będzie ustalonym zbiorem wiadomości o błędach. Obiekty $\Err$ to w
 \[
 f \colon A \longrightarrow B + M.
 \]
+Składanie i identyczności definiujemy analogicznie jak w $\Par$: dla $f \colon A \to B$, $g \colon B \to C$
+\[
+(g \circ f)(a) \;\stackrel{df}{=}\;
+\begin{cases}
+f(a), & f(a) \in M \quad (\text{błąd jest propagowany}), \\
+g\bigl(f(a)\bigr), & f(a) \in B,
+\end{cases}
+\qquad \id_A(a) = a.
+\]
+Kategoria $\Par$ to szczególny przypadek $\Err$ dla $M = \{\bot\}$.
 \end{przyklad}
 
 \begin{przyklad}[Kategoria $\Trace$ nad monoidem]
@@ -247,4 +261,16 @@ wzorem
 \[
 f^{*}(\varepsilon) = \varepsilon, \qquad f^{*}(a_1 \ldots a_n) = f(a_1) \ldots f(a_n).
 \]
+\end{przyklad}
+
+\begin{przyklad}[Funktor zapominania]
+$U \colon \Mon \to \Set$ przyporządkowuje monoidowi $(M, \cdot, 1)$ jego nośnik $M$, a homomorfizmowi monoidów -- jego samego, traktowanego jako zwykłą funkcję. Aksjomaty funktora są spełnione w oczywisty sposób. Analogiczne funktory zapominania mamy m.in.\ dla $\Grp$, $\Pos$ i $\Top$.
+\end{przyklad}
+
+\begin{przyklad}[Wolny monoid jako funktor $\Set \to \Mon$]
+Konstrukcję $(-)^{*}$ można wzbogacić: zbiór $A^{*}$ z operacją sklejania słów i słowem pustym $\varepsilon$ jest monoidem, a $f^{*}$ jest homomorfizmem monoidów. Otrzymujemy funktor $(-)^{*} \colon \Set \to \Mon$; złożenie go z funktorem zapominania $U \colon \Mon \to \Set$ daje funktor $(-)^{*} \colon \Set \to \Set$ z poprzedniego przykładu.
+\end{przyklad}
+
+\begin{przyklad}[Przekształcenia monotoniczne jako funktory]
+Niech $\underline{\mathbf{P}}$, $\underline{\mathbf{Q}}$ będą kategoriami indukowanymi przez posety $(P, \le)$ i $(Q, \le)$. Funktor $F \colon \underline{\mathbf{P}} \to \underline{\mathbf{Q}}$ to dokładnie przekształcenie monotoniczne $P \to Q$: warunek (1) z definicji funktora mówi, że z $p_1 \le p_2$ wynika $F(p_1) \le F(p_2)$, a warunki (2) i (3) są spełnione automatycznie, bo w $\underline{\mathbf{Q}}$ między każdą parą obiektów istnieje co najwyżej jedna strzałka (por.\ zadanie~\ref{zad:funktory-posety}).
 \end{przyklad}

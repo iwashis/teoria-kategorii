@@ -1,20 +1,20 @@
-Niech $\C$ będzie kategorią kartezjańsko zamkniętą (CCC). Przypomnijmy zwykłe składanie morfizmów:
+Niech $\C$ będzie kategorią kartezjańsko domkniętą (CCC). Przypomnijmy zwykłe składanie morfizmów:
 \[
 \frac{X \xrightarrow{f} Y \qquad Y \xrightarrow{g} Z}{X \xrightarrow{g \circ f} Z}
 \]
 
 \begin{uwaga}[Motywacja --- ,,obliczenia z efektem'']
-Ustalmy obiekt $A \in \Ob(\C)$ i oznaczmy
+Ustalmy obiekt $A \in \Ob(\C)$ i przypomnijmy funktor stanu z rozdziału~\ref{ch:stan}:
 \[
-\IO X \;\stackrel{df}{=}\; (X \times A)^A.
+\State_A X \;\stackrel{df}{=}\; (X \times A)^A
 \]
-Chcielibyśmy mieć regułę składania morfizmów ,,z efektem'' postaci
+(dla $A = W$ --- obiektu ,,świata zewnętrznego'' --- jest to funktor $\IO$). Chcielibyśmy mieć regułę składania morfizmów ,,z efektem'' postaci
 \[
-\frac{X \xrightarrow{f} \IO Y \qquad Y \xrightarrow{g} \IO Z}{X \xrightarrow{g \,\square\, f} \IO Z}
+\frac{X \xrightarrow{f} \State_A Y \qquad Y \xrightarrow{g} \State_A Z}{X \xrightarrow{g \,\square\, f} \State_A Z}
 \]
 oraz wyróżnioną rodzinę morfizmów
 \[
-\eta = \{\eta_X : X \to \IO X\}_{X \in \C}.
+\eta = \{\eta_X : X \to \State_A X\}_{X \in \C}.
 \]
 \end{uwaga}
 
@@ -43,32 +43,62 @@ oraz operacje $\eta$ (czyli \texttt{pure} $:\ a \to \IO a$) i $\square$. Wówcza
 \begin{uwaga}[Pytanie]
 Jakie własności abstrakcyjne pozwalają na zdefiniowanie ,,składania''
 \[
-\frac{X \xrightarrow{f} \IO Y \qquad Y \xrightarrow{g} \IO Z}{X \xrightarrow{g \,\square\, f} \IO Z} \;?
+\frac{X \xrightarrow{f} \State_A Y \qquad Y \xrightarrow{g} \State_A Z}{X \xrightarrow{g \,\square\, f} \State_A Z} \;?
 \]
 
-\textbf{Odpowiedź} (por.\ zad.\ 4.7): dane są
+\textbf{Odpowiedź} (por.\ zadanie~\ref{zad:state}): dane są
 \[
-\eta = \{\eta_X : X \to \IO X\}_{X},
+\eta = \{\eta_X : X \to \State_A X\}_{X},
 \qquad
-\mu = \bigl\{(\varepsilon_{X \times A})^A : \IO^2 X \to \IO X\bigr\}_{X},
+\mu = \bigl\{(\varepsilon_{X \times A})^A : \State_A^2 X \to \State_A X\bigr\}_{X},
 \]
-gdzie $\varepsilon$ jest kojednością sprzężenia $(-)\times A \dashv (-)^A$.
+gdzie $\varepsilon$ jest ewaluacją.\footnote{W języku, który pojawi się w rozdziale~\ref{ch:kleisli}: $\varepsilon$ jest kojednością sprzężenia $(-)\times A \dashv (-)^A$.}
 \end{uwaga}
+
+\section{Transformacje naturalne}
+
+W odpowiedzi powyżej pojawiły się \emph{rodziny} morfizmów indeksowane obiektami kategorii. Rodziny ,,spójne'' z działaniem funktorów mają swoją nazwę:
+
+\begin{definicja}
+Niech $F, G \colon \C \to \D$ będą funktorami. \emph{Transformacją naturalną} $\tau \colon F \Rightarrow G$ nazywamy rodzinę strzałek
+\[
+\tau = \{\tau_X \colon F X \to G X\}_{X \in \Ob(\C)}
+\]
+taką, że dla każdej strzałki $f \colon X \to Y$ w $\C$ diagram
+\[
+\begin{tikzcd}
+F X \arrow[r, "\tau_X"] \arrow[d, "F(f)"'] & G X \arrow[d, "G(f)"] \\
+F Y \arrow[r, "\tau_Y"'] & G Y
+\end{tikzcd}
+\]
+jest przemienny (\emph{warunek naturalności}).
+\end{definicja}
+
+\begin{przyklad}
+Rodzina $\{\eta_X \colon X \to \mathcal{P}X\}_{X \in \Set}$, $\eta_X(x) = \{x\}$, jest transformacją naturalną $\Id \Rightarrow \mathcal{P}$, gdzie funktor potęgowy $\mathcal{P}$ działa na strzałkach przez obraz: $\mathcal{P}(f)(U) = f(U)$. Istotnie, dla $f \colon X \to Y$ i $x \in X$:
+\[
+\mathcal{P}(f)\bigl(\eta_X(x)\bigr) = f(\{x\}) = \{f(x)\} = \eta_Y\bigl(f(x)\bigr).
+\]
+\end{przyklad}
+
+\begin{przyklad}
+Rodzina $\{\mathrm{rev}_X \colon X^* \to X^*\}_{X \in \Set}$ odwracająca słowa, $\mathrm{rev}_X(a_1 \ldots a_n) = a_n \ldots a_1$, jest transformacją naturalną $(-)^* \Rightarrow (-)^*$: dla $f \colon X \to Y$ obie drogi w kwadracie naturalności posyłają słowo $a_1 \ldots a_n$ na $f(a_n) \ldots f(a_1)$. Więcej przykładów -- zadania~\ref{zad:nat-ccc} i~\ref{zad:nat-set}.
+\end{przyklad}
 
 \begin{uwaga}[Własności rodzin $\eta$ i $\mu$]
 \begin{enumerate}
-\item $\eta$ jest naturalną transformacją $\Id \Rightarrow \IO$ -- dla każdego $f : X \to Y$:
+\item $\eta$ jest transformacją naturalną $\Id \Rightarrow \State_A$ -- dla każdego $f : X \to Y$:
 \[
 \begin{tikzcd}
-X \arrow[r, "\eta_X"] \arrow[d, "f"'] & \IO X \arrow[d, "\IO f"] \\
-Y \arrow[r, "\eta_Y"'] & \IO Y
+X \arrow[r, "\eta_X"] \arrow[d, "f"'] & \State_A X \arrow[d, "\State_A f"] \\
+Y \arrow[r, "\eta_Y"'] & \State_A Y
 \end{tikzcd}
 \]
 komutuje.
-\item Analogicznie $\mu$ jest naturalną transformacją $\IO^2 \Rightarrow \IO$.
+\item Analogicznie $\mu$ jest transformacją naturalną $\State_A^2 \Rightarrow \State_A$.
 \item Mamy
 \[
-\eta_X \;=\; \widetilde{\id_{X \times A}} \;:\; X \to (X \times A)^A \;=\; \IO X.
+\eta_X \;=\; \widetilde{\id_{X \times A}} \;:\; X \to (X \times A)^A \;=\; \State_A X.
 \]
 \end{enumerate}
 \end{uwaga}
@@ -77,18 +107,18 @@ komutuje.
 Rodziny $\eta$ i $\mu$ spełniają dodatkowo:
 \[
 \begin{tikzcd}[column sep=large]
-\IO X \arrow[r, "\eta_{\IO X}"] \arrow[dr, "\id_{\IO X}"'] & \IO^2 X \arrow[d, "\mu_X"] & \IO X \arrow[l, "\IO(\eta_X)"'] \arrow[dl, "\id_{\IO X}"] \\
-& \IO X &
+\State_A X \arrow[r, "\eta_{\State_A X}"] \arrow[dr, "\id_{\State_A X}"'] & \State_A^2 X \arrow[d, "\mu_X"] & \State_A X \arrow[l, "\State_A(\eta_X)"'] \arrow[dl, "\id_{\State_A X}"] \\
+& \State_A X &
 \end{tikzcd}
 \qquad
 \begin{tikzcd}
-\IO^3 X \arrow[r, "\mu_{\IO X}"] \arrow[d, "\IO(\mu_X)"'] & \IO^2 X \arrow[d, "\mu_X"] \\
-\IO^2 X \arrow[r, "\mu_X"'] & \IO X
+\State_A^3 X \arrow[r, "\mu_{\State_A X}"] \arrow[d, "\State_A(\mu_X)"'] & \State_A^2 X \arrow[d, "\mu_X"] \\
+\State_A^2 X \arrow[r, "\mu_X"'] & \State_A X
 \end{tikzcd}
 \]
 gdzie operacja $\square$ jest zdefiniowana wzorem
 \[
-g \,\square\, f \;=\; \mu_Z \circ \IO(g) \circ f, \qquad f : X \to \IO Y,\ g : Y \to \IO Z.
+g \,\square\, f \;=\; \mu_Z \circ \State_A(g) \circ f, \qquad f : X \to \State_A Y,\ g : Y \to \State_A Z.
 \]
 \end{uwaga}
 
@@ -120,6 +150,32 @@ T^2 X \arrow[r, "\mu_X"'] & T X
 Nieformalnie: jeśli wyobrazimy sobie $A$ jako punkt, $TA$ jako ,,$A$ owinięte pojedynczą warstwą'', a $T^2 A$ jako ,,$A$ owinięte podwójną warstwą'', to $\eta_A : A \to TA$ pakuje punkt w warstwę, a $\mu_A : T^2 A \to TA$ scala dwie warstwy w jedną. Aksjomat jedności mówi, że doklejenie warstwy a następnie scalanie nic nie zmienia; aksjomat łączności mówi, że scalanie trzech warstw nie zależy od kolejności.
 \end{uwaga}
 
+\subsection*{Przykłady monad}
+
+\begin{przyklad}[Monada $\mathrm{Maybe}$]
+$T = \mathrm{Maybe}$, $TX = X + \{\bot\}$, z jednością $\eta_X(x) = x$ (włożenie $X \hookrightarrow X + \{\bot\}$) oraz mnożeniem
+\[
+\mu_X \colon (X + \{\bot\}) + \{\bot\} \longrightarrow X + \{\bot\}
+\]
+sklejającym obie kopie $\bot$ w jedną. Aksjomaty sprawdza się bezpośrednio. Monada ta modeluje \emph{obliczenia częściowe} -- wartość $\bot$ oznacza brak wyniku.
+\end{przyklad}
+
+\begin{przyklad}[Monada potęgowa]
+$T = \mathcal{P}$, $\eta_X(x) = \{x\}$, $\mu_X(\mathcal{S}) = \bigcup \mathcal{S}$ dla $\mathcal{S} \in \mathcal{P}\mathcal{P}X$. Modeluje obliczenia \emph{niedeterministyczne}: wynikiem jest zbiór możliwych wartości.
+\end{przyklad}
+
+\begin{przyklad}[Monada list]
+$T = (-)^*$, $\eta_X(x) = (x)$ (słowo jednoelementowe), $\mu_X(s_1, \ldots, s_n) = s_1 s_2 \ldots s_n$ (konkatenacja słowa słów).
+\end{przyklad}
+
+\begin{przyklad}[Monada trace]
+Dla ustalonego monoidu $(M, \cdot, 1)$: $T = M \times (-)$, $\eta_X(x) = (1, x)$, $\mu_X(m_1, (m_2, x)) = (m_1 \cdot m_2,\, x)$. Aksjomaty monady sprowadzają się dokładnie do aksjomatów monoidu $M$.
+\end{przyklad}
+
+\begin{uwaga}
+Dowody, że powyższe trójki (oraz $\State_A$) istotnie są monadami, to zadania~\ref{zad:nat-set} i~\ref{zad:monady}.
+\end{uwaga}
+
 \begin{stwierdzenie}
 Niech $(T, \mu, \eta)$ będzie monadą w $\C$. Wówczas operacja
 \[
@@ -133,5 +189,5 @@ jest
 \end{stwierdzenie}
 
 \begin{uwaga}
-Dowód na ćwiczeniach.
+Dowód na ćwiczeniach (zadanie~\ref{zad:kleisli-sklad}).
 \end{uwaga}

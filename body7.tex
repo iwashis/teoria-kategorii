@@ -1,3 +1,5 @@
+Przypomnijmy pojęcia diagramu i stożka wprowadzone pod koniec poprzedniego rozdziału.
+
 \begin{definicja}
 Niech $\Jcat$ i $\C$ będą kategoriami. \emph{Diagramem typu $\Jcat$ w $\C$} nazywamy funktor
 \[
@@ -92,6 +94,18 @@ to
 \]
 \end{przyklad}
 
+\begin{przyklad}[Granica nieskończonego łańcucha]
+Granice istnieją także nad diagramami nieskończonymi. Niech $\Jcat$ będzie kategorią indukowaną przez poset $(\mathbb{N}, \ge)$; diagram $D\colon \Jcat\to\Set$ to łańcuch zbiorów i przekształceń
+\[
+\cdots \longrightarrow X_2 \xrightarrow{\;f_1\;} X_1 \xrightarrow{\;f_0\;} X_0.
+\]
+W $\Set$ granicą takiego diagramu (zwaną \emph{granicą odwrotną}) jest
+\[
+\varprojlim_n X_n \;=\; \Bigl\{ (x_0, x_1, x_2, \ldots) \in \prod_n X_n \;:\; f_n(x_{n+1}) = x_n \text{ dla każdego } n \Bigr\}
+\]
+wraz z rzutowaniami. Na przykład dla $X_n = A^n$ (ciągi długości $n$ nad zbiorem $A$) i przekształceń obcinających ostatni element granicą jest zbiór $A^\omega$ wszystkich nieskończonych ciągów (strumieni) nad $A$.
+\end{przyklad}
+
 \begin{definicja}
 \emph{Skończoną granicą} nazywamy granicę nad diagramem $D \colon \Jcat \to \C$, w którym kategoria $\Jcat$ jest skończona.
 \end{definicja}
@@ -165,7 +179,7 @@ Pokażemy, że funktor $\C(X, -)$ zachowuje wszystkie skończone granice.
 \]
 czyli obiekt końcowy w $\Set$.
 
-\textbf{(2) Produkty.} Z ćwiczeń wiemy, że $\C(X, -)$ zachowuje produkty.
+\textbf{(2) Produkty.} Z ćwiczeń (zadanie~\ref{zad:hom-produkty}) wiemy, że $\C(X, -)$ zachowuje produkty.
 
 \textbf{(3) Ekwalizatory.} Weźmy parę $f, g \colon A \rightrightarrows B$, ich ekwalizator
 \[
@@ -193,3 +207,7 @@ Funktor $\C(X, -)$ zachowuje wszystkie skończone granice.
 \begin{uwaga}
 Można pokazać, że $\C(X, -)$ zachowuje wszystkie granice (nie tylko skończone).
 \end{uwaga}
+
+\begin{przyklad}[Funktor, który nie zachowuje granic]
+Nie każdy funktor zachowuje granice. Rozważmy $F = (-) + 1 \colon \Set \to \Set$, $FX = X + \{\ast\}$. Funktor $F$ nie zachowuje obiektu końcowego: $F(\mathbf{1})$ jest zbiorem dwuelementowym, a więc nie jest obiektem końcowym w $\Set$. Nie zachowuje też produktów: zbiór $F(\mathbf{1}\times\mathbf{1})$ ma dwa elementy, podczas gdy $F(\mathbf{1})\times F(\mathbf{1})$ -- cztery.
+\end{przyklad}

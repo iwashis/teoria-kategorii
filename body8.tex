@@ -92,15 +92,15 @@ Kategorię $\C$ nazywamy \emph{kartezjańsko domkniętą}, jeśli ma:
 \end{enumerate}
 \end{definicja}
 
-\begin{przyklad}
-$\Set$ oraz $\Pos$ są kategoriami kartezjańsko domkniętymi.
-\end{przyklad}
-
 \begin{stwierdzenie}
-$\Pos$ jest kartezjańsko domknięta.
+Kategorie $\Set$ oraz $\Pos$ są kartezjańsko domknięte.
 \end{stwierdzenie}
 
 \begin{proof}[Szkic]
+Dla $\Set$: skończone produkty to produkty kartezjańskie (z singletonem jako obiektem końcowym), a obiektem potęgowym jest zbiór funkcji $C^B$ wraz z ewaluacją $\mathrm{eval}$ -- własność uniwersalną sprawdziliśmy w uwagach na początku tej sekcji.
+
+Dla $\Pos$:
+
 \textbf{(1)} $\Pos$ ma wszystkie skończone produkty: jednoelementowy poset jest terminalny w $\Pos$, a dla posetów $P = (P, \leq_P)$, $Q = (Q, \leq_Q)$ definiujemy
 \[
 P \times Q = (P \times Q, \leq),
@@ -125,3 +125,19 @@ oraz ewaluację
 \]
 która jest dobrze zdefiniowaną strzałką w $\Pos$. Transpozycja $\tilde{f}\colon X\to Q^P$ jest zdefiniowana analogicznie jak w $\Set$.
 \end{proof}
+
+\begin{przyklad}[Posety kartezjańsko domknięte]
+Kiedy kategoria indukowana przez poset $(P, \le)$ jest CCC? Obiekt końcowy to element największy $1$, a produkty binarne to kresy dolne $p \wedge q$. Obiekt potęgowy $q^p$ -- oznaczany zwykle $p \Rightarrow q$ -- musi spełniać własność uniwersalną
+\[
+x \le (p \Rightarrow q) \quad\Longleftrightarrow\quad x \wedge p \le q \qquad \text{dla każdego } x \in P.
+\]
+Element o tej własności nazywa się \emph{relatywnym pseudouzupełnieniem}, a kraty z $1$, $\wedge$ i $\Rightarrow$ to dokładnie \emph{algebry Heytinga} -- algebraiczne modele logiki intuicjonistycznej. W algebrze Boole'a (np.\ w kracie wszystkich podzbiorów zbioru) mamy $p \Rightarrow q = \neg p \vee q$.
+\end{przyklad}
+
+\begin{uwaga}[Nie każda ,,porządna'' kategoria jest CCC]
+Kategoria $\Grp$ nie jest CCC. Grupa trywialna jest w $\Grp$ zarówno obiektem końcowym $\mathbf{1}$, jak i początkowym. Gdyby $\Grp$ była CCC, to dla dowolnych grup $A, B$ mielibyśmy
+\[
+\Grp(A, B) \;\cong\; \Grp(\mathbf{1}\times A,\, B) \;\cong\; \Grp(\mathbf{1},\, B^A)
+\]
+(korzystamy z izomorfizmu $\mathbf{1}\times A \cong A$, prawdziwego w każdej kategorii ze skończonymi produktami), a ostatni zbiór jest jednoelementowy, bo $\mathbf{1}$ jest obiektem początkowym. Między dowolnymi dwiema grupami istniałby więc dokładnie jeden homomorfizm -- sprzeczność. Ten sam argument działa w każdej kategorii z obiektem zerowym, np.\ w $\Ab$ i $\Vect$. Kategoria $\Mon$ także nie jest CCC (zadanie~\ref{zad:mon-ccc}), podobnie $\Top$ -- choć tam dowód jest subtelniejszy.
+\end{uwaga}

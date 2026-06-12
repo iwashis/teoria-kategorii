@@ -1,33 +1,15 @@
 \subsection*{Kategorie z produktami binarnymi i ekwalizatorami a pullbacki}
 
-\begin{stwierdzenie}
-W kategorii z produktami binarnymi i ekwalizatorami dla dowolnej pary strzałek
-\[
-\begin{tikzcd}
-A \arrow[r,"f"] & C & B \arrow[l,"g"']
-\end{tikzcd}
-\]
-istnieje pullback. Dokładniej, biorąc:
-\begin{enumerate}
-  \item[(a)] $A\times B$ wraz z $\pi_1\colon A\times B \to A$, $\pi_2\colon A\times B \to B$ jako produkt,
-  \item[(b)] obiekt $E$ oraz $e\colon E \to A\times B$, gdzie $E$ jest ekwalizatorem
-  \[
-  \begin{tikzcd}
-  E \arrow[r,"e"] & A\times B \arrow[r, shift left,"f\circ\pi_1"] \arrow[r, shift right,"g\circ\pi_2"'] & C,
-  \end{tikzcd}
-  \]
-  \item[(c)] $p_1 \stackrel{\mathrm{df}}{=} \pi_1\circ e$, $p_2 \stackrel{\mathrm{df}}{=} \pi_2\circ e$,
-\end{enumerate}
-otrzymujemy, że $E$ wraz ze strzałkami $p_1,p_2$ jest pullbackiem strzałek $A \xrightarrow{f} C \xleftarrow{g} B$:
-\[
-\begin{tikzcd}
-E \arrow[r,"p_2"] \arrow[d,"p_1"'] \arrow[dr, phantom, "\lrcorner", very near start] & B \arrow[d,"g"] \\
-A \arrow[r,"f"'] & C
-\end{tikzcd}
-\]
-\end{stwierdzenie}
+W poprzedniej sekcji pokazaliśmy, że kategoria z produktami binarnymi i ekwalizatorami ma wszystkie pullbacki. Celem tej sekcji jest pełna charakteryzacja:
 
-\paragraph{Krok 1.} Jeśli $E$ wraz z $p_1\colon E\to A$, $p_2\colon E\to B$ jest pullbackiem strzałek $A \xrightarrow{f} C \xleftarrow{g} B$, to strzałka
+\begin{twierdzenie}\label{tw:pullbacki-charakteryzacja}
+Kategoria ma skończone produkty i ekwalizatory wtedy i tylko wtedy, gdy ma pullbacki i obiekt końcowy.
+\end{twierdzenie}
+
+Zanim przejdziemy do dowodu, odnotujmy konstrukcję odwrotną do konstrukcji z poprzedniej sekcji: każdy pullback wyznacza ekwalizator.
+
+\begin{stwierdzenie}\label{stw:pullback-daje-ekwalizator}
+Niech $\C$ będzie kategorią z produktami binarnymi. Jeśli $E$ wraz z $p_1\colon E\to A$, $p_2\colon E\to B$ jest pullbackiem strzałek $A \xrightarrow{f} C \xleftarrow{g} B$, to strzałka
 \[
 E \xrightarrow{\langle p_1,p_2\rangle} A\times B
 \]
@@ -37,8 +19,10 @@ jest ekwalizatorem $f\circ \pi_1$ i $g\circ \pi_2$:
 E \arrow[r,"{\langle p_1,p_2\rangle}"] & A\times B \arrow[r, shift left,"f\circ\pi_1"] \arrow[r, shift right,"g\circ\pi_2"'] & C.
 \end{tikzcd}
 \]
+\end{stwierdzenie}
 
-\emph{Dowód.} Z założenia diagram
+\begin{proof}
+Z założenia diagram
 \[
 \begin{tikzcd}
 E \arrow[r,"p_2"] \arrow[d,"p_1"'] & B \arrow[d,"g"] \\
@@ -70,11 +54,13 @@ Wtedy
 \]
 a stąd z jednoznaczności pary do produktu $\langle p_1,p_2\rangle\circ u = z$.
 
-Jednoznaczność $u$ wynika z jednoznaczności w pullbacku. \qed
+Jednoznaczność $u$ wynika z jednoznaczności w pullbacku.
+\end{proof}
 
-\bigskip
+\begin{proof}[Dowód Twierdzenia~\ref{tw:pullbacki-charakteryzacja}]
+($\Rightarrow$) Jeśli kategoria ma skończone produkty, to w szczególności ma obiekt końcowy, a istnienie pullbacków wykazaliśmy w poprzedniej sekcji.
 
-\paragraph{Krok 2.} Pokazujemy, że jeśli kategoria ma pullbacki i obiekt końcowy, to ma binarne produkty oraz ekwalizatory.
+($\Leftarrow$) Załóżmy, że kategoria ma pullbacki i obiekt końcowy. Pokażemy, że ma binarne produkty oraz ekwalizatory.
 
 \emph{(a) Binarne produkty.} Weźmy dwa obiekty $A,B$ oraz pullback strzałek $A\xrightarrow{!_A} 1 \xleftarrow{!_B} B$:
 \[
@@ -92,15 +78,10 @@ E \arrow[r,"u"] \arrow[d,"e"'] \arrow[dr, phantom, "\lrcorner", very near start]
 A \arrow[r,"{\langle f,g\rangle}"'] & B\times B
 \end{tikzcd}
 \]
-daje obiekt $e\colon E\to A$ będący ekwalizatorem $f$ i $g$. \qed
+daje obiekt $e\colon E\to A$ będący ekwalizatorem $f$ i $g$.
 
-\begin{wniosek}
-Jeśli $\C$ jest kategorią z produktami binarnymi i ekwalizatorami, to ma pullbacki.
-\end{wniosek}
-
-\begin{twierdzenie}
-Kategoria ma skończone produkty i ekwalizatory wtedy i tylko wtedy, gdy ma pullbacki i obiekt końcowy.
-\end{twierdzenie}
+Kategoria ma więc obiekt końcowy i binarne produkty -- czyli wszystkie skończone produkty -- oraz ekwalizatory, co kończy dowód.
+\end{proof}
 
 \subsection*{Diagramy i stożki}
 

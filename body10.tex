@@ -100,3 +100,7 @@ Tu $\IO = (-)^W \circ ((-)\times W)$ jest funktorem na $\C$.
 \[
 \texttt{writeFile} \;::\; (\texttt{FilePath},\, \texttt{String}) \longrightarrow \IO\,()
 \]
+
+\begin{uwaga}
+W Haskellu \texttt{writeFile} występuje w postaci rozwiniętej (\emph{curried}): \texttt{writeFile :: FilePath -> String -> IO ()}. Powyżej podajemy wersję nierozwiniętą, odpowiadającą strzałce z produktu -- obie są sobie równoważne na mocy bijekcji $\C(A \times B,\, C) \cong \C(A,\, C^B)$.
+\end{uwaga}

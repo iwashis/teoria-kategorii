@@ -65,7 +65,7 @@ Niech $\Cat$ będzie kategorią. Definiujemy $\Cat^{\op}$ w następujący sposó
 \end{definicja}
 
 \begin{uwaga}
-Mówimy, że $\Cat^{\op}$ jest \emph{kategorią strzałek o dziedzinie $C$ i przeciwdziedzinie $D$} w $\Cat$ (po odwróceniu strzałek).
+Zauważmy, że $(\Cat^{\op})^{\op} = \Cat$: dwukrotne odwrócenie strzałek przywraca wyjściową kategorię.
 \end{uwaga}
 
 \begin{uwaga}
@@ -84,7 +84,7 @@ To przyporządkowanie nie jest funktorem (zmienia kierunek strzałek).
 \subsection{Kategoria slice}
 
 \begin{definicja}
-Niech $\Cat$ będzie kategorią i niech $C$ będzie obiektem $\Cat$. \emph{Kategorią slice} (kategorią ilorazową) $\Cat / C$ nazywamy kategorię, w której:
+Niech $\Cat$ będzie kategorią i niech $C$ będzie obiektem $\Cat$. \emph{Kategorią slice} (kategorią nad $C$) $\Cat / C$ nazywamy kategorię, w której:
 \begin{enumerate}
     \item[(a)] obiektami są strzałki $f \in \Cat$ takie, że $\cod(f) = C$;
     \item[(b)] strzałką z obiektu $f \colon X \to C$ do obiektu $f' \colon X' \to C$ jest morfizm $g \colon X \to X'$ w $\Cat$ taki, że poniższy diagram jest przemienny:
@@ -140,7 +140,7 @@ Podsumowanie: kategorie duże, małe i lokalnie małe.
         \{f \colon C \to D \in \Cat\}
     \]
     jest zbiorem $\Longrightarrow$ kategoria jest \emph{lokalnie mała}.
-    \item Jeżeli kolekcja obiektów i kolekcja strzałek są zbiorami, kategoria jest \emph{mała}; w przeciwnym razie jest \emph{duża} (nie jest lokalnie mała).
+    \item Jeżeli kolekcja obiektów i kolekcja strzałek są zbiorami, kategoria jest \emph{mała}; w przeciwnym razie jest \emph{duża}. Kategoria duża może być lokalnie mała --- np.\ $\Set$ jest duża (klasa wszystkich zbiorów nie jest zbiorem), ale lokalnie mała.
 \end{itemize}
 \end{uwaga}
 
