@@ -2,21 +2,20 @@
 
 Złożona w LaTeX-u transkrypcja 13 odręcznych wykładów z teorii kategorii,
 wraz z rozdziałem zbierającym wszystkie serie zadań z kursu.
-Wynikiem kompilacji jest pojedynczy PDF w formie książki (`Wyklady.pdf`, ok. 45 stron).
+Wynikiem kompilacji jest pojedynczy PDF w formie książki (`Wyklady.pdf`, ok. 46 stron).
 
 ## Pliki
 
 | Plik | Przeznaczenie |
 |---|---|
 | `Wyklady.tex` | Dokument główny — preambuła, style twierdzeń, struktura rozdziałów |
-| `body1.tex` … `body12.tex`, `body14.tex` | Treść poszczególnych wykładów, dołączana przez `\input{}` |
+| `body1.tex` … `body13.tex` | Treść poszczególnych wykładów, dołączana przez `\input{}` |
 | `body_zadania.tex` | Rozdział „Zadania” — wszystkie 5 serii, dołączany przez `\input{}` |
 | `tk1.tex` … `tk5.tex` | Oryginalne, samodzielne pliki źródłowe serii zadań (proweniencja / materiał źródłowy) |
 | `Wyklady.pdf` | Skompilowany wynik |
 
-Numeracja wykładów pomija 13: w materiale źródłowym nie było wykładu 13
-(zajęcia online, brak notatek). Numeracja rozdziałów w PDF-ie jest ciągła:
-rozdziały 1–13 to wykłady, a rozdział 14 to „Zadania”.
+13 wykładów jest zebranych w 8 rozdziałów (niektóre rozdziały łączą kilka
+kolejnych wykładów jako sekcje), a ostatni rozdział „Z” to „Zadania”.
 
 Pliki `tk*.tex` **nie** wchodzą w skład kompilacji — `body_zadania.tex` zawiera
 te same zadania złożone na nowo w stylu książki, ze znormalizowanymi makrami.
