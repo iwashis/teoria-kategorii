@@ -30,6 +30,7 @@
 \author{Seria 5: Transformacje naturalne i monady}
 \begin{document}
 \maketitle
+\thispagestyle{empty}
 
 \begin{problem} \label{problem:1}
   Niech $\mathbb{C}$ będzie kategorią kartezjańsko-domkniętą. Pokazać, że następujące rodziny:
@@ -42,21 +43,21 @@
   są transformacjami naturalnymi między odpowiednimi funktorami. 
 \end{problem} 
 
-\begin{problem} \label{problem:2}
-  Pokazać, że następujące rodziny $\{\eta_X\}_X$ i $\{\mu_X\}_X$ są 
-transformacjami naturalnymi między odpowiednimi $\mathsf{Set}$-funktorami:
-\begin{enumerate}
-\item $\{\eta_X:X\to \mathcal{P}X\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = \{x\}$ oraz 
-  $\{\mu_X: \mathcal{P}\mathcal{P}X\to \mathcal{P}X\}_{X\in \mathsf{Set}}, \mu_X(S) =\bigcup S$,
-\item $\{\eta_X:X\to X^\ast\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = x$ 
-  oraz $\{\mu_X: (X^\ast)^\ast \to X^\ast\}_{X\in \mathsf{Set}}$, 
-  gdzie $\mu_X( s_1,s_2,\ldots, s_n ) = s_1s_2\ldots s_n$.
-\item Niech  $M=(M,\cdot,1)$ będzie ustalonym z góry monoidem, a ponadto
-  $\{\eta_X: X\to M\times X\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = (1,x)$ oraz  
-  $\{\mu_{X}:M\times M\times X\to M\times X\}_{X\in \mathsf{Set}}$, 
-  gdzie $\mu_{X}(m,n,x) = (m\cdot n,x)$.
-\end{enumerate}
-\end{problem}
+% \begin{problem} \label{problem:2}
+%   Pokazać, że następujące rodziny $\{\eta_X\}_X$ i $\{\mu_X\}_X$ są 
+% transformacjami naturalnymi między odpowiednimi $\mathsf{Set}$-funktorami:
+% \begin{enumerate}
+% \item $\{\eta_X:X\to \mathcal{P}X\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = \{x\}$ oraz 
+%   $\{\mu_X: \mathcal{P}\mathcal{P}X\to \mathcal{P}X\}_{X\in \mathsf{Set}}, \mu_X(S) =\bigcup S$,
+% \item $\{\eta_X:X\to X^\ast\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = x$ 
+%   oraz $\{\mu_X: (X^\ast)^\ast \to X^\ast\}_{X\in \mathsf{Set}}$, 
+%   gdzie $\mu_X( s_1,s_2,\ldots, s_n ) = s_1s_2\ldots s_n$.
+% \item Niech  $M=(M,\cdot,1)$ będzie ustalonym z góry monoidem, a ponadto
+%   $\{\eta_X: X\to M\times X\}_{X\in \mathsf{Set}}$, gdzie $\eta_X(x) = (1,x)$ oraz  
+%   $\{\mu_{X}:M\times M\times X\to M\times X\}_{X\in \mathsf{Set}}$, 
+%   gdzie $\mu_{X}(m,n,x) = (m\cdot n,x)$.
+% \end{enumerate}
+% \end{problem}
 
 
 \begin{problem} 
@@ -67,9 +68,9 @@ Pokazać, że następujące trójki są monadami:
     \mu: \left ((\mathcal{I}d\times A)^A \times A\right)^A\implies (\mathcal{I}d\times A)^A, 
     \eta: \mathcal{I}d\implies (\mathcal{I}d\times A)^A)
     $, 
-    gdzie $\mathbb{C}$ jest kategorią kartezjańsko domkniętą oraz $\mu$ i $\eta$ są jak w Zadaniu \ref{problem:1}.  
-  \item $(T, \mu, \eta)$, gdzie $T\in \{\mathcal{P}, (-)^\ast, M\times \mathcal{I}d\}$, oraz 
-      $\mu$ i $\eta$ są jak w Zadaniu \ref{problem:2} dla odpowiednich funktorów. 
+    gdzie $\mathbb{C}$ jest kategorią kartezjańsko domkniętą oraz $\mu$ i $\eta$ są jak w zadaniu \ref{problem:1},  
+  \item $(T, \mu, \eta)$, gdzie $T\in \{\mathcal{P}, M\times \mathcal{I}d\}$, oraz 
+      $\mu$ i $\eta$ są jak w zadaniu $6$ z serii $4$ dla odpowiednich funktorów. 
    
 \end{enumerate}
 \end{problem}
@@ -99,7 +100,7 @@ Pokazać, że następujące trójki są monadami:
  Pokazać, że jeśli $(T, (-)^\ast, \eta)$ jest trójką Kleisliego, to $(T,\mu,\eta)$ jest monadą, gdzie $Tf = (\eta_Y\circ f)^\ast$ 
  dla każdej strzałki $f:X\to Y$ oraz
  $\mu = \{\mu_X:T^2X\to TX\}$ dla $\mu_X = (id_{TX})^\ast$. 
- Ponadto, jeśli $(T,(-)^\ast, \eta)$ jest monadą, 
+ Ponadto, jeśli $(T,\mu, \eta)$ jest monadą, 
  to $(T,(-)^\ast, \eta)$ jest trójką Kleisliego, gdzie $f^\ast = \mu_Y \circ Tf$ dla $f:X\to TY$. 
 \end{problem} 
 
