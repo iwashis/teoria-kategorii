@@ -37,12 +37,15 @@
 \author{Seria 3: (Ko)granice}
 \begin{document}
 \maketitle
-
-\blfootnote{\today}
+\thispagestyle{empty}
 
 \begin{problem}
-W kategorii $\mathsf{Set}$ rozważmy dowolne przekształcenie $f:A\to B$ oraz zanurzenie $i_U:w:U\subseteq B$. Opisać pullback przekształceń $f$ i $i$.
+W kategorii $\Set$ rozważmy dowolne przekształcenie $f\colon A\to B$ oraz zanurzenie $i_U\colon U\hookrightarrow B$. Opisać pullback przekształceń $f$ i $i_U$.
 \end{problem}
+
+%\begin{problem}
+%W kategorii $\mathsf{Set}$ rozważmy dowolne %przekształcenie $f:A\to B$ oraz zanurzenie %\linebreak $i_U: U\to B$, gdzie $U \subseteq B$. %Opisać pullback przekształceń $f$ i $i_U$.
+%\end{problem}
 
 \begin{problem}
 Pokazać, że strzałka $m:X\to Y$ jest mono wtedy i tylko wtedy, gdy $X$ wraz z parą $id:X\to X$, $id:X\to X$ jest pullbackiem pary $m:X\to Y$, $m:X\to Y$. Wywnioskować, że funktor $\mathsf{C}(A,-)$ zachowuje monomorfizmy.
@@ -53,24 +56,23 @@ Pokazać, że w dowolnej kategorii dla pullbacku  $A'\stackrel{m'}{\leftarrow} M
 \end{problem}
 
 \begin{problem}
-Pokazać, że jeśli $\mathsf{C}$ jest kategorią w której istnieją skończone granice oraz $F:\mathsf{C}\to \mathsf{C}$ jest funktorem to kategoria $\mathsf{Alg}(F)$ ma wszystkie skończone granice. 
-\end{problem}
-
-\begin{problem}
-Pokazać, że jeśli kategoria $\mathbb{C}$ ma skończone produkty i pullbacki, to ma ekwalizatory.
-\end{problem}
-
-\begin{problem}
 Zdualizować definicję pullbacku (nazywając go pushoutem). Opisać pushouty w $\mathsf{Set}$. Pokazać konstrukcję pushoutów za pomocą koproduktów i koekwalizatorów. 
 \end{problem}
 
 \begin{problem}
-Podać definicję kostożka i kogranicy nad diagramem $D:J\to \mathsf{K}$. Pokazać, że kategoria $K$ ma wszystkie skończone kogranice wtedy i tylko, gdy ma wszystkie skończone koprodukty i koekwalizatory (bez używania zasady dualności). 
+Pokazać, że $\mathsf{C}(-,A):\mathsf{C}^{op}\to \mathsf{Set}$ przekształca koekwalizatory w $\mathsf{C}$ na ekwalizatory i~obiekt początkowy na obiekt końcowy.
 \end{problem}
 
 \begin{problem}
-Pokazać, że $\mathsf{C}(-,A):\mathsf{C}^{op}\to \mathsf{Set}$ przekształca koekwalizatory w $\mathsf{C}$ na ekwalizatory i obiekt początkowy na obiekt końcowy.
+Pokazać, że jeśli $\mathsf{C}$ jest kategorią, w której istnieją skończone granice oraz $F:\mathsf{C}\to \mathsf{C}$ jest funktorem, to kategoria $\mathsf{Alg}(F)$ ma wszystkie skończone granice. 
 \end{problem}
 
+%\begin{problem}
+%Pokazać, że jeśli kategoria $\mathbb{C}$ ma %skończone produkty i pullbacki, to ma %ekwalizatory.
+%\end{problem}
+
+\begin{problem}
+Podać definicję kostożka i kogranicy nad diagramem $D:\mathsf{J}\to \mathsf{K}$. Pokazać, że kategoria~$\mathsf{K}$ ma wszystkie skończone kogranice wtedy i tylko wtedy, gdy ma wszystkie skończone koprodukty i~koekwalizatory (bez używania zasady dualności). 
+\end{problem}
 
 \end{document}

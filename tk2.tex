@@ -35,23 +35,28 @@
 \author{Seria 2: Podstawowe konstrukcje kategoryjne}
 \begin{document}
 \maketitle
-
-\blfootnote{\today}
-
+\thispagestyle{empty}
 
 \begin{problem}
-Znaleźć obiekt początkowy i końcowy (jeśli istnieją) w kategorii 
-$\mathsf{Grp}$, $\mathsf{Pos}$, $\mathsf{Par}$ oraz w kategorii wszystkich algebr typu $(1,0)$. 
+Znaleźć obiekty początkowe i końcowe (jeśli istnieją) w następujących kategoriach:
+$\mathsf{Rel}$,  $\mathsf{Mon}$, $\mathsf{Pos}$, $\mathsf{Ring}$ (kategoria pierścieni przemiennych z jedynką). 
 \end{problem}
 
-
+% \begin{problem}
+% Niech $F:\mathsf{C}\to \mathsf{C}$ będzie funktorem. Udowodnić, że jeśli $(A,a:FA\to A)$ jest obiektem początkowym w $\mathrm{Alg}(F)\footnote{Niech $F:\mathsf{C}\to \mathsf{C}$ będzie funktorem. $F$-algebrą nazywamy parę $(A,a:FA\to A)$ dla obiektu $A\in \mathsf{C}$. Dla dwóch $F$-algebr $(A,a:FA\to A)$, $(B,b:FB\to B)$ morfizm $h:A\to B$ nazywamy \emph{homomorfizmem} o dziedzinie $(A,a:FA\to A)$ i przeciwdziedzinie $(B,b:FB\to B)$, jeśli $h\circ a = b\circ F(h)$.  Kategorię wszystkich $F$-algebr i homomorfizmów miedzy nimi oznaczamy przez $\mathrm{Alg}(F).$}$,
+% to morfizm $a:FA\to A$ jest izomorfizmem w $\mathsf{C}$. Czy istnieje obiekt początkowy w $\mathrm{Alg}(\mathcal{P})$?
+% \end{problem}
 
 \begin{problem}
 Niech $\mathsf{C}$ będzie kategorią oraz niech $A\in \mathsf{C}$ będzie obiektem. Definiujemy przyporządkowanie $\mathsf{C}(A,-):\mathsf{C}\to \mathsf{Set}$ w następujący sposób:
 $$
 X\mapsto \mathsf{C}(A,X) \text{ oraz } f:X\to Y \mapsto \mathsf{C}(A,f):\mathsf{C}(A,X)\to \mathsf{C}(A,Y);g\mapsto f\circ g. 
 $$
-Pokazać, że $\mathsf{C}(A,-)$ jest funktorem. Udowodnić, że zachowuje on binarne produkty\footnote{Mówimy, że funktor $F:\mathsf{C}\to\mathsf{D}$ \emph{zachowuje produkty}, jeśli $F(A\times B) \cong F(A)\times F(B)$, dla dowolnych $A,B\in \mathsf{C}$ dla których istnieje produkt $A\times B$ w $\mathsf{C}$.}. 
+Pokazać, że $\mathsf{C}(A,-)$ jest funktorem. Udowodnić, że zachowuje on binarne produkty.\footnote{Mówimy, że funktor $F:\mathsf{C}\to\mathsf{D}$ \emph{zachowuje produkty}, jeśli $F(A\times B) \cong F(A)\times F(B)$, dla dowolnych $A,B\in \mathsf{C}$ dla których istnieje produkt $A\times B$ w $\mathsf{C}$.}
+\end{problem}
+
+\begin{problem}
+    Niech $F:\mathsf{C}\to\mathsf{C}$ będzie funktorem. Pokazać, że jeśli w $\mathsf{C}$ istnieją binarne produkty, to w $\mathrm{Alg}(F)$ też istnieją.\footnote{Niech $F:\mathsf{C}\to \mathsf{C}$ będzie funktorem. $F$-algebrą nazywamy parę $(A,a:FA\to A)$ dla obiektu $A\in \mathsf{C}$. Dla dwóch $F$-algebr $(A,a:FA\to A)$, $(B,b:FB\to B)$ morfizm $h:A\to B$ nazywamy \emph{homomorfizmem} o dziedzinie $(A,a:FA\to A)$ i przeciwdziedzinie $(B,b:FB\to B)$, jeśli $h\circ a = b\circ F(h)$.  Kategorię wszystkich $F$-algebr i homomorfizmów miedzy nimi oznaczamy przez $\mathrm{Alg}(F).$} 
 \end{problem}
 
 \begin{problem}
@@ -62,14 +67,12 @@ $$
 \end{problem}
 
 \begin{problem}
-Dla dowolnej rodziny $(X_i)_{i\in I}$ obiektów z kategorii $\mathsf{C}$ napisać definicję produktu
-$\prod_{i\in I} X_i$ poprzez własność uniwersalności uogólniając przypadek $|I|=2$.
+Podać definicję uogólnionego produktu dla dowolnej rodziny $\{X_i\}_{i\in I}$ obiektów z kategorii~$\mathsf{C}$. 
 \end{problem}
 
 \begin{problem}
 Pokazać, że binarne koprodukty wyznaczone są jednoznacznie z dokładnością do izomorfizmu.
 \end{problem}
-
 
 \begin{problem}
 Udowodnić, że w kategorii grup abelowych $\mathsf{Ab}$ koprodukt $A+B$ dwóch grup abelowych $A,B$ spełnia $A+B \cong A\times B$.  
@@ -82,21 +85,22 @@ A^\ast + B^\ast \cong (A+B)^\ast.
 $$
 \end{problem}
 
-
 \begin{problem}
 Pokazać, że jeśli $e:E\to A$ jest ekwalizatorem pewnej pary strzałek, to $e$ jest mono. Sformułować i udowodnić (bez używania zasady dualności) dualne twierdzenie dla koekwalizatorów. 
 \end{problem}
 
 \begin{problem}
-Pokazać, że kategoria grup abelowych $\mathsf{Ab}$ ma wszystkie ekwalizatory. Opisać je.  
+Pokazać, że kategoria grup abelowych $\mathsf{Ab}$ ma wszystkie ekwalizatory. Opisać je. 
 \end{problem}
 
 \begin{problem}
 Pokazać, że $\mathsf{Set}$ ma wszystkie koekwalizatory. Podać ich konstrukcję.
 \end{problem}
+
 \begin{problem}
 Niech $f:A\to B$ będzie pewnym przekształceniem w $\mathsf{Set}$. Opisać ekwalizator przekształceń $f\circ \pi_1, f\circ \pi_2:A\times A\to B$ (taki typ ekwalizatora będziemy nazywać \emph{jądrem} $f$). Udowodnić, że dla dowolnej relacji równoważności $R$ na $A$ jądrem  przekształcenia ilorazowego $A\to A/R; a\mapsto [a]_R$ jest $R$.
 \end{problem}
+
 \begin{problem}
 Niech $R\subseteq A\times A$ będzie dowolną relacją binarną oraz niech $\left < R\right >$ będzie najmniejszą relacją równoważności na $A$ zawierającą $R$. Pokazać, że przekształcenie ilorazowe $A\to A/\left < R \right >$ jest koekwalizatorem dwóch rzutowań $R\rightrightarrows A$. 
 \end{problem}
