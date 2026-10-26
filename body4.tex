@@ -1,39 +1,72 @@
 Niech $\C$ będzie kategorią.
 
-\begin{definicja}
-\emph{Diagramem produktowym} dla $A, B \in \C$ nazywamy obiekt $P$ wraz ze strzałkami
+W $\Set$:
+\[
+A\times B = \{(a,b) : a\in A,\; b\in B\}.
+\]
+Zauważmy, że każdy produkt kartezjański $A\times B$ jest w parze z dwoma rzutowaniami
+\[
+\begin{tikzcd}
+A & A\times B \arrow[l, "\pi_1"'] \arrow[r, "\pi_2"] & B
+\end{tikzcd}
+\]
+gdzie $\pi_1(a,b) = a$, $\pi_2(a,b)=b$. Ponadto dla dowolnego zbioru $X$ wraz ze strzałkami $c_1\colon X\to A$, $c_2\colon X\to B$ istnieje jednoznacznie wyznaczona strzałka $X\to A\times B$ dana wzorem $x\mapsto (c_1(x),c_2(x))$.
+
+\begin{definicja}\label{def:produkt}
+\emph{Diagramem produktowym} dla obiektów $A,B\in\C$ nazywamy obiekt $P$ wraz ze strzałkami
 \[
 \begin{tikzcd}
 A & P \arrow[l, "p_1"'] \arrow[r, "p_2"] & B
 \end{tikzcd}
 \]
-takimi, że dla każdego obiektu $X \in \C$ wraz ze strzałkami
+takimi, że dla każdego obiektu $X\in\C$ wraz ze strzałkami
 \[
 \begin{tikzcd}
 A & X \arrow[l, "x_1"'] \arrow[r, "x_2"] & B
 \end{tikzcd}
 \]
-istnieje jednoznaczne $u \colon X \to P$, które czyni diagram
+istnieje jednoznaczna strzałka $u\colon X\to P$ czyniąca następujący diagram przemiennym:
 \[
 \begin{tikzcd}
-& X \arrow[dl, "x_1"'] \arrow[dr, "x_2"] \arrow[d, "u" description, dashed] & \\
+& X \arrow[ld, "x_1"'] \arrow[rd, "x_2"] \arrow[d, dashed, "\exists! u"] & \\
 A & P \arrow[l, "p_1"] \arrow[r, "p_2"'] & B
 \end{tikzcd}
 \]
-przemiennym. Piszemy $P = A \times B$ oraz $u = \langle x_1, x_2 \rangle$.
 \end{definicja}
+
+\begin{definicja}
+Jeśli $P$ wraz z $A\xleftarrow{p_1} P\xrightarrow{p_2} B$ jest diagramem produktowym dla obiektów $A,B$, to $P$ nazywamy \emph{produktem} $A$ oraz $B$. Piszemy $P = A\times B$ oraz $u = \langle x_1, x_2\rangle$.
+\end{definicja}
+
+\begin{stwierdzenie}
+Produkty są określone jednoznacznie z dokładnością do izomorfizmu.
+\end{stwierdzenie}
+
+\begin{proof}
+Załóżmy, że
+\[
+\begin{tikzcd}
+A & P \arrow[l, "p_1"'] \arrow[r, "p_2"] & B
+\end{tikzcd}
+\qquad\text{oraz}\qquad
+\begin{tikzcd}
+A & Q \arrow[l, "q_1"'] \arrow[r, "q_2"] & B
+\end{tikzcd}
+\]
+są diagramami produktowymi dla $A,B$. $Q$ jest produktem, więc istnieje jednoznacznie określona strzałka $i\colon P\to Q$ taka, że
+\[
+q_1\circ i = p_1 \quad\text{oraz}\quad q_2\circ i = p_2.
+\]
+Analogicznie, ponieważ $P$ jest produktem, istnieje jednoznacznie określona strzałka $j\colon Q\to P$ taka, że
+\[
+q_1 = p_1\circ j, \qquad q_2 = p_2\circ j.
+\]
+Stąd $p_1\circ j\circ i = p_1$ oraz $p_2\circ j\circ i = p_2$. Z jednoznaczności strzałki czyniącej diagram produktowy przemiennym (a $\id_P$ także go uzupełnia) mamy $j\circ i = \id_P$. Analogicznie $i\circ j = \id_Q$.
+\end{proof}
 
 \begin{przyklad}
 \leavevmode
 \begin{enumerate}
-\item W kategorii $\Set$ dla dwóch zbiorów $A, B \in \Set$ ich diagramem produktowym jest
-\[
-\begin{tikzcd}
-A & A \times B \arrow[l, "\pi_1"'] \arrow[r, "\pi_2"] & B
-\end{tikzcd}
-\qquad A \times B = \{(a, b) \mid a \in A,\ b \in B\}.
-\]
-
 \item W omawianych wcześniej kategoriach algebr ($\Mon$, $\Grp$, $\Ring$ itd.) dla każdych dwóch obiektów $A, B$ istnieje produkt $A \times B$ zdefiniowany w naturalny sposób (np. dla $\Grp$ -- produkt grup).
 
 \item Niech $\mathcal{P}$ będzie kategorią indukowaną przez $(P, \leq)$. Czym jest produkt $p \times q$ dla $p, q \in P$?
