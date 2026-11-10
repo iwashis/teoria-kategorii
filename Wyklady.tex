@@ -16,6 +16,17 @@
 \usepackage{tikz}
 \usepackage{tikz-cd}
 \usepackage{enumitem}
+\usepackage{listings}
+\lstset{
+  language=Haskell,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{defaccent}\bfseries,
+  commentstyle=\color{remaccent}\itshape,
+  columns=fullflexible, keepspaces=true,
+  showstringspaces=false, upquote=true,
+  morekeywords={class,instance,where,type},
+}
+\lstnewenvironment{haskell}{\lstset{xleftmargin=12pt,aboveskip=6pt,belowskip=6pt}}{}
 \setlist{itemsep=2pt,parsep=2pt,topsep=4pt}
 \usepackage{xcolor}
 \usepackage[most]{tcolorbox}
@@ -132,6 +143,7 @@
 \newcommand{\Par}{\catname{Par}}
 \newcommand{\Err}{\catname{Err}}
 \newcommand{\Trace}{\catname{Trace}}
+\newcommand{\Hask}{\catname{Hask}}
 \newcommand{\Cat}{\mathcal{C}}
 \let\C\undefined
 \newcommand{\C}{\mathcal{C}}
@@ -188,11 +200,11 @@
 \input{body7}
 
 \chapter{Kategorie kartezjańsko domknięte}
-\section{Wykładniki i kategorie kartezjańsko domknięte}
+\section{Wykładniki i kategorie kartezjańsko domknięte}\label{sec:wykladniki}
 \input{body8}
-\section{Funktor wykładniczy. Aksjomatyzacja równościowa CCC}
+\section{Funktor wykładniczy. Aksjomatyzacja równościowa CCC}\label{sec:funktor-wykl}
 \input{body9}
-\section{Funktor IO i modelowanie obliczeń z efektami}
+\section{CCC z perspektywy Haskella. Funktor IO}\label{sec:ccc-haskell}
 \input{body10}
 
 \chapter{Funktor stanu i kompozycja Kleisliego}\label{ch:stan}

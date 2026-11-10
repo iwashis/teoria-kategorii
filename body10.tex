@@ -1,4 +1,257 @@
-\section*{Podsumowanie najważniejszych własności CCC}
+W~tej sekcji patrzymy na kategorie kartezjańsko domknięte (\emph{cartesian closed categories}, CCC) od strony języka programowania. Teza, którą chcemy uzasadnić, pochodzi od J.~Lambeka \cite{tk-lambek80}: \emph{kategorie kartezjańsko domknięte są dokładnie modelami prosto typowanego rachunku lambda}. Haskell jest -- po odpowiedniej idealizacji -- praktyczną realizacją tego rachunku. Każda podstawowa konstrukcja języka (typ \lstinline{()}, pary, typ funkcyjny \lstinline{a -> b}, funkcje \lstinline{curry} i~\lstinline{uncurry}) okaże się rozwiązaniem pewnego problemu uniwersalnego. Prawa, z~których programista korzysta przy rozumowaniu równościowym o~programach, to dokładnie aksjomaty CCC. Korzystamy z~definicji wykładnika i~CCC z~sekcji~\ref{sec:wykladniki} oraz z~równościowej aksjomatyzacji CCC z~sekcji~\ref{sec:funktor-wykl}. Na końcu sekcji zbieramy najważniejsze własności CCC i~używamy ich do modelowania obliczeń z~efektami ubocznymi (funktor $\IO$).
+
+\subsection*{Idealizacja: kategoria \texorpdfstring{$\Hask$}{Hask}}
+
+\begin{definicja}[robocza]\label{def:hask}
+Kategoria $\Hask$ ma:
+\begin{itemize}
+\item jako obiekty -- zamknięte, monomorficzne typy Haskella (\lstinline{Int}, \lstinline{Bool}, \lstinline{(Int, Bool)}, \lstinline{Int -> Bool}, \dots);
+\item jako morfizmy $A \to B$ -- \emph{totalne} funkcje \lstinline{f :: A -> B} (tj.\ dla każdej zdefiniowanej wartości argumentu zwracające zdefiniowaną wartość) z~dokładnością do równości ekstensjonalnej: $f = g$ wtedy i~tylko wtedy, gdy \lstinline{f x = g x} dla każdej zdefiniowanej wartości \lstinline{x :: A};
+\item identyczność \lstinline{id} i~złożenie \lstinline{(.)}, gdzie \lstinline{(g . f) x = g (f x)}.
+\end{itemize}
+\end{definicja}
+
+Aksjomaty kategorii, tj.\ \lstinline{id . f = f}, \lstinline{f . id = f} oraz \lstinline{h . (g . f) = (h . g) . f}, wynikają natychmiast z~definicji \lstinline{(.)} i~ekstensjonalności. W~bibliotece standardowej strukturę tę wyraża klasa \lstinline{Category} z~modułu \lstinline{Control.Category}:
+\begin{haskell}
+class Category k where
+  id  :: k a a
+  (.) :: k b c -> k a b -> k a c
+
+instance Category (->) where
+  id    = \x -> x
+  g . f = \x -> g (f x)
+\end{haskell}
+Parametr \lstinline{k} (\emph{konstruktor typu} rodzaju \lstinline{* -> * -> *}) odgrywa rolę kategorii: \lstinline{k a b} to zbiór morfizmów $\C(a, b)$. Instancja dla \lstinline{(->)} to właśnie $\Hask$.
+
+Słowo ,,totalne'' w~definicji~\ref{def:hask} nie jest ozdobnikiem: rzeczywisty Haskell dopuszcza obliczenia nieskończone i~błędy (wartość $\perp$, w~kodzie \lstinline{undefined}), co psuje kilka praw poniżej. Wracamy do tego w~uwadze~\ref{uw:hask-nie-ccc}. Do tego miejsca pracujemy w~fragmencie totalnym.
+
+\subsection*{Obiekt końcowy i produkty}
+
+\paragraph{Obiekt końcowy.} Typ \lstinline{()} ma dokładnie jedną (totalną) wartość, \lstinline{()}. Stąd dla każdego typu \lstinline{a} istnieje dokładnie jedna totalna funkcja \lstinline{a -> ()}:
+\begin{haskell}
+it :: a -> ()
+it _ = ()
+\end{haskell}
+Jednoznaczność: jeśli \lstinline{h :: a -> ()} jest totalna, to \lstinline{h x} jest zdefiniowaną wartością typu \lstinline{()}, a więc \lstinline{h x = ()} \lstinline{= it x}. Zatem \lstinline{()} jest obiektem końcowym $\mathbf{1}$, a \lstinline{it} to $!_A$.
+
+\paragraph{Produkty.} Dla typów \lstinline{a}, \lstinline{b} kandydatem na produkt jest typ par \lstinline{(a, b)} z~rzutowaniami \lstinline{fst}, \lstinline{snd}. Strzałkę $\langle f, g\rangle$ realizuje operator \lstinline{(&&&)} z~\lstinline{Control.Arrow}:
+\begin{haskell}
+(&&&) :: (c -> a) -> (c -> b) -> c -> (a, b)
+(f &&& g) z = (f z, g z)
+\end{haskell}
+Następująca tabela zestawia prawa Haskella z~równościami charakteryzującymi produkt (por.\ stwierdzenie~\ref{stw:ccc-rown}):
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{ll}
+\textbf{Haskell} & \textbf{teoria kategorii} \\ \hline
+\lstinline{fst . (f &&& g) = f} & $p_1 \circ \langle f, g\rangle = f$ \\
+\lstinline{snd . (f &&& g) = g} & $p_2 \circ \langle f, g\rangle = g$ \\
+\lstinline{(fst . h) &&& (snd . h) = h} & $\langle p_1 \circ h,\, p_2\circ h\rangle = h$
+\end{tabular}
+\end{center}
+Dwa pierwsze prawa wynikają z~jednego kroku obliczenia. Trzecie (tzw.\ \emph{surjective pairing}) wymaga totalności: jeśli \lstinline{h z} jest zdefiniowaną wartością typu \lstinline{(a, b)}, to jest postaci \lstinline{(x, y)}, więc
+\[
+\texttt{((fst . h) \&\&\& (snd . h)) z} = \texttt{(fst (x, y), snd (x, y))} = \texttt{(x, y)} = \texttt{h z}.
+\]
+Z~trzeciego prawa wynika jednoznaczność $\langle f,g\rangle$: jeśli $p_1\circ h = f$ i~$p_2\circ h = g$, to $h = \langle p_1\circ h, p_2\circ h\rangle = \langle f, g\rangle$. Zatem \lstinline{(a, b)} jest produktem $A\times B$ w~$\Hask$. Strzałka $f\times g = \langle f\circ p_1,\, g\circ p_2\rangle$ to operator \lstinline{(***)}:
+\begin{haskell}
+(***) :: (a -> c) -> (b -> d) -> (a, b) -> (c, d)
+f *** g = (f . fst) &&& (g . snd)
+\end{haskell}
+Funktor $(-)\times(-)\colon \Hask\times\Hask\to\Hask$ to instancja \lstinline{Bifunctor} dla par: \lstinline{bimap = (***)}.
+
+\subsection*{Wykładniki: typ funkcyjny}
+
+Przypomnijmy (definicja~\ref{def:wykladnik}): wykładnik $B^A$ to obiekt ze strzałką $\varepsilon\colon B^A\times A\to B$ taką, że każda $f\colon Z\times A\to B$ ma jednoznaczną transpozycję $\tilde f\colon Z\to B^A$ spełniającą $\varepsilon\circ(\tilde f\times\id_A) = f$. W~Haskellu kandydatem jest typ funkcyjny \lstinline{a -> b}:
+\begin{haskell}
+apply :: (a -> b, a) -> b
+apply (f, x) = f x
+
+curry :: ((z, a) -> b) -> z -> a -> b
+curry f = \z x -> f (z, x)
+
+uncurry :: (z -> a -> b) -> (z, a) -> b
+uncurry g = \(z, x) -> g z x
+\end{haskell}
+Zauważmy, że \lstinline{apply = uncurry id} oraz \lstinline{uncurry g = apply . (g *** id)}, co dokładnie odpowiada definicji $\overline{g} = \varepsilon\circ(g\times\id_A)$ z~sekcji~\ref{sec:wykladniki}.
+
+\begin{twierdzenie}\label{tw:hask-ccc}
+Kategoria $\Hask$ (definicja~\ref{def:hask}), z~obiektem końcowym \lstinline{()}, produktami \lstinline{(a, b)} i~wykładnikami \lstinline{a -> b} z~ewaluacją \lstinline{apply}, jest kartezjańsko domknięta. Transpozycją strzałki \lstinline{f :: (z, a) -> b} jest \lstinline{curry f}.
+\end{twierdzenie}
+
+\begin{proof}
+Produkty i~obiekt końcowy omówiliśmy wyżej. Dla wykładników należy sprawdzić dwa prawa.
+
+\emph{Istnienie} (reguła $\beta$): \lstinline{apply . (curry f *** id) = f}. Istotnie, dla pary \lstinline{(z, x)}:
+\[
+\texttt{apply ((curry f *** id) (z, x))} = \texttt{apply (curry f z, x)} = \texttt{curry f z x} = \texttt{f (z, x)}.
+\]
+
+\emph{Jednoznaczność} (reguła $\eta$): jeśli \lstinline{g :: z -> a -> b} spełnia \lstinline{apply . (g *** id) = f}, to \lstinline{g = curry f}. Istotnie, dla każdego \lstinline{z}:
+\[
+\texttt{curry f z} = \texttt{\textbackslash x -> f (z, x)} = \texttt{\textbackslash x -> apply (g z, x)} = \texttt{\textbackslash x -> g z x} = \texttt{g z},
+\]
+gdzie ostatnia równość to $\eta$-reguła rachunku lambda, czyli ekstensjonalność funkcji.
+\end{proof}
+
+\begin{uwaga}[Currying jako sprzężenie]
+Bijekcja $\C(Z\times A, B)\cong\C(Z, B^A)$ jest w~Haskellu realizowana przez parę wzajemnie odwrotnych funkcji \lstinline{curry} i~\lstinline{uncurry}:
+\[
+\texttt{curry . uncurry = id}, \qquad \texttt{uncurry . curry = id}.
+\]
+Jest ona naturalna w~$Z$, tzn.\ dla \lstinline{h :: y -> z} zachodzi
+\lstinline{curry (f . (h *** id)) = curry f . h}
+(sprawdzenie: obie strony posyłają \lstinline{y} na \lstinline{\x -> f (h y, x)}). Naturalna bijekcja tej postaci to \emph{sprzężenie} funktorów $(-)\times A\dashv(-)^A$. Jego jednostką jest strzałka $\eta$ z~sekcji~\ref{sec:funktor-wykl}, czyli \lstinline{curry id :: c -> a -> (c, a)}, a kojednostką -- ewaluacja \lstinline{apply}. Każdy typ funkcyjny w~Haskellu jest więc wykładnikiem w~sensie ściśle uniwersalnym, a nie tylko ,,zbiorem funkcji''.
+\end{uwaga}
+
+\begin{przyklad}[Funktor $(-)^A$ to \texttt{fmap} dla \texttt{((->) a)}]
+W~sekcji~\ref{sec:funktor-wykl} definiujemy $\beta^A = \widetilde{\beta\circ\varepsilon}$ dla $\beta\colon B\to C$. W~Haskellu:
+\[
+\texttt{curry (beta . apply) f} = \texttt{\textbackslash x -> beta (apply (f, x))} = \texttt{\textbackslash x -> beta (f x)} = \texttt{beta . f}.
+\]
+Zatem $\beta^A$ to składanie z~lewej strony z~$\beta$ -- dokładnie metoda \lstinline{fmap} instancji z~biblioteki standardowej:
+\begin{haskell}
+instance Functor ((->) a) where
+  fmap = (.)
+\end{haskell}
+Prawa funktora \lstinline{fmap id = id} i~\lstinline{fmap (g . f) = fmap g . fmap f} to równości $(\id_B)^A = \id_{B^A}$ i~$(\sigma\circ\beta)^A = \sigma^A\circ\beta^A$ udowodnione w~sekcji~\ref{sec:funktor-wykl}.
+\end{przyklad}
+
+\subsection*{CCC jako interfejs}
+
+Ponieważ CCC jest strukturą algebraiczną (stwierdzenie~\ref{stw:ccc-rown}), można ją wyrazić jako klasę typów, abstrahując od konkretnej kategorii \lstinline{k}. Poniższe sformułowanie pochodzi od C.~Elliotta \cite{tk-elliott17}:
+\begin{haskell}
+class Category k => Cartesian k where
+  it    :: k a ()
+  exl   :: k (a, b) a
+  exr   :: k (a, b) b
+  (&&&) :: k c a -> k c b -> k c (a, b)
+
+class Cartesian k => Closed k where
+  apply   :: k (a -> b, a) b
+  curry   :: k (a, b) c -> k a (b -> c)
+  uncurry :: k a (b -> c) -> k (a, b) c
+\end{haskell}
+Instancje dla \lstinline{(->)} są dane powyższymi definicjami. Prawa (,,aksjomaty'') nie są sprawdzane przez kompilator -- są zobowiązaniem dowodowym autora instancji, dokładnie jak w~stwierdzeniu~\ref{stw:ccc-rown}.
+
+\begin{uwaga}
+W~tym sformułowaniu obiektami każdej kategorii \lstinline{k} są typy Haskella, a obiekt wykładniczy jest zawsze reprezentowany przez \lstinline{a -> b}. To uproszczenie; w~pełnej ogólności należałoby uzależnić produkt i~wykładnik od \lstinline{k} (np.\ przez rodziny typów stowarzyszonych). Dla naszych celów nie ma to znaczenia.
+\end{uwaga}
+
+Siła tego podejścia polega na tym, że wyrażenie zbudowane wyłącznie z~\lstinline{id}, \lstinline{(.)}, \lstinline{it}, \lstinline{exl}, \lstinline{exr}, \lstinline{(&&&)}, \lstinline{apply}, \lstinline{curry} jest polimorficzne względem \lstinline{k}, a więc ma sens w~\emph{każdej} CCC. Na przykład:
+\begin{haskell}
+swapC :: Cartesian k => k (a, b) (b, a)
+swapC = exr &&& exl
+
+constC :: Closed k => k a (b -> a)
+constC = curry exl
+
+compC :: Closed k => k (b -> c, a -> b) (a -> c)
+compC = curry (apply . ((exl . exl) &&& (apply . ((exr . exl) &&& exr))))
+\end{haskell}
+W~\lstinline{(->)} są to odpowiednio \lstinline{\(x, y) -> (y, x)}, \lstinline{\x _ -> x} oraz \lstinline{\(g, f) -> g . f}. Jest to wersja kombinatorów kategoryjnych P.-L.~Curiena \cite{tk-curien86}, które posłużyły do konstrukcji maszyny abstrakcyjnej CAM (implementacja języka CAML). Elliott \cite{tk-elliott17} pokazał, że tę translację może wykonywać kompilator GHC i~interpretować jeden program np.\ jako układ logiczny albo jako jego pochodną (automatyczne różniczkowanie).
+
+\subsection*{Interpretacja rachunku lambda w CCC}
+
+Translacja z~poprzedniego punktu nie jest przypadkowa. Niech $\C$ będzie CCC i~niech każdemu typowi bazowemu przypisany będzie obiekt $\C$. Typy interpretujemy indukcyjnie:
+\[
+[\![\texttt{()}]\!] = \mathbf{1},\qquad
+[\![(A, B)]\!] = [\![A]\!]\times[\![B]\!],\qquad
+[\![A\texttt{ -> }B]\!] = [\![B]\!]^{[\![A]\!]}.
+\]
+Kontekst $\Gamma = x_1{:}A_1,\dots,x_n{:}A_n$ interpretujemy jako $[\![\Gamma]\!] = (\cdots(\mathbf{1}\times[\![A_1]\!])\times\cdots)\times[\![A_n]\!]$, a term $\Gamma\vdash t : B$ jako \emph{strzałkę} $[\![t]\!]\colon[\![\Gamma]\!]\to[\![B]\!]$:
+\begin{align*}
+[\![x_i]\!] &= \pi_i \quad\text{(odpowiednie złożenie rzutowań $p_1$, $p_2$)}, &
+[\![\texttt{()}]\!] &= \,!_{[\![\Gamma]\!]},\\
+[\![(t, u)]\!] &= \langle [\![t]\!], [\![u]\!]\rangle, &
+[\![\texttt{fst}\ t]\!] &= p_1\circ[\![t]\!],\quad [\![\texttt{snd}\ t]\!] = p_2\circ[\![t]\!],\\
+[\![t\ u]\!] &= \varepsilon\circ\langle[\![t]\!], [\![u]\!]\rangle, &
+[\![\lambda x.\,t]\!] &= \widetilde{[\![t]\!]}, \quad\text{gdzie } [\![t]\!]\colon [\![\Gamma]\!]\times[\![A]\!]\to[\![B]\!].
+\end{align*}
+Abstrakcja $\lambda$ to transpozycja, a aplikacja to ewaluacja. Zmienne stają się rzutowaniami, a więc w~obrazie nie ma już zmiennych: dostajemy styl \emph{point-free}.
+
+\begin{przyklad}
+Dla $\Gamma = g{:}B\texttt{ -> }C,\ f{:}A\texttt{ -> }B$ (z~pominięciem nieistotnego czynnika $\mathbf{1}$) i~termu $\lambda x.\, g\,(f\,x)$ mamy w~kontekście $\Gamma, x{:}A$: $[\![x]\!] = p_2$, $[\![f]\!] = p_2\circ p_1$, $[\![g]\!] = p_1\circ p_1$. Stąd
+\[
+[\![\lambda x.\,g\,(f\,x)]\!] = \Bigl(\varepsilon\circ\bigl\langle p_1\circ p_1,\ \varepsilon\circ\langle p_2\circ p_1, p_2\rangle\bigr\rangle\Bigr)^{\sim},
+\]
+co jest dokładnie definicją \lstinline{compC} powyżej (\lstinline{exl} $= p_1$, \lstinline{exr} $= p_2$).
+\end{przyklad}
+
+\begin{twierdzenie}[Lambek \cite{tk-lambek80,tk-lambek-scott}]\label{tw:lambek}
+\begin{enumerate}
+\item (\emph{Poprawność}) Jeśli $\Gamma\vdash t = u : B$ jest równością wyprowadzalną w~prosto typowanym rachunku lambda z~produktami (reguły $\beta$ i~$\eta$ dla $\times$, $\to$ oraz $\eta$ dla $\mathbf{1}$), to $[\![t]\!] = [\![u]\!]$ w~każdej CCC i~przy każdej interpretacji typów bazowych.
+\item (\emph{Zupełność, wolność}) Kategoria syntaktyczna, której obiektami są typy, a~morfizmami $A\to B$ są klasy $\beta\eta$-równoważności termów $x{:}A\vdash t : B$, jest wolną CCC generowaną przez typy bazowe. W~szczególności równość zachodząca w~każdej CCC jest wyprowadzalna w~rachunku lambda.
+\end{enumerate}
+\end{twierdzenie}
+
+\begin{proof}[Szkic dowodu poprawności]
+Indukcja po wyprowadzeniu. Kluczowe jest \emph{lemat o~podstawieniu}: $[\![t[u/x]]\!] = [\![t]\!]\circ\langle\id,[\![u]\!]\rangle$. Wtedy dla reguły $\beta$:
+\[
+[\![(\lambda x.\,t)\,u]\!] = \varepsilon\circ\langle\widetilde{[\![t]\!]}, [\![u]\!]\rangle
+= \varepsilon\circ(\widetilde{[\![t]\!]}\times\id)\circ\langle\id, [\![u]\!]\rangle
+= [\![t]\!]\circ\langle\id, [\![u]\!]\rangle
+= [\![t[u/x]]\!].
+\]
+Reguła $\eta$ dla funkcji ($\lambda x.\,t\,x = t$, gdy $x\notin FV(t)$) to dokładnie równość $\widetilde{\varepsilon\circ(g\times\id)} = g$, a reguły dla produktów i~$\mathbf{1}$ to pozostałe równości stwierdzenia~\ref{stw:ccc-rown}.
+\end{proof}
+
+Twierdzenie~\ref{tw:lambek} mówi, że rozumowanie równościowe o~totalnych programach haskellowych bez rekursji jest \emph{tym samym} co rozumowanie w~języku dowolnej CCC. Prawo udowodnione ,,w~Haskellu'' przy użyciu jedynie $\beta\eta$ jest twierdzeniem teorii kategorii i~odwrotnie.
+
+\subsection*{Odpowiedniość Curry'ego--Howarda--Lambeka}
+
+Rozważmy relację $A\preceq B$ $\iff$ istnieje (totalna) strzałka $A\to B$. Utożsamienie typów równoważnych względem $\preceq$ zamienia CCC w~poset, który -- jak wiemy z~przykładu o~posetach kartezjańsko domkniętych w~sekcji~\ref{sec:wykladniki} -- jest algebrą Heytinga, czyli modelem logiki intuicjonistycznej. Otrzymujemy słownik:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lll}
+\textbf{logika} & \textbf{Haskell} & \textbf{CCC} \\ \hline
+$\top$ & \lstinline{()} & $\mathbf{1}$ \\
+$\varphi\wedge\psi$ & \lstinline{(a, b)} & $A\times B$ \\
+$\varphi\Rightarrow\psi$ & \lstinline{a -> b} & $B^A$ \\
+\emph{modus ponens} & \lstinline{apply} & $\varepsilon$ \\
+twierdzenie o~dedukcji & \lstinline{curry} & transpozycja $f\mapsto\tilde f$ \\
+$\bot$ & \lstinline{Void} & obiekt początkowy $\mathbf{0}$ \\
+$\varphi\vee\psi$ & \lstinline{Either a b} & koprodukt $A+B$ \\
+dowód & program & strzałka \\
+normalizacja dowodu & obliczenie ($\beta$-redukcja) & równość strzałek
+\end{tabular}
+\end{center}
+Dwa ostatnie wiersze z~$\bot$ i~$\vee$ wymagają kategorii \emph{dwukartezjańsko domkniętej} (CCC z~obiektem początkowym i~koproduktami). W~$\Hask$ (wersji totalnej) są nimi \lstinline{Void} z~\lstinline{absurd :: Void -> a} oraz \lstinline{Either a b} z~\lstinline{Left}, \lstinline{Right} i~$[f,g] =$ \lstinline{either f g}.
+
+Konsekwencją jest, że typ polimorficzny ma totalnego mieszkańca tylko wtedy, gdy odpowiadająca mu formuła jest tautologią intuicjonistyczną. Na przykład prawo Peirce'a \lstinline{((a -> b) -> a) -> a} jest tautologią klasyczną, ale nie intuicjonistyczną, i~żaden totalny program tego typu nie istnieje.
+
+\begin{przyklad}[Algebra typów]
+Ponieważ $(-)\times A$ jest lewym sprzężonym, zachowuje wszystkie kogranice istniejące w~$\C$. W~szczególności w~każdej CCC z~koproduktami zachodzi rozdzielność $A\times(B+C)\cong A\times B + A\times C$ oraz $A\times\mathbf{0}\cong\mathbf{0}$. W~Haskellu:
+\begin{haskell}
+distr :: (a, Either b c) -> Either (a, b) (a, c)
+distr (x, Left y)  = Left  (x, y)
+distr (x, Right z) = Right (x, z)
+\end{haskell}
+Dualnie, $(-)^A$ jako prawy sprzężony zachowuje granice, a przez bijekcję $\C(A+B, C)\cong\C(A,C)\times\C(B,C)$ dostajemy prawa potęg, które znamy z~arytmetyki:
+\[
+C^{A+B}\cong C^A\times C^B,\quad C^{\mathbf{1}}\cong C,\quad C^{\mathbf{0}}\cong\mathbf{1},\quad (C^B)^A\cong C^{A\times B},\quad (B\times C)^A\cong B^A\times C^A.
+\]
+Pierwszy izomorfizm realizują \lstinline{\f -> (f . Left, f . Right)} oraz \lstinline{uncurry either}, czwarty -- \lstinline{uncurry} i~\lstinline{curry} (por.\ zadanie~\ref{zad:ccc-izo}).
+\end{przyklad}
+
+\subsection*{Zastrzeżenie: rzeczywisty Haskell nie jest CCC}
+
+\begin{uwaga}\label{uw:hask-nie-ccc}
+W~pełnym Haskellu każdy typ zawiera wartość $\perp$ (\lstinline{undefined}, pętla nieskończona), a operacja \lstinline{seq :: a -> b -> b} wymusza obliczenie pierwszego argumentu do postaci czołowej. To psuje trzy z~powyższych praw:
+\begin{enumerate}
+\item \emph{\lstinline{()} nie jest obiektem końcowym.} Typ \lstinline{()} ma dwie wartości, $\perp$ i~\lstinline{()}, a funkcje \lstinline{const ()}, \lstinline{const undefined} oraz \lstinline{\x -> x `seq` ()} typu \lstinline{a -> ()} są parami różne.
+\item \emph{Pary są ,,podniesione''.} Wartości $\perp$ oraz \lstinline{(undefined, undefined)} są różne, więc
+\lstinline{(fst &&& snd) undefined /= undefined}: lewą stronę rozróżnia \lstinline{seq}, a także zwykłe dopasowanie wzorca \lstinline{case p of (_, _) -> ...}. Prawo surjective pairing nie zachodzi, a \lstinline{(a, b)} nie jest produktem.
+\item \emph{\lstinline{seq} łamie regułę $\eta$.} Wyrażenie \lstinline{(\x -> undefined x) `seq` ()} daje \lstinline{()}, natomiast \lstinline{undefined `seq` ()} daje $\perp$, choć $\eta$ utożsamia \lstinline{\x -> undefined x} z~\lstinline{undefined}.
+\end{enumerate}
+Istnieją dwa standardowe sposoby wyjścia z~tej sytuacji.
+\begin{itemize}
+\item \emph{Rozumowanie ,,moralnie poprawne''} \cite{tk-danielsson06}: rozważamy fragment totalny (model w~$\Set$, czyli $\Hask$ z~definicji~\ref{def:hask}). Danielsson, Hughes, Jansson i~Gibbons pokazali, że jeśli dwa programy są równe w~tym modelu, to dla totalnych argumentów dają równe wyniki także w~rzeczywistym języku. To uzasadnia codzienną praktykę rozumowania równościowego.
+\item \emph{Semantyka dziedzinowa:} typy interpretujemy jako punktowe $\omega$-CPO, a programy jako przekształcenia ciągłe (niekoniecznie zachowujące $\perp$). Kategoria $\omega\mathrm{CPO}$ jest CCC, natomiast $\omega\mathrm{CPO}_\perp$ ze strzałkami \emph{ścisłymi} nie jest (zadanie~\ref{zad:omega-cpo}). Haskellowa para to jednak \emph{podniesiony} produkt $(A\times B)_\perp$, a w~obecności \lstinline{seq} także typ funkcyjny jest podniesiony. Dlatego model dziedzinowy pełnego Haskella nie jest CCC -- z~powodów opisanych w~punktach 1--3 powyżej.
+\end{itemize}
+\end{uwaga}
+
+\subsection*{Podsumowanie najważniejszych własności CCC}
 
 Jeśli $\C$ jest CCC, to:
 
@@ -63,7 +316,7 @@ Z definicji $f^A = \widetilde{f\circ\varepsilon}$ wynika, że $\varepsilon\circ(
 Ćwiczenie: uzasadnić powyższą równość.
 \end{uwaga}
 
-\section*{Wykorzystanie CCC w modelowaniu obliczeń z efektami ubocznymi}
+\subsection*{Funktor IO: modelowanie obliczeń z efektami ubocznymi}
 
 Niech w naszej kategorii istnieje specjalny obiekt $W$ odpowiadający za stan ,,świata zewnętrznego''. Funkcja, która przyjmuje argument typu $X$ i zwraca wartość typu $Y$, jednocześnie ingerując w $W$, jest typu
 \[
@@ -83,7 +336,7 @@ to nasza funkcja jest typu $\widetilde{f}\colon X \to \IO(Y)$.
 
 Tu $\IO = (-)^W \circ ((-)\times W)$ jest funktorem na $\C$.
 
-\subsection*{Przykłady typów funkcji w Haskellu}
+\subsubsection*{Przykłady typów funkcji w Haskellu}
 
 \[
 \texttt{putChar} \;::\; \texttt{Char} \longrightarrow \IO\,()
@@ -104,3 +357,21 @@ Tu $\IO = (-)^W \circ ((-)\times W)$ jest funktorem na $\C$.
 \begin{uwaga}
 W Haskellu \texttt{writeFile} występuje w postaci rozwiniętej (\emph{curried}): \texttt{writeFile :: FilePath -> String -> IO ()}. Powyżej podajemy wersję nierozwiniętą, odpowiadającą strzałce z produktu -- obie są sobie równoważne na mocy bijekcji $\C(A \times B,\, C) \cong \C(A,\, C^B)$.
 \end{uwaga}
+
+\begin{uwaga}[IO i State]
+Funktor $\IO(Y) = (Y\times W)^W$ jest złożeniem $(-)^W\circ\bigl((-)\times W\bigr)$ funktorów sprzężonych $(-)\times W\dashv(-)^W$. Złożenie prawego sprzężonego z~lewym zawsze niesie strukturę monady, której jednostką jest jednostka sprzężenia (\lstinline{curry id}). To wyjaśnia, dlaczego \lstinline{State} i~(modelowe) \lstinline{IO} są monadami (rozdziały~\ref{ch:stan} i~\ref{ch:monady}).
+\end{uwaga}
+
+\makeatletter
+\begingroup
+\renewcommand*{\bib@heading}{\subsection*{Literatura}}
+\begin{thebibliography}{9}\small
+\bibitem{tk-lambek80} J.~Lambek, \emph{From $\lambda$-calculus to cartesian closed categories}, w: \emph{To H.\,B.~Curry: Essays on Combinatory Logic, Lambda Calculus and Formalism}, Academic Press, 1980, s.~375--402.
+\bibitem{tk-lambek-scott} J.~Lambek, P.\,J.~Scott, \emph{Introduction to Higher Order Categorical Logic}, Cambridge University Press, 1986.
+\bibitem{tk-curien86} P.-L.~Curien, \emph{Categorical Combinators}, Information and Control 69 (1986), s.~188--254.
+\bibitem{tk-danielsson06} N.\,A.~Danielsson, J.~Hughes, P.~Jansson, J.~Gibbons, \emph{Fast and Loose Reasoning is Morally Correct}, POPL 2006, s.~206--217.
+\bibitem{tk-elliott17} C.~Elliott, \emph{Compiling to Categories}, Proc.\ ACM Program.\ Lang.\ 1 (ICFP 2017), art.~27.
+\bibitem{tk-awodey} S.~Awodey, \emph{Category Theory}, wyd.~2, Oxford University Press, 2010, rozdz.~6.
+\end{thebibliography}
+\endgroup
+\makeatother

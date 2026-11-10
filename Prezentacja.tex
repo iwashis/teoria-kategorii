@@ -1,0 +1,1017 @@
+\documentclass[10pt,aspectratio=169,notheorems]{beamer}
+
+\usetheme[progressbar=frametitle,block=fill,numbering=fraction]{metropolis}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm,mathtools}
+\usepackage[lining,semibold]{libertine}
+\let\openbox\relax
+\let\Bbbk\relax
+\usepackage[libertine,vvarbb]{newtxmath}
+\let\Bbbk\relax
+\usepackage{amssymb}
+\usepackage[polish]{babel}
+\AtBeginDocument{\shorthandoff{"}}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usefonttheme{professionalfonts}
+
+% --- Paleta (jak w Wyklady.tex) ---
+\definecolor{defaccent}{HTML}{1F4E79}
+\definecolor{thmaccent}{HTML}{6A1B9A}
+\definecolor{exaccent}{HTML}{2E7D32}
+\definecolor{remaccent}{HTML}{546E7A}
+\definecolor{titleaccent}{HTML}{1F4E79}
+
+\setbeamercolor{frametitle}{bg=titleaccent,fg=white}
+\setbeamercolor{progress bar}{fg=thmaccent,bg=titleaccent!25}
+\setbeamercolor{title separator}{fg=thmaccent}
+\setbeamercolor{alerted text}{fg=thmaccent}
+\setbeamercolor{normal text}{fg=black!85,bg=white}
+\setbeamertemplate{itemize items}[circle]
+
+% --- Kolorowe bloki w stylu książki ---
+\newenvironment{colblock}[3]{%
+  \setbeamercolor{block title}{bg=#1,fg=white}%
+  \setbeamercolor{block body}{bg=#1!6,fg=black!85}%
+  \begin{block}{#2\if\relax\detokenize{#3}\relax\else\ (#3)\fi}}%
+  {\end{block}}
+\newenvironment{definicja}[1][]{\begin{colblock}{defaccent}{Definicja}{#1}}{\end{colblock}}
+\newenvironment{twierdzenie}[1][]{\begin{colblock}{thmaccent}{Twierdzenie}{#1}}{\end{colblock}}
+\newenvironment{stwierdzenie}[1][]{\begin{colblock}{thmaccent}{Stwierdzenie}{#1}}{\end{colblock}}
+\newenvironment{wniosek}[1][]{\begin{colblock}{thmaccent}{Wniosek}{#1}}{\end{colblock}}
+\newenvironment{przyklad}[1][]{\begin{colblock}{exaccent}{Przykład}{#1}}{\end{colblock}}
+\newenvironment{uwaga}[1][]{\begin{colblock}{remaccent}{Uwaga}{#1}}{\end{colblock}}
+
+% --- Makra matematyczne (jak w Wyklady.tex) ---
+\newcommand{\catname}[1]{\mathbf{#1}}
+\newcommand{\Set}{\catname{Set}}
+\newcommand{\Setf}{\catname{Set}_{\mathrm{fin}}}
+\newcommand{\Grp}{\catname{Grp}}
+\newcommand{\Ab}{\catname{Ab}}
+\let\Top\relax
+\newcommand{\Top}{\catname{Top}}
+\newcommand{\Vect}{\catname{Vect}}
+\newcommand{\Mon}{\catname{Mon}}
+\newcommand{\Ring}{\catname{Ring}}
+\newcommand{\Pos}{\catname{Pos}}
+\newcommand{\Rel}{\catname{Rel}}
+\newcommand{\Par}{\catname{Par}}
+\newcommand{\Err}{\catname{Err}}
+\newcommand{\Trace}{\catname{Trace}}
+\let\C\undefined
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Jcat}{\mathcal{J}}
+\newcommand{\Ob}{\mathrm{Ob}}
+\newcommand{\Mor}{\mathrm{Mor}}
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\cod}{\mathrm{cod}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\IO}{\mathrm{IO}}
+\newcommand{\State}{\mathrm{State}}
+\newcommand{\Kl}{\mathrm{Kl}}
+\newcommand{\df}{\stackrel{\mathrm{df}}{=}}
+
+\title{Teoria kategorii}
+\subtitle{Przegląd wykładu --- definicje, przykłady, twierdzenia}
+\author{Tomasz Brengos}
+\institute{Politechnika Warszawska}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Plan}
+  \tableofcontents
+\end{frame}
+
+% =====================================================================
+\section{Pojęcie kategorii. Przykłady i funktory}
+% =====================================================================
+
+\begin{frame}{Definicja kategorii}
+\begin{definicja}
+\emph{Kategoria} $\C = (\C_0, \C_m)$ składa się z:
+\begin{itemize}
+\item klasy \emph{obiektów} $\C_0$ ($A, B, C, \ldots$) oraz klasy \emph{morfizmów} (strzałek) $\C_m$ ($f, g, h, \ldots$);
+\item dla każdej strzałki: $\dom(f), \cod(f) \in \C_0$; piszemy $f\colon A\to B$;
+\item \emph{złożenia} $g\circ f\colon A\to C$ dla $f\colon A\to B$, $g\colon B\to C$, które jest \emph{łączne}:
+\[ h\circ(g\circ f) = (h\circ g)\circ f; \]
+\item \emph{identyczności} $\id_A\colon A\to A$ dla każdego obiektu, takiej że
+\[ \id_B\circ f = f\circ\id_A = f \quad\text{dla } f\colon A\to B. \]
+\end{itemize}
+\end{definicja}
+\end{frame}
+
+\begin{frame}{Przykłady kategorii ,,konkretnych''}
+\begin{itemize}
+\item $\Set$ --- zbiory i funkcje; $\Setf$ --- zbiory skończone i funkcje.
+\item $\Grp$, $\Mon$ --- grupy / monoidy i ich homomorfizmy.
+\item $\mathbf{Graphs}$ --- grafy i homomorfizmy grafów.
+\item $\Top$ --- przestrzenie topologiczne i przekształcenia ciągłe.
+\item $\Pos$ --- posety i przekształcenia monotoniczne:
+\[ p_1\le p_2 \;\Rightarrow\; f(p_1)\le f(p_2). \]
+Złożenie przekształceń monotonicznych jest monotoniczne, więc składanie jest dobrze określone.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Kategoria relacji $\Rel$}
+\begin{przyklad}[$\Rel$]
+Obiekty: zbiory. Strzałka $f\colon A\to B$ to relacja $f\subseteq A\times B$.
+\[
+\id_A = \{(a,a) : a\in A\}, \qquad
+g\circ f = \{(a,c) : \exists\, b\ \ (a,b)\in f \text{ i } (b,c)\in g\}.
+\]
+Np.\ dla $f = \{(a_1,y),(a_1,x)\}\colon\{a_1,a_2\}\to\{x,y\}$ i $g = \{(x,z),(y,z)\}\colon\{x,y\}\to\{z,t\}$:
+\[ g\circ f = \{(a_1,z)\}. \]
+\end{przyklad}
+\end{frame}
+
+\begin{frame}[fragile]{Monoidy i posety jako kategorie}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{przyklad}[Monoid jako kategoria]
+Monoid $(M,\cdot,1)$ wyznacza kategorię $\underline{\mathbf{M}}$ o \emph{jednym} obiekcie $*$:
+\begin{itemize}
+\item strzałki $m\colon *\to *$ to elementy $m\in M$,
+\item $m\circ n \df m\cdot n$, \quad $\id_* = 1$.
+\end{itemize}
+\[\begin{tikzcd} * \ar[r,"n"] & * \ar[r,"m"] & * \end{tikzcd}\]
+\end{przyklad}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{przyklad}[Poset jako kategoria]
+Poset $(P,\le)$ wyznacza kategorię $\underline{\mathbf{P}}$:
+\begin{itemize}
+\item obiekty --- elementy $P$,
+\item jedna strzałka $a\to b$ $\iff$ $a\le b$.
+\end{itemize}
+\[\begin{tikzcd}[row sep=small,column sep=small]
+ & 1 & \\
+a \arrow[ur] & & b \arrow[ul] \\
+ & 0 \arrow[ul] \arrow[ur] &
+\end{tikzcd}\]
+\end{przyklad}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Kategorie ,,obliczeń z efektem'': $\Par$ i $\Err$}
+\begin{przyklad}[$\Par$ --- przekształcenia częściowe]
+Obiekty: zbiory. Strzałka $f\colon A\to B$ to funkcja $f\colon A\to B+\{\bot\}$ ($\bot$ = wartość nieokreślona,
+$X+Y \df X\times\{1\}\cup Y\times\{2\}$). Np.\ $\mathrm{div}(a,b) = a/b$ dla $b\ne 0$, $\bot$ w p.p.
+\[
+(g\circ f)(a) = \begin{cases}\bot, & f(a)=\bot,\\ g(f(a)), & f(a)\neq\bot,\end{cases}
+\qquad \id_A(a) = a.
+\]
+\end{przyklad}
+\begin{przyklad}[$\Err$ --- kategoria błędów]
+Ustalony zbiór komunikatów $M$; strzałki $f\colon A\to B+M$. Składanie \emph{propaguje błąd}:
+$(g\circ f)(a) = f(a)$ gdy $f(a)\in M$, w p.p.\ $g(f(a))$. \quad $\Par$ to $\Err$ dla $M=\{\bot\}$.
+\end{przyklad}
+\end{frame}
+
+\begin{frame}{Kategoria $\Trace$ nad monoidem}
+\begin{przyklad}[$\Trace$]
+Niech $(M,\cdot,1)$ będzie monoidem. Obiekty: zbiory; strzałka $f\colon A\to B$ to funkcja
+\[ f\colon A\longrightarrow M\times B. \]
+Złożenie i identyczność:
+\[
+(g\circ f)(a) \df (m_f\cdot m_g,\, c), \quad\text{gdzie } f(a)=(m_f,b),\ g(b)=(m_g,c);
+\qquad \id_A(a) = (1,a).
+\]
+\end{przyklad}
+\textbf{Intuicja:} każde obliczenie zostawia ,,ślad'' w monoidzie $M$, a ślady składamy mnożeniem.
+\end{frame}
+
+\begin{frame}{Funktory}
+\begin{definicja}
+\emph{Funktor} $F\colon\C\to\D$ to para przyporządkowań $F_0\colon\C_0\to\D_0$, $F_m\colon\C_m\to\D_m$ taka, że
+\begin{enumerate}
+\item $f\colon A\to B \;\Rightarrow\; F(f)\colon F(A)\to F(B)$;
+\item $F(g\circ f) = F(g)\circ F(f)$;
+\item $F(\id_A) = \id_{F(A)}$.
+\end{enumerate}
+\end{definicja}
+\begin{przyklad}[Proste funktory]
+\begin{itemize}
+\item $\Id\colon\C\to\C$, \quad $\Id(A)=A$, $\Id(f) = f$.
+\item $\mathrm{Maybe}\colon\Set\to\Set$, \quad $\mathrm{Maybe}\,B = B+\{\bot\}$, \quad $(\mathrm{Maybe}\,f)(a) = f(a)$, $(\mathrm{Maybe}\,f)(\bot)=\bot$.
+\item $(-)^*\colon\Set\to\Set$ --- słowa nad $A$; \quad $f^*(a_1\ldots a_n) = f(a_1)\ldots f(a_n)$, $f^*(\varepsilon)=\varepsilon$.
+\end{itemize}
+\end{przyklad}
+\end{frame}
+
+\begin{frame}{Dalsze przykłady funktorów}
+\begin{itemize}
+\item \textbf{Funktor zapominania} $U\colon\Mon\to\Set$: monoid $\mapsto$ nośnik, homomorfizm $\mapsto$ ta sama funkcja.
+Analogicznie dla $\Grp$, $\Pos$, $\Top$.
+\item \textbf{Wolny monoid} $(-)^*\colon\Set\to\Mon$: $A^*$ z konkatenacją i słowem pustym jest monoidem, $f^*$ --- homomorfizmem.
+Złożenie $U\circ(-)^*$ to funktor $(-)^*\colon\Set\to\Set$.
+\item \textbf{Przekształcenia monotoniczne}: funktor $\underline{\mathbf{P}}\to\underline{\mathbf{Q}}$ między kategoriami posetów
+to \emph{dokładnie} funkcja monotoniczna $P\to Q$ --- warunki (2), (3) są automatyczne,
+bo między dwoma obiektami jest co najwyżej jedna strzałka.
+\end{itemize}
+\end{frame}
+
+% =====================================================================
+\section{Kategoria produktowa, opposite i slice}
+% =====================================================================
+
+\begin{frame}[fragile]{Kategoria produktowa}
+\begin{definicja}
+\emph{Kategoria produktowa} $\C\times\D$:
+\begin{itemize}
+\item obiekty --- pary $(C,D)$, $C\in\C$, $D\in\D$;
+\item strzałki --- pary $(f,g)\colon(C,D)\to(C',D')$, gdzie $f\colon C\to C'$, $g\colon D\to D'$;
+\item $(f',g')\circ(f,g) \df (f'\circ f,\, g'\circ g)$, \quad $\id_{(C,D)} \df (\id_C,\id_D)$.
+\end{itemize}
+\end{definicja}
+\begin{columns}[c]
+\begin{column}{0.55\textwidth}
+Mamy funktory-\emph{projekcje}
+\[ \pi_1(C,D) = C,\ \pi_1(f,g) = f, \qquad \pi_2(C,D) = D,\ \pi_2(f,g) = g. \]
+\end{column}
+\begin{column}{0.4\textwidth}
+\[\begin{tikzcd}[column sep=small]
+& \C\times\D \arrow[dl, "\pi_1"'] \arrow[dr, "\pi_2"] & \\
+\C & & \D
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Kategoria przeciwna $\C^{\op}$}
+\begin{definicja}
+\begin{itemize}
+\item obiekty $\C^{\op}$ = obiekty $\C$;
+\item $\C^{\op}(C,D) \df \C(D,C)$ --- odwracamy strzałki;
+\item $g\circ_{\C^{\op}} f \df f\circ_{\C} g$; \quad identyczności jak w $\C$.
+\end{itemize}
+\end{definicja}
+\begin{itemize}
+\item $(\C^{\op})^{\op} = \C$.
+\item Przyporządkowanie $\overline{(-)}\colon\C\to\C^{\op}$, $A\mapsto A$, $(f\colon C\to D)\mapsto(f\colon D\to C)$
+\alert{nie jest} funktorem --- odwraca kierunek strzałek.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Kategoria slice $\C/C$}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\begin{definicja}
+Dla $C\in\C$ kategoria $\C/C$:
+\begin{itemize}
+\item obiekty --- strzałki $f\colon X\to C$;
+\item strzałka $f\to f'$ --- morfizm $g\colon X\to X'$ taki, że $f'\circ g = f$;
+\item składanie i identyczności jak w $\C$.
+\end{itemize}
+\end{definicja}
+\end{column}
+\begin{column}{0.38\textwidth}
+\[\begin{tikzcd}
+X \arrow[rr, "g"] \arrow[dr, "f"'] & & X' \arrow[dl, "f'"] \\
+& C &
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{przyklad}
+Dla posetu $(P,\le)$ i $p\in P$: \quad $P/p = \bigl(\mathord{\downarrow}(p),\le\bigr)$, \quad $\mathord{\downarrow}(p) \df \{x : x\le p\}$.
+\end{przyklad}
+\begin{uwaga}
+Zamieniając dziedzinę z przeciwdziedziną otrzymujemy kategorię \emph{coslice} $C/\C$.
+\end{uwaga}
+\end{frame}
+
+\begin{frame}{Kategorie małe, duże i lokalnie małe}
+\begin{itemize}
+\item $\C$ jest \emph{lokalnie mała}, jeśli dla wszystkich $C,D$ kolekcja $\C(C,D)$ strzałek $C\to D$ jest zbiorem.
+\item $\C$ jest \emph{mała}, jeśli obiekty i strzałki tworzą zbiory; w przeciwnym razie --- \emph{duża}.
+\item Np.\ $\Set$ jest duża (klasa wszystkich zbiorów nie jest zbiorem), ale lokalnie mała.
+\end{itemize}
+\end{frame}
+
+% =====================================================================
+\section{Mono-, epi- i izomorfizmy. Obiekty początkowe i końcowe. Produkty i koprodukty}
+% =====================================================================
+
+\begin{frame}{Izomorfizmy}
+\begin{definicja}
+$f\colon A\to B$ jest \emph{izomorfizmem}, jeśli istnieje $g\colon B\to A$ taka, że
+\[ g\circ f = \id_A \quad\text{oraz}\quad f\circ g = \id_B. \]
+\end{definicja}
+\begin{przyklad}
+W $\Set$ izomorfizmy to bijekcje; w $\Grp$ --- izomorfizmy grup; analogicznie w innych kategoriach algebr.
+\end{przyklad}
+\begin{twierdzenie}
+Złożenie izomorfizmów jest izomorfizmem.
+\end{twierdzenie}
+\end{frame}
+
+\begin{frame}[fragile]{Monomorfizmy i epimorfizmy}
+\begin{definicja}
+$f\colon A\to B$ jest
+\begin{itemize}
+\item \emph{monomorfizmem} ($A\hookrightarrow B$), jeśli $f\circ g = f\circ h \Rightarrow g = h$ dla wszystkich $g,h\colon C\to A$;
+\item \emph{epimorfizmem} ($A\twoheadrightarrow B$), jeśli $i\circ f = j\circ f \Rightarrow i = j$ dla wszystkich $i,j\colon B\to C$.
+\end{itemize}
+\[\begin{tikzcd}
+C \arrow[r, shift left, "g"] \arrow[r, shift right, "h"'] & A \arrow[r, "f"] & B \arrow[r, shift left, "i"] \arrow[r, shift right, "j"'] & C'
+\end{tikzcd}\]
+\end{definicja}
+\begin{stwierdzenie}
+\begin{itemize}
+\item W $\Set$: mono $=$ różnowartościowe, epi $=$ ,,na''.
+\item $f$ jest mono w $\C$ $\iff$ $f$ jest epi w $\C^{\op}$.
+\end{itemize}
+\end{stwierdzenie}
+\end{frame}
+
+\begin{frame}{Mono $+$ epi $\not\Rightarrow$ izo}
+\begin{przyklad}
+\begin{itemize}
+\item W kategorii posetu \emph{każda} strzałka jest mono i epi (strzałki równoległe są równe).
+\item W $\Mon$ włożenie $f\colon(\mathbb{N},+,0)\to(\mathbb{Z},+,0)$, $f(i)=i$, jest mono i epi
+(homomorfizm z $\mathbb{Z}$ jest wyznaczony przez wartości na $\mathbb{N}$, bo odwrotności są jednoznaczne),
+ale nie jest izomorfizmem.
+\item W $\Top$ włożenie $\mathbb{Q}\hookrightarrow\mathbb{R}$ jest mono i epi, ale nie jest homeomorfizmem.
+\end{itemize}
+\end{przyklad}
+\begin{uwaga}
+W $\Set$ mono $+$ epi $=$ bijekcja $=$ izo.
+\end{uwaga}
+\end{frame}
+
+\begin{frame}{Obiekty początkowe i końcowe}
+\begin{definicja}
+\begin{itemize}
+\item $0\in\C$ jest \emph{początkowy}, jeśli dla każdego $A$ istnieje dokładnie jedna strzałka $i_A\colon 0\to A$.
+\item $\mathbf{1}\in\C$ jest \emph{końcowy}, jeśli dla każdego $A$ istnieje dokładnie jedna strzałka $!_A\colon A\to\mathbf{1}$.
+\end{itemize}
+\end{definicja}
+\begin{stwierdzenie}
+\begin{itemize}
+\item $0$ jest początkowy w $\C$ $\iff$ $0$ jest końcowy w $\C^{\op}$.
+\item Obiekt początkowy (końcowy) jest jednoznaczny z dokładnością do izomorfizmu.
+\end{itemize}
+\end{stwierdzenie}
+\end{frame}
+
+\begin{frame}{Obiekty początkowe i końcowe --- przykłady}
+\begin{itemize}
+\item $\Set$: początkowy $=\emptyset$, końcowy $=$ dowolny singleton.
+\item $\Grp$: grupa trywialna $\{e\}$ jest jednocześnie początkowa i końcowa --- \emph{obiekt zerowy}.
+\item Poset $(P,\le)$: początkowy $=$ element najmniejszy, końcowy $=$ element największy (o ile istnieją).
+\end{itemize}
+\begin{przyklad}[Algebry typu $(1,0)$]
+Obiekty: $(A,s,a)$, $s\colon A\to A$, $a\in A$. Strzałki $f\colon(A,s,a)\to(B,s',b)$: $f\circ s = s'\circ f$, $f(a)=b$.
+\end{przyklad}
+\begin{stwierdzenie}
+$(\mathbb{N},\mathrm{succ},0)$ jest obiektem początkowym w kategorii algebr typu $(1,0)$.
+Inicjalność $\mathbb{N}$ to dokładnie \emph{zasada definiowania przez rekursję}.
+\end{stwierdzenie}
+\end{frame}
+
+\begin{frame}[fragile]{Produkty}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\begin{definicja}
+\emph{Produkt} $A\times B$ to obiekt $P$ ze strzałkami $p_1\colon P\to A$, $p_2\colon P\to B$ takimi, że
+dla każdych $x_1\colon X\to A$, $x_2\colon X\to B$ istnieje \emph{dokładnie jedna} $u\colon X\to P$ z
+\[ p_1\circ u = x_1,\qquad p_2\circ u = x_2. \]
+Oznaczenie: $u = \langle x_1,x_2\rangle$.
+\end{definicja}
+\end{column}
+\begin{column}{0.38\textwidth}
+\[\begin{tikzcd}
+& X \arrow[ld, "x_1"'] \arrow[rd, "x_2"] \arrow[d, dashed, "\exists! u"] & \\
+A & P \arrow[l, "p_1"] \arrow[r, "p_2"'] & B
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{stwierdzenie}
+Produkty są jednoznaczne z dokładnością do izomorfizmu.
+\end{stwierdzenie}
+\textbf{W $\Set$:} $A\times B$ --- iloczyn kartezjański, $\langle x_1,x_2\rangle(x) = (x_1(x),x_2(x))$.
+\end{frame}
+
+\begin{frame}[fragile]{Produkty --- przykłady i własności}
+\begin{itemize}
+\item W $\Mon$, $\Grp$, $\Ring$: produkt struktur (nośnik = produkt kartezjański).
+\item W posecie: $p\times q = p\wedge q$ (kres dolny); w antyłańcuchu produkt nie istnieje.
+\end{itemize}
+\begin{columns}[c]
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item Dla $f\colon B\to A$, $f'\colon B'\to A'$ mamy jednoznaczną strzałkę $f\times f'\colon B\times B'\to A\times A'$.
+\item Z produktów binarnych mamy ternarne: $(A\times B)\times C$.
+\end{itemize}
+\end{column}
+\begin{column}{0.45\textwidth}
+\[\begin{tikzcd}[column sep=small]
+A & A\times A' \arrow[l] \arrow[r] & A' \\
+B \arrow[u, "f"] & B\times B' \arrow[l] \arrow[r] \arrow[u, dashed, "f\times f'"] & B' \arrow[u, "f'"']
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{definicja}
+$\C$ ma \emph{wszystkie skończone produkty}, jeśli ma obiekt końcowy i produkty binarne.
+\end{definicja}
+\end{frame}
+
+\begin{frame}{Zasada dualności}
+Język teorii kategorii: obiekty, strzałki, $\dom$, $\cod$, $\id$, $\circ$ z aksjomatami
+\[
+\dom(\id_A) = \cod(\id_A) = A,\quad f\circ\id_{\dom f} = f = \id_{\cod f}\circ f,\quad
+\dom(g\circ f) = \dom f,\ \cod(g\circ f) = \cod g,
+\]
+\[ h\circ(g\circ f) = (h\circ g)\circ f. \]
+Zdanie dualne $\Sigma^{\op}$: zamieniamy $f\circ g \leftrightarrow g\circ f$ oraz $\dom\leftrightarrow\cod$.
+\begin{twierdzenie}[Zasada dualności]
+Jeśli $\Sigma$ wynika z aksjomatów teorii kategorii, to $\Sigma^{\op}$ też.
+\end{twierdzenie}
+\end{frame}
+
+\begin{frame}[fragile]{Koprodukty}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\begin{definicja}
+\emph{Koprodukt} $A+B$ to obiekt $Q$ ze strzałkami $q_1\colon A\to Q$, $q_2\colon B\to Q$ takimi, że dla każdych
+$z_1\colon A\to Z$, $z_2\colon B\to Z$ istnieje dokładnie jedna $u\colon Q\to Z$ z
+$u\circ q_1 = z_1$, $u\circ q_2 = z_2$. Oznaczenie: $u = [z_1,z_2]$.
+\end{definicja}
+\end{column}
+\begin{column}{0.38\textwidth}
+\[\begin{tikzcd}
+A \arrow[r, "q_1"] \arrow[dr, "z_1"'] & Q \arrow[d, dashed, "\exists! u"] & B \arrow[l, "q_2"'] \arrow[dl, "z_2"] \\
+& Z &
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{itemize}
+\item $\Set$: suma rozłączna $A+B = A\times\{1\}\cup B\times\{2\}$ z włożeniami.
+\item Poset: $p+q = p\vee q$ (kres górny).
+\item $\Ab$: $A+B\cong A\times B$; \ $\Grp$: produkt wolny $A*B$; \ $\Mon$: $A^*+B^*\cong(A+B)^*$.
+\item Koprodukty są jednoznaczne z dokładnością do izo (dualność); mamy $f+f'$.
+\item \emph{Skończone koprodukty} = obiekt początkowy + koprodukty binarne.
+\end{itemize}
+\end{frame}
+
+% =====================================================================
+\section{Granice}
+% =====================================================================
+
+\begin{frame}[fragile]{Ekwalizatory}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\begin{definicja}
+$e\colon E\to A$ jest \emph{ekwalizatorem} $f,g\colon A\to B$, jeśli
+\begin{enumerate}
+\item $f\circ e = g\circ e$,
+\item dla każdego $z\colon Z\to A$ z $f\circ z = g\circ z$ istnieje dokładnie jedno $u\colon Z\to E$ z $e\circ u = z$.
+\end{enumerate}
+\end{definicja}
+\end{column}
+\begin{column}{0.42\textwidth}
+\[\begin{tikzcd}
+E \arrow[r,"e"] & A \arrow[r,shift left,"f"] \arrow[r,shift right,swap,"g"] & B \\
+Z \arrow[ur,swap,"z"] \arrow[u,dashed,"\exists !\, u"] & &
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{itemize}
+\item W $\Set$: $\{x\in A\mid f(x)=g(x)\}\hookrightarrow A$.
+\item Każdy ekwalizator jest mono.
+\item Każdy podzbiór $U\subseteq A$ jest ekwalizatorem pary $\chi_U,\ \mathrm{const}_1\colon A\to 2=\{0,1\}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Koekwalizatory}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\begin{definicja}
+$q\colon B\to Q$ jest \emph{koekwalizatorem} $f,g\colon A\to B$, jeśli
+\begin{enumerate}
+\item $q\circ f = q\circ g$,
+\item dla każdego $z\colon B\to Z$ z $z\circ f = z\circ g$ istnieje dokładnie jedno $u\colon Q\to Z$ z $u\circ q = z$.
+\end{enumerate}
+\end{definicja}
+\end{column}
+\begin{column}{0.42\textwidth}
+\[\begin{tikzcd}
+A \arrow[r,shift left,"f"] \arrow[r,shift right,swap,"g"] & B \arrow[r,"q"] \arrow[dr,swap,"z"] & Q \arrow[d,dashed,"\exists !\, u"] \\
+& & Z
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{itemize}
+\item Każdy koekwalizator jest epi.
+\item Dla relacji równoważności $R\subseteq X\times X$ koekwalizatorem $\pi_1,\pi_2\colon R\rightrightarrows X$ jest
+\[ \mathrm{nat}\,R\colon X\twoheadrightarrow X/R, \qquad x\mapsto[x]_R. \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Pullbacki}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\begin{definicja}
+\emph{Pullback} (cofnięcie) pary $A\xrightarrow{f}C\xleftarrow{g}B$ to obiekt $P$ ze strzałkami $p_1, p_2$, że
+\begin{enumerate}
+\item $f\circ p_1 = g\circ p_2$,
+\item dla każdych $z_1\colon Z\to A$, $z_2\colon Z\to B$ z $f\circ z_1 = g\circ z_2$ istnieje dokładnie jedno $u\colon Z\to P$ z
+$p_1\circ u = z_1$, $p_2\circ u = z_2$.
+\end{enumerate}
+Oznaczenie: $P = A\times_C B$.
+\end{definicja}
+\end{column}
+\begin{column}{0.42\textwidth}
+\[\begin{tikzcd}
+Z \arrow[drr,bend left,"z_2"] \arrow[ddr,bend right,swap,"z_1"] \arrow[dr,dashed,"\exists !\, u"] & & \\
+& P \arrow[r,"p_2"] \arrow[d,swap,"p_1"] \arrow[dr, phantom, "\lrcorner", very near start] & B \arrow[d,"g"] \\
+& A \arrow[r,swap,"f"] & C
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Pullbacki w $\Set$}
+\begin{przyklad}
+\[ A\times_C B = \{(a,b)\in A\times B : f(a) = g(b)\} \]
+wraz z obcięciami rzutowań. Przypadki szczególne:
+\begin{itemize}
+\item \textbf{Przeciwobraz:} dla $U\subseteq C$ mamy $A\times_C U \cong f^{-1}(U)$ --- stąd nazwa ,,cofnięcie''.
+\item \textbf{Przecięcie:} pullback inkluzji $U\hookrightarrow X\hookleftarrow V$ to $U\cap V$.
+\end{itemize}
+\end{przyklad}
+\end{frame}
+
+\begin{frame}[fragile]{Pullbacki a produkty i ekwalizatory}
+\begin{stwierdzenie}
+Jeśli $\C$ ma produkty binarne i ekwalizatory, to ekwalizator
+\[\begin{tikzcd}
+E \arrow[r,"e"] & A\times B \arrow[r,shift left,"f\circ \pi_1"] \arrow[r,shift right,swap,"g\circ \pi_2"] & C
+\end{tikzcd}\]
+wraz z $\pi_1\circ e$, $\pi_2\circ e$ jest pullbackiem $A\xrightarrow{f}C\xleftarrow{g}B$.
+Odwrotnie: jeśli $(E,p_1,p_2)$ jest pullbackiem, to $\langle p_1,p_2\rangle$ jest ekwalizatorem $f\circ\pi_1$, $g\circ\pi_2$.
+\end{stwierdzenie}
+\begin{twierdzenie}
+$\C$ ma skończone produkty i ekwalizatory $\iff$ $\C$ ma pullbacki i obiekt końcowy.
+\end{twierdzenie}
+\small
+Konstrukcje: $A\times B$ = pullback $A\xrightarrow{!}\mathbf{1}\xleftarrow{!}B$; \
+ekwalizator $f,g$ = pullback $A\xrightarrow{\langle f,g\rangle}B\times B\xleftarrow{\langle\id,\id\rangle}B$.
+\end{frame}
+
+\begin{frame}[fragile]{Diagramy i stożki}
+\begin{definicja}
+\emph{Diagram typu $\Jcat$ w $\C$} to funktor $D\colon\Jcat\to\C$ ($\Jcat$ --- kategoria indeksów; piszemy $D_i$, $D_\alpha$).
+\end{definicja}
+\begin{columns}[T]
+\begin{column}{0.6\textwidth}
+\begin{definicja}
+\emph{Stożek nad $D$}: obiekt $C$ z rodziną $\{c_i\colon C\to D_i\}_{i\in\Ob\Jcat}$ taką, że $D_\alpha\circ c_i = c_j$ dla każdego $\alpha\colon i\to j$.
+\end{definicja}
+\end{column}
+\begin{column}{0.35\textwidth}
+\[\begin{tikzcd}[column sep=small]
+& C \arrow[dl,"c_i"'] \arrow[dr,"c_j"] & \\
+D_i \arrow[rr,"D_\alpha"'] & & D_j
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{przyklad}
+\begin{itemize}
+\item $\Jcat$ dyskretna o 2 obiektach: stożek $=$ $S$ z $s_1\colon S\to A$, $s_2\colon S\to B$.
+\item $\Jcat = (1\xrightarrow{\alpha}2)$: stożek nad $A\xrightarrow{f}B$ to $s_1, s_2$ z $f\circ s_1 = s_2$.
+\item $\Jcat = (1\to 3\leftarrow 2)$: stożek nad $A\xrightarrow{f}C\xleftarrow{g}B$ to $s_1,s_2,s_3$ z $s_3 = f\circ s_1 = g\circ s_2$.
+\end{itemize}
+\end{przyklad}
+\end{frame}
+
+\begin{frame}[fragile]{Granice}
+\begin{columns}[T]
+\begin{column}{0.6\textwidth}
+\begin{definicja}
+\emph{Morfizm stożków} $(C,\{c_i\})\to(C',\{c'_i\})$: strzałka $\vartheta\colon C\to C'$ z $c'_i\circ\vartheta = c_i$ dla wszystkich $i$.
+Stożki i ich morfizmy tworzą kategorię $\mathrm{Cone}(D)$.
+\end{definicja}
+\end{column}
+\begin{column}{0.35\textwidth}
+\[\begin{tikzcd}[column sep=small]
+C \arrow[rr, "\vartheta"] \arrow[dr, "c_i"'] & & C' \arrow[dl, "c'_i"] \\
+ & D_i &
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{definicja}
+\emph{Granica} diagramu $D$ to obiekt końcowy w $\mathrm{Cone}(D)$:
+\[ \Bigl(\varprojlim_j D_j,\ \bigl\{p_i\colon\varprojlim_j D_j\to D_i\bigr\}\Bigr). \]
+\end{definicja}
+\end{frame}
+
+\begin{frame}{Granice --- przykłady}
+\begin{itemize}
+\item $\Jcat=\emptyset$: \quad $\varprojlim D$ = obiekt końcowy.
+\item $\Jcat$ dyskretna, 2 obiekty: \quad $\varprojlim D = D_1\times D_2$.
+\item $\Jcat = (\bullet\rightrightarrows\bullet)$: \quad $\varprojlim D$ = ekwalizator $D_\alpha, D_\beta$.
+\item $\Jcat = (\bullet\to\bullet\leftarrow\bullet)$: \quad $\varprojlim D$ = pullback.
+\end{itemize}
+\begin{przyklad}[Granica odwrotna]
+Dla łańcucha $\cdots\to X_2\xrightarrow{f_1}X_1\xrightarrow{f_0}X_0$ w $\Set$:
+\[ \varprojlim_n X_n = \Bigl\{(x_0,x_1,\ldots)\in\prod_n X_n : f_n(x_{n+1}) = x_n\Bigr\}. \]
+Dla $X_n = A^n$ z obcinaniem ostatniego elementu: $\varprojlim_n A^n = A^\omega$ (strumienie nad $A$).
+\end{przyklad}
+\end{frame}
+
+\begin{frame}[fragile]{Skończone granice}
+\begin{definicja}
+\emph{Skończona granica} --- granica diagramu $D\colon\Jcat\to\C$ ze skończoną $\Jcat$.
+\end{definicja}
+\begin{twierdzenie}
+$\C$ ma wszystkie skończone granice $\iff$ $\C$ ma skończone produkty i ekwalizatory
+$\iff$ $\C$ ma pullbacki i obiekt końcowy.
+\end{twierdzenie}
+\textbf{Konstrukcja:} granica to ekwalizator
+\[\begin{tikzcd}[column sep=large]
+E \arrow[r, "e"] & \displaystyle\prod_{i\in\Ob\Jcat} D_i \arrow[r, shift left, "\varphi"] \arrow[r, shift right, "\psi"'] & \displaystyle\prod_{\alpha\colon i\to j} D_j,
+\end{tikzcd}
+\qquad \pi_\alpha\circ\varphi = \pi_j,\quad \pi_\alpha\circ\psi = D_\alpha\circ\pi_i,\]
+z rzutowaniami $e_i = \pi_i\circ e$.
+\end{frame}
+
+\begin{frame}{Zachowywanie granic}
+\begin{definicja}
+$F\colon\C\to\D$ \emph{zachowuje granice} typu $\Jcat$, jeśli dla każdego $D\colon\Jcat\to\C$
+\[ F\Bigl(\varprojlim_i D_i\Bigr)\cong\varprojlim_i F(D_i) \quad\text{(kanonicznie).} \]
+\end{definicja}
+\begin{przyklad}[Funktor hom]
+$\C(X,-)\colon\C\to\Set$, \ $A\mapsto\C(X,A)$, \ $f\mapsto f_*$, $f_*(g) = f\circ g$.
+\begin{itemize}
+\item $\C(X,\mathbf{1}) = \{!_X\}$; zachowuje produkty i ekwalizatory.
+\item Zatem $\C(X,-)$ zachowuje skończone granice (a nawet wszystkie granice).
+\end{itemize}
+\end{przyklad}
+\begin{przyklad}[Kontrprzykład]
+$(-)+1\colon\Set\to\Set$ nie zachowuje obiektu końcowego ($|\mathbf{1}+1| = 2$) ani produktów
+($|(\mathbf{1}\times\mathbf{1})+1| = 2 \ne 4$).
+\end{przyklad}
+\end{frame}
+
+% =====================================================================
+\section{Kategorie kartezjańsko domknięte}
+% =====================================================================
+
+\begin{frame}[fragile]{Motywacja: currying w $\Set$}
+\begin{itemize}
+\item $C^B \df \{f\colon B\to C\}$.
+\item $f\colon A\times B\to C$ wyznacza $\hat f\colon A\to C^B$, $a\mapsto f(a,-)$, i odwrotnie:
+\[ \Set(A\times B, C)\;\cong\;\Set(A, C^B). \]
+\item Ewaluacja $\mathrm{eval}\colon C^B\times B\to C$, $\mathrm{eval}(g,b) = g(b)$, spełnia
+$\mathrm{eval}\circ(\tilde f\times\id_B) = f$.
+\end{itemize}
+\[\begin{tikzcd}
+C^B \times B \arrow[r, "\mathrm{eval}"] & C \\
+A \times B \arrow[u, "\tilde{f} \times \id_B"] \arrow[ur, "f"'] &
+\end{tikzcd}\]
+\end{frame}
+
+\begin{frame}[fragile]{Wykładniki}
+\begin{columns}[T]
+\begin{column}{0.6\textwidth}
+\begin{definicja}
+Niech $\C$ ma produkty binarne. \emph{Wykładnik} (obiekt potęgowy) $C^B$ to obiekt ze strzałką
+$\varepsilon\colon C^B\times B\to C$ (\emph{ewaluacja}) taką, że dla każdej $f\colon Z\times B\to C$ istnieje dokładnie jedna
+$\tilde f\colon Z\to C^B$ (\emph{transpozycja}) z
+\[ \varepsilon\circ(\tilde f\times\id_B) = f. \]
+\end{definicja}
+\end{column}
+\begin{column}{0.35\textwidth}
+\[\begin{tikzcd}
+C^B \times B \arrow[r, "\varepsilon"] & C \\
+Z \times B \arrow[u, "\tilde{f} \times \id_B"] \arrow[ur, "f"'] &
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{uwaga}
+Dla $g\colon Z\to C^B$ niech $\overline{g}\df\varepsilon\circ(g\times\id_B)$. Wtedy $\overline{\tilde f} = f$, $\widetilde{\overline g} = g$, czyli
+\[ \C(Z\times B, C)\;\cong\;\C(Z, C^B). \]
+\end{uwaga}
+\end{frame}
+
+\begin{frame}{Kategorie kartezjańsko domknięte (CCC)}
+\begin{definicja}
+$\C$ jest \emph{kartezjańsko domknięta}, jeśli ma wszystkie skończone produkty i wszystkie wykładniki.
+\end{definicja}
+\begin{stwierdzenie}
+$\Set$ i $\Pos$ są CCC.
+\end{stwierdzenie}
+W $\Pos$: $P\times Q$ z porządkiem po współrzędnych,
+$Q^P$ --- funkcje monotoniczne z porządkiem punktowym, $\varepsilon(f,p) = f(p)$.
+\begin{przyklad}[Algebry Heytinga]
+Poset $(P,\le)$ jest CCC $\iff$ ma $1$, $\wedge$ oraz $p\Rightarrow q$ z
+\[ x\le(p\Rightarrow q) \iff x\wedge p\le q. \]
+To są \emph{algebry Heytinga} --- modele logiki intuicjonistycznej. W algebrze Boole'a $p\Rightarrow q = \neg p\vee q$.
+\end{przyklad}
+\end{frame}
+
+\begin{frame}{Nie każda ,,porządna'' kategoria jest CCC}
+\begin{stwierdzenie}
+$\Grp$ nie jest CCC.
+\end{stwierdzenie}
+\textbf{Idea:} w CCC $\C(A,B)\cong\C(\mathbf{1}\times A,B)\cong\C(\mathbf{1},B^A)$, a w $\Grp$ obiekt $\mathbf{1}$ jest też początkowy,
+więc każdy zbiór $\Grp(A,B)$ byłby jednoelementowy.
+\begin{itemize}
+\item Ten sam argument: każda kategoria z obiektem zerowym ($\Ab$, $\Vect$).
+\item $\Mon$ oraz $\Top$ również nie są CCC.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Funktor wykładniczy $(-)^A$}
+\begin{stwierdzenie}
+W CCC przyporządkowanie $X\mapsto X^A$ rozszerza się do funktora $(-)^A\colon\C\to\C$:
+\[ \beta^A\df\widetilde{\beta\circ\varepsilon}\colon B^A\to C^A \qquad\text{dla } \beta\colon B\to C, \]
+czyli $\beta^A$ jest jedyną strzałką czyniącą diagram przemiennym:
+\[\begin{tikzcd}
+C^A \times A \arrow[r, "\varepsilon"] & C \\
+B^A \times A \arrow[u, "\beta^A \times \id_A"] \arrow[r, "\varepsilon"'] & B \arrow[u, "\beta"']
+\end{tikzcd}\]
+\end{stwierdzenie}
+W $\Set$: $\beta^A(f) = \beta\circ f$.
+\end{frame}
+
+\begin{frame}[fragile]{Jedność $\eta$ i równościowa aksjomatyzacja}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\begin{itemize}
+\item $\eta\colon C\to(C\times B)^B$, \ $\eta \df \widetilde{\id_{C\times B}}$; \ w $\Set$: $\eta(c) = (b\mapsto(c,b))$.
+\item Dla $F = (-)^B$, $G = (-)\times B$: \ $\eta\colon C\to FGC$, \ $\varepsilon\colon GFC\to C$.
+\item Transpozycja przez $\eta$: \ $\tilde f = f^A\circ\eta$.
+\end{itemize}
+\end{column}
+\begin{column}{0.4\textwidth}
+\[\begin{tikzcd}
+(Z \times A)^A \arrow[r, "f^A"] & B^A \\
+Z \arrow[u, "\eta"] \arrow[ur, "\tilde{f}"'] &
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{stwierdzenie}[Aksjomatyzacja równościowa]
+$\C$ jest CCC $\iff$ ma:
+\begin{itemize}
+\item $\mathbf{1}$ z $!_C\colon C\to\mathbf{1}$ i $f = {!_C}$ dla każdego $f\colon C\to\mathbf{1}$;
+\item $A\times B$, $p_1,p_2$, $\langle f,g\rangle$ z $p_1\circ\langle f,g\rangle = f$, $p_2\circ\langle f,g\rangle = g$, $\langle p_1\circ h, p_2\circ h\rangle = h$;
+\item $B^A$, $\varepsilon$, $\tilde f$ z $\varepsilon\circ(\tilde f\times\id_A) = f$ oraz $\widetilde{\varepsilon\circ(g\times\id_A)} = g$.
+\end{itemize}
+\end{stwierdzenie}
+\end{frame}
+
+\begin{frame}[fragile]{Podsumowanie własności CCC}
+\begin{enumerate}
+\item Funktory $(-)\times A$ (z $f\mapsto f\times\id_A$) oraz $(-)^A$ (z $f^A = \widetilde{f\circ\varepsilon}$).
+\item Bijekcja $\C(X\times A, Y)\cong\C(X, Y^A)$, \ $f\mapsto\tilde f$.
+\item Ewaluacja $\varepsilon\colon X^A\times A\to X$ jest naturalna:
+\[\begin{tikzcd}[column sep=large]
+X^{A}\times A \arrow[r, "\varepsilon_{X}"] \arrow[d, "f^{A}\times \id_{A}"'] & X \arrow[d, "f"] \\
+Y^{A}\times A \arrow[r, "\varepsilon_{Y}"'] & Y
+\end{tikzcd}\]
+\item $\eta\colon X\to(X\times A)^A$, \ $\eta = \widetilde{\id_{X\times A}}$.
+\item Dla $f\colon X\times A\to Y\times A$, $g\colon Y\times A\to Z\times A$:
+\[ \widetilde{g\circ f} = (\varepsilon_{Z\times A})^A\circ(\tilde g\times\id_A)^A\circ\tilde f. \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{CCC a obliczenia z efektami ubocznymi: funktor $\IO$}
+Niech $W$ --- obiekt ,,stanu świata''. Funkcja z $X$ do $Y$ ingerująca w $W$:
+\[
+\frac{f\colon X\times W\longrightarrow Y\times W}{\tilde f\colon X\longrightarrow(Y\times W)^W}
+\qquad\qquad
+\IO(Y)\df(Y\times W)^W, \quad \IO = (-)^W\circ((-)\times W).
+\]
+\begin{przyklad}[Typy w Haskellu]
+\begin{itemize}
+\item \texttt{putChar :: Char -> IO ()}, \quad \texttt{getChar :: IO Char}
+\item \texttt{readFile :: FilePath -> IO String}
+\item \texttt{writeFile :: FilePath -> String -> IO ()} \\
+(postać rozwinięta; równoważna $(\texttt{FilePath},\texttt{String})\to\IO\,()$ na mocy $\C(A\times B,C)\cong\C(A,C^B)$)
+\end{itemize}
+\end{przyklad}
+\end{frame}
+
+% =====================================================================
+\section{Funktor stanu i kompozycja Kleisliego}
+% =====================================================================
+
+\begin{frame}[fragile]{Przypomnienie: CCC}
+\textbf{(A)} Dla $f\colon X\times A\to B$ istnieje jedyne $\tilde f\colon X\to B^A$ z $\varepsilon\circ(\tilde f\times\id_A) = f$.
+
+\smallskip
+\textbf{(B)} Dla $g\colon X\to B^A$: \ $\overline g\df\varepsilon\circ(g\times\id_A)$; \ $\widetilde{\overline g} = g$, \ $\overline{\tilde f} = f$.
+
+\smallskip
+\textbf{(C)} Naturalność ewaluacji: $\varepsilon_Y\circ(f^A\times\id_A) = f\circ\varepsilon_X$, \ $f^A = \widetilde{f\circ\varepsilon}$.
+
+\begin{stwierdzenie}[Transpozycja złożenia]
+Dla $f\colon X\times A\to Y\times A$, $g\colon Y\times A\to Z\times A$:
+\[ \widetilde{g\circ f} = (\varepsilon_{Z\times A})^A\circ(\tilde g\times\id_A)^A\circ\tilde f. \]
+\end{stwierdzenie}
+\end{frame}
+
+\begin{frame}{Funktor stanu}
+\begin{definicja}
+W CCC dla obiektu $A$:
+\[
+\State_A \df (-)^A\circ\bigl((-)\times A\bigr), \qquad \State_A X = (X\times A)^A,
+\]
+\[
+\State_A(f) = (f\times\id_A)^A = \widetilde{(f\times\id_A)\circ\varepsilon_{X\times A}} \qquad\text{dla } f\colon X\to Y.
+\]
+\end{definicja}
+Dla $A = W$ (stan świata) otrzymujemy $\State_W = \IO$.
+
+\medskip
+\textbf{Intuicja:} $\C(X,\State_A Y)\cong\C(X\times A, Y\times A)$ --- obliczenie, które z wejścia $X$ i bieżącego stanu
+daje wynik $Y$ i nowy stan.
+\end{frame}
+
+\begin{frame}{Kompozycja Kleisliego dla $\State_A$}
+\begin{definicja}[Kompozycja Kleisliego]
+Dla $f\colon X\to\State_A Y$, $g\colon Y\to\State_A Z$:
+\[ g\,\square\,f \df (\varepsilon_{Z\times A})^A\circ\State_A(g)\circ f. \]
+\end{definicja}
+\begin{uwaga}
+$\square$ odpowiada zwykłemu składaniu przez korespondencję $f\leftrightarrow\tilde f$:
+\[
+\frac{f\colon X\times A\to Y\times A,\quad g\colon Y\times A\to Z\times A}{g\circ f}
+\;\longleftrightarrow\;
+\frac{\tilde f,\ \tilde g}{\tilde g\,\square\,\tilde f\colon X\to\State_A Z}
+\qquad\text{tzn. } g\,\square\,f = \widetilde{\overline g\circ\overline f}.
+\]
+\end{uwaga}
+\begin{stwierdzenie}
+$\square$ jest łączne, a $\eta_X = \widetilde{\id_{X\times A}}\colon X\to\State_A X$ jest jego jednością:
+\[ \eta_Y\,\square\,f = f = f\,\square\,\eta_X. \]
+\end{stwierdzenie}
+\end{frame}
+
+% =====================================================================
+\section{Monady}
+% =====================================================================
+
+\begin{frame}{Motywacja: składanie obliczeń z efektem}
+Chcemy reguły składania ,,z efektem'' oraz rodziny $\eta = \{\eta_X\colon X\to\State_A X\}$:
+\[
+\frac{X\xrightarrow{f}\State_A Y\qquad Y\xrightarrow{g}\State_A Z}{X\xrightarrow{g\,\square\,f}\State_A Z}
+\]
+\begin{przyklad}[Haskell]
+Program: wczytaj nazwę pliku, usuń wielkie litery z zawartości, wypisz ją od tyłu.
+\[
+\mathrm{main} = \mathrm{putString}\;\square\;(\mathrm{pure}\circ\mathrm{reverse})\;\square\;(\mathrm{pure}\circ\mathrm{removeCaps})\;\square\;\mathrm{readFile}\;\square\;\mathrm{readString}.
+\]
+\end{przyklad}
+\textbf{Co pozwala zdefiniować $\square$?} Rodziny
+\[
+\eta = \{\eta_X\colon X\to\State_A X\}_X, \qquad
+\mu = \bigl\{(\varepsilon_{X\times A})^A\colon\State_A^2X\to\State_A X\bigr\}_X.
+\]
+\end{frame}
+
+\begin{frame}[fragile]{Transformacje naturalne}
+\begin{columns}[T]
+\begin{column}{0.6\textwidth}
+\begin{definicja}
+Dla funktorów $F,G\colon\C\to\D$ \emph{transformacja naturalna} $\tau\colon F\Rightarrow G$ to rodzina
+$\{\tau_X\colon FX\to GX\}_{X\in\Ob\C}$ taka, że dla każdego $f\colon X\to Y$
+\[ G(f)\circ\tau_X = \tau_Y\circ F(f). \]
+\end{definicja}
+\end{column}
+\begin{column}{0.35\textwidth}
+\[\begin{tikzcd}
+F X \arrow[r, "\tau_X"] \arrow[d, "F(f)"'] & G X \arrow[d, "G(f)"] \\
+F Y \arrow[r, "\tau_Y"'] & G Y
+\end{tikzcd}\]
+\end{column}
+\end{columns}
+\begin{przyklad}
+\begin{itemize}
+\item $\eta_X\colon X\to\mathcal{P}X$, $x\mapsto\{x\}$ --- transformacja $\Id\Rightarrow\mathcal{P}$ (z $\mathcal{P}(f)(U) = f(U)$).
+\item $\mathrm{rev}_X\colon X^*\to X^*$, $a_1\ldots a_n\mapsto a_n\ldots a_1$ --- transformacja $(-)^*\Rightarrow(-)^*$.
+\item Dla stanu: $\eta\colon\Id\Rightarrow\State_A$ oraz $\mu\colon\State_A^2\Rightarrow\State_A$.
+\end{itemize}
+\end{przyklad}
+\end{frame}
+
+\begin{frame}[fragile]{Definicja monady}
+\begin{definicja}
+\emph{Monada} w $\C$ to trójka $(T,\mu,\eta)$: funktor $T\colon\C\to\C$ oraz transformacje naturalne
+$\mu\colon T^2\Rightarrow T$, $\eta\colon\Id_\C\Rightarrow T$, dla których komutują diagramy
+\[
+\begin{tikzcd}[column sep=large]
+T X \arrow[r, "\eta_{T X}"] \arrow[dr, "\id_{T X}"'] & T^2 X \arrow[d, "\mu_X"] & T X \arrow[l, "T(\eta_X)"'] \arrow[dl, "\id_{T X}"] \\
+& T X &
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+T^3 X \arrow[r, "\mu_{T X}"] \arrow[d, "T(\mu_X)"'] & T^2 X \arrow[d, "\mu_X"] \\
+T^2 X \arrow[r, "\mu_X"'] & T X
+\end{tikzcd}
+\]
+(\emph{aksjomat jedności} i \emph{aksjomat łączności}).
+\end{definicja}
+\textbf{Intuicja:} $TA$ --- ,,$A$ w jednej warstwie''; $\eta$ dokłada warstwę, $\mu$ scala dwie warstwy w jedną.
+Przykład: $(\State_A,\mu,\eta)$ jest monadą.
+\end{frame}
+
+\begin{frame}{Przykłady monad}
+\begin{itemize}
+\item \textbf{Maybe:} $TX = X+\{\bot\}$, $\eta_X(x) = x$, $\mu_X$ skleja dwie kopie $\bot$. \hfill \emph{obliczenia częściowe}
+\item \textbf{Potęgowa:} $T = \mathcal{P}$, $\eta_X(x) = \{x\}$, $\mu_X(\mathcal{S}) = \bigcup\mathcal{S}$. \hfill \emph{niedeterminizm}
+\item \textbf{List:} $T = (-)^*$, $\eta_X(x) = (x)$, $\mu_X(s_1,\ldots,s_n) = s_1s_2\ldots s_n$. \hfill \emph{konkatenacja}
+\item \textbf{Trace:} dla monoidu $(M,\cdot,1)$: $T = M\times(-)$, $\eta_X(x) = (1,x)$,
+$\mu_X(m_1,(m_2,x)) = (m_1\cdot m_2, x)$ --- aksjomaty monady $=$ aksjomaty monoidu.
+\item \textbf{Stan:} $T = \State_A$, $\eta_X = \widetilde{\id_{X\times A}}$, $\mu_X = (\varepsilon_{X\times A})^A$.
+\end{itemize}
+\begin{stwierdzenie}
+Dla monady $(T,\mu,\eta)$ operacja $g\,\square\,f \df \mu_Z\circ T(g)\circ f$ (dla $f\colon X\to TY$, $g\colon Y\to TZ$) jest łączna,
+a $\eta$ jest jej obustronną jednością: $\eta_Y\,\square\,f = f = f\,\square\,\eta_X$.
+\end{stwierdzenie}
+\end{frame}
+
+% =====================================================================
+\section{Kategorie Kleisliego}
+% =====================================================================
+
+\begin{frame}[fragile]{Kategoria Kleisliego}
+\begin{definicja}
+Dla monady $(T,\mu,\eta)$ w $\C$ \emph{kategoria Kleisliego} $\Kl(T)$:
+\begin{itemize}
+\item obiekty --- obiekty $\C$;
+\item $\Kl(T)(X,Y)\df\C(X,TY)$;
+\item identyczność na $X$ --- $\eta_X\colon X\to TX$;
+\item złożenie: $g\circ_{\Kl}f\df\mu_Z\circ T(g)\circ f = g\,\square\,f$.
+\end{itemize}
+\[\begin{tikzcd}[column sep=large]
+X \arrow[r,"f"] & TY \arrow[r,"T(g)"] & T^2 Z \arrow[r,"\mu_Z"] & TZ
+\end{tikzcd}\]
+\end{definicja}
+\begin{stwierdzenie}
+$\Kl(T)$ jest kategorią (łączność z naturalności i łączności $\mu$; jedynki z aksjomatu jedności i naturalności $\eta$).
+\end{stwierdzenie}
+\end{frame}
+
+\begin{frame}{Kategorie Kleisliego --- przykłady}
+\renewcommand{\arraystretch}{1.4}
+\begin{center}
+\begin{tabular}{lll}
+\textbf{Monada} $T$ & \textbf{Strzałki} $X\to Y$ w $\Kl(T)$ & $\Kl(T)\cong$ \\\hline
+$\mathrm{Maybe} = (-)+\{\bot\}$ & funkcje częściowe $X\to Y+\{\bot\}$ & $\Par$ \\
+$(-)+M$ & $X\to Y+M$, propagacja pierwszego błędu & $\Err$ \\
+$M\times(-)$ & $X\to M\times Y$, $(g\,\square\,f)(x) = (m_f\cdot m_g, z)$ & $\Trace$ \\
+$\mathcal{P}$ & $X\to\mathcal{P}Y$, $(g\,\square\,f)(x) = \bigcup_{y\in f(x)}g(y)$ & $\Rel$ \\
+$\State_A$ & $X\to(Y\times A)^A\;\cong\;X\times A\to Y\times A$ & obliczenia ze stanem \\
+\end{tabular}
+\end{center}
+\medskip
+\begin{itemize}
+\item Kategorie $\Par$, $\Err$, $\Trace$, $\Rel$ z rozdziału 1 to kategorie Kleisliego!
+\item Operacja $\square$ dla stanu z rozdziału 6 jest dokładnie składaniem w $\Kl(\State_A)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Sprzężenie $F\dashv G$}
+\begin{definicja}
+\[
+F\colon\C\to\Kl(T),\quad F(X) = X,\quad F(f) = \eta_Y\circ f;
+\]
+\[
+G\colon\Kl(T)\to\C,\quad G(X) = TX,\quad G(f\colon X\to TY) = \mu_Y\circ T(f).
+\]
+\end{definicja}
+\begin{itemize}
+\item $F$, $G$ są funktorami oraz $G\circ F = T$.
+\item Naturalna bijekcja
+\[ \Kl(T)(FX, Y) = \C(X,TY) = \C(X, GY), \]
+czyli $F$ jest \emph{lewym sprzężonym} do $G$: \ $F\dashv G$.
+\item Monada $T$ jest indukowana przez to sprzężenie: $T = GF$, $\eta$ --- jedność, $\mu = G\varepsilon F$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Własność uniwersalna i podsumowanie}
+\begin{uwaga}
+Spośród wszystkich sprzężeń $F'\dashv G'$ generujących monadę $T$ sprzężenie przez $\Kl(T)$ jest \emph{początkowe}.
+Dualną rolę (\emph{terminalną}) pełni kategoria algebr Eilenberga--Moore'a $T\text{-}\catname{Alg}$.
+\end{uwaga}
+\begin{itemize}
+\item Każda monada $(T,\mu,\eta)$ wyznacza kategorię $\Kl(T)$ \emph{obliczeń z efektem $T$}.
+\item Identyczność w $\Kl(T)$ to $\eta$; składanie to $\square$.
+\item Monady jednolicie opisują: obliczenia częściowe (Maybe), błędy ($(-)+M$), ślady ($M\times-$),
+niedeterminizm ($\mathcal{P}$) i stan ($\State_A$).
+\item $\Kl(T)$ wpisuje monadę $T$ w sprzężenie $F\dashv G$ między $\C$ a $\Kl(T)$.
+\end{itemize}
+\end{frame}
+
+\end{document}
